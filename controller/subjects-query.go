@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 
 // Request handler to get a user's subjects
 //
-// @Summary 	Get a user's subjects
+// @Summary 	Search for subjects or get all [WIP]
 // @Description	Returns a list of user subjects, without any subtopics. Those need to be requested separately
 // @Tags		subjects
 // @Produce		json

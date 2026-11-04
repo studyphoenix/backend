@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "https://janishutz.com/legal/tos/",
         "contact": {
-            "name": "Docs",
+            "name": "Support",
             "url": "https://github.com/studyphoenix/backend#readme",
             "email": "support@janishutz.com"
         },
@@ -24,6 +24,172 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/subjects/assets/{id}": {
+            "patch": {
+                "description": "(de)associates the asset(s) depending on the value of \"add\"",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "(de)associate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add or remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subject or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/create": {
+            "put": {
+                "description": "Creates a new subject linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Create a new subject [WIP]",
+                "parameters": [
+                    {
+                        "description": "Subject details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given subject including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Deletes the given subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/get/{id}": {
+            "get": {
+                "description": "Returns the specified subject details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Get the specified subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Subject"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/subjects/search": {
             "get": {
                 "description": "Returns a list of user subjects, without any subtopics. Those need to be requested separately",
@@ -33,7 +199,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Get a user's subjects",
+                "summary": "Search for subjects or get all [WIP]",
                 "parameters": [
                     {
                         "type": "string",
@@ -88,6 +254,147 @@ const docTemplate = `{
                 }
             }
         },
+        "/subjects/subtopics/{id}": {
+            "patch": {
+                "description": "(de)associates the subtopic(s) depending on the value of \"add\"",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "(de)associate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add or remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/techtree/{id}": {
+            "get": {
+                "description": "Returns the tech tree data structure for rendering the tech tree",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Get a the tech tree for a given subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the subject to retrieve the techtree for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is simply a list of subtopics",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Subtopic"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/update/{id}": {
+            "patch": {
+                "description": "Updates the subject. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Updates the specified subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Subject details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/user/profile": {
             "get": {
                 "description": "Get user's profile. Includes username",
@@ -119,6 +426,45 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.AssociationRequest": {
+            "type": "object"
+        },
+        "controller.CreateSubjectRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateSubjectRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
         "controller.UserProfileResponse": {
             "type": "object",
             "properties": {
@@ -143,27 +489,30 @@ const docTemplate = `{
         },
         "model.Subject": {
             "type": "object"
+        },
+        "model.Subtopic": {
+            "type": "object"
         }
     },
     "tags": [
         {
-            "description": "Asset CRUD (assets are any type of file the user can upload)",
+            "description": "Asset CRUD (assets are any type of file the user can upload) [WIP]",
             "name": "assets"
         },
         {
-            "description": "Chat CRUD, chat message CRUD",
+            "description": "Chat CRUD, chat message CRUD [WIP]",
             "name": "chats"
         },
         {
-            "description": "Flashcard CRUD",
+            "description": "Flashcard CRUD [WIP]",
             "name": "flashcards"
         },
         {
-            "description": "Subjects CRUD, association of subtopics and assets",
+            "description": "Subjects CRUD, association of subtopics and assets [WIP]",
             "name": "subjects"
         },
         {
-            "description": "Subtopics CRUD, association of other subtopics, chats and assets",
+            "description": "Subtopics CRUD, association of other subtopics, chats and assets [WIP]",
             "name": "subtopics"
         },
         {
@@ -180,7 +529,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "You need to be logged in to use the APIs listed here. You can do that through the /auth/v2/login route",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage\nComing soon.\n\nPlease note that all endpoints marked with `[WIP]` are currently not functional\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

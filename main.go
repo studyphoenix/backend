@@ -19,10 +19,10 @@ import (
 
 // @title StudyPhoenix backend
 // @version         1.0
-// @description     You need to be logged in to use the APIs listed here. You can do that through the /auth/v2/login route
+// @description.markdown
 // @termsOfService  https://janishutz.com/legal/tos/
 //
-// @contact.name   Docs
+// @contact.name   Support
 // @contact.url    https://github.com/studyphoenix/backend#readme
 // @contact.email  support@janishutz.com
 //
@@ -31,19 +31,19 @@ import (
 // @schemes 	  http https
 //
 // @tag.name assets
-// @tag.description Asset CRUD (assets are any type of file the user can upload)
+// @tag.description Asset CRUD (assets are any type of file the user can upload) [WIP]
 //
 // @tag.name chats
-// @tag.description Chat CRUD, chat message CRUD
+// @tag.description Chat CRUD, chat message CRUD [WIP]
 //
 // @tag.name flashcards
-// @tag.description Flashcard CRUD
+// @tag.description Flashcard CRUD [WIP]
 //
 // @tag.name subjects
-// @tag.description Subjects CRUD, association of subtopics and assets
+// @tag.description Subjects CRUD, association of subtopics and assets [WIP]
 //
 // @tag.name subtopics
-// @tag.description Subtopics CRUD, association of other subtopics, chats and assets
+// @tag.description Subtopics CRUD, association of other subtopics, chats and assets [WIP]
 //
 // @tag.name user
 // @tag.description User data retrieval and deletion
