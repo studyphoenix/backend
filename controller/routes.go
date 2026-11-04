@@ -13,7 +13,7 @@ func AddRoutes(c *Controller, r *gin.Engine) {
 	users := r.Group("/user", oidclogin.EnsureLogin(false))
 	users.GET("profile", c.GetUserProfile)
 	subjects := users.Group("subjects")
-	subjects.GET("get", c.GetUserSubjects)
+	subjects.GET("search", c.QuerySubjects)
 
 	// ── Healthcheck ──────────────────────────────────────────────────
 	r.GET("/healthz", func(c *gin.Context) { c.JSON(200, gin.H{"status": true}) })

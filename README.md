@@ -13,6 +13,9 @@ TEST_MODE=true # used for running the tests via bruno
 > [!NOTE]
 > This is a MUCH more technical description than for the frontend
 
+### API docs
+API documentation is available at `<url>/swagger/index.html`, for local development typically at [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
+
 ### Running the backend without container
 ```bash
 go run main.go

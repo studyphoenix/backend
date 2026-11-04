@@ -11,8 +11,8 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "https://janishutz.com/legal/tos/",
         "contact": {
-            "name": "Support",
-            "url": "https://janishutz.com/support",
+            "name": "Docs",
+            "url": "https://github.com/studyphoenix/backend#readme",
             "email": "support@janishutz.com"
         },
         "license": {
@@ -24,6 +24,70 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/subjects/search": {
+            "get": {
+                "description": "Returns a list of user subjects, without any subtopics. Those need to be requested separately",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Get a user's subjects",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The search query (matches name)",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of results to return. Defaults to 25",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The offset in the results list. Defaults to 0",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Whether or not the subject must have a subtopic. Defaults to false",
+                        "name": "subtopic",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The minimum number of assets the subject and its subtopics need to have. Defaults to 0",
+                        "name": "assetCount",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Subject"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/user/profile": {
             "get": {
                 "description": "Get user's profile. Includes username",
@@ -39,38 +103,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/controller.UserProfileResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/user/subjects/get": {
-            "get": {
-                "description": "Returns a list of user subjects, without any topics. Those need to be requested separately",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subjects"
-                ],
-                "summary": "Get a user's subjects",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Subject"
-                            }
                         }
                     },
                     "401": {
@@ -112,17 +144,43 @@ const docTemplate = `{
         "model.Subject": {
             "type": "object"
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "Asset CRUD (assets are any type of file the user can upload)",
+            "name": "assets"
+        },
+        {
+            "description": "Chat CRUD, chat message CRUD",
+            "name": "chats"
+        },
+        {
+            "description": "Flashcard CRUD",
+            "name": "flashcards"
+        },
+        {
+            "description": "Subjects CRUD, association of subtopics and assets",
+            "name": "subjects"
+        },
+        {
+            "description": "Subtopics CRUD, association of other subtopics, chats and assets",
+            "name": "subtopics"
+        },
+        {
+            "description": "User data retrieval and deletion",
+            "name": "user"
+        }
+    ]
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/api/v1",
-	Schemes:          []string{},
-	Title:            "janishutz Store",
-	Description:      "This is the backend for store.janishutz.com.",
+	Host:             "",
+	BasePath:         "/",
+	Schemes:          []string{"http", "https"},
+	Title:            "StudyPhoenix backend",
+	Description:      "You need to be logged in to use the APIs listed here. You can do that through the /auth/v2/login route",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
