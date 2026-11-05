@@ -42,8 +42,8 @@ func (m *Controller) GetChat(c *gin.Context) {
 }
 
 type UpdateChatRequest struct {
-	Name *string `example:"Analysis" json:"name" maxLength:"250" minLength:"3"`
-	Icon *string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0"` // The Icon of the chat. Must be an icon that can be rendered in the browser
+	Name *string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"optional"`
+	Icon *string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"optional"` // The Icon of the chat. Must be an icon that can be rendered in the browser
 }
 
 // Request handler to update a chat

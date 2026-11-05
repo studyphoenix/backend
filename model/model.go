@@ -15,10 +15,17 @@ type DBConnector struct {
 
 var ctx = context.Background()
 
-func Init() *DBConnector {
-	db, err := gorm.Open(sqlite.Open("janishutz-store.db"), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
+func Init(prod bool) *DBConnector {
+	var conf gorm.Config
+	if prod {
+		conf = gorm.Config{}
+	} else {
+		conf = gorm.Config{
+			Logger: logger.Default.LogMode(logger.Info),
+		}
+	}
+
+	db, err := gorm.Open(sqlite.Open("janishutz-store.db"), &conf)
 	if err != nil {
 		log.Fatal("[DB] Failed to connect to DB with error", err)
 	}
@@ -26,8 +33,13 @@ func Init() *DBConnector {
 	// FIXME: Only used if using sqlite db
 	db.Exec("PRAGMA foreign_keys = ON")
 
-	// Users
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Subtopic{})
+	db.AutoMigrate(&Subject{})
+	db.AutoMigrate(&Asset{})
+	db.AutoMigrate(&Chat{})
+	db.AutoMigrate(&ChatMessage{})
+	db.AutoMigrate(&Flashcard{})
 
 	return &DBConnector{
 		DB: db,

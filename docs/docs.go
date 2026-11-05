@@ -1910,6 +1910,11 @@ const docTemplate = `{
     "definitions": {
         "controller.CreateAssetRequest": {
             "type": "object",
+            "required": [
+                "icon",
+                "mediaType",
+                "name"
+            ],
             "properties": {
                 "icon": {
                     "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
@@ -1917,6 +1922,12 @@ const docTemplate = `{
                     "maxLength": 250,
                     "minLength": 0,
                     "example": "fa-gear"
+                },
+                "mediaType": {
+                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
+                    "type": "string",
+                    "maxLength": 250,
+                    "example": "application/json"
                 },
                 "name": {
                     "type": "string",
@@ -1928,6 +1939,10 @@ const docTemplate = `{
         },
         "controller.CreateChatRequest": {
             "type": "object",
+            "required": [
+                "icon",
+                "name"
+            ],
             "properties": {
                 "icon": {
                     "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
@@ -1946,6 +1961,10 @@ const docTemplate = `{
         },
         "controller.CreateFlashcardRequest": {
             "type": "object",
+            "required": [
+                "icon",
+                "name"
+            ],
             "properties": {
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
@@ -1964,6 +1983,10 @@ const docTemplate = `{
         },
         "controller.CreateSubjectRequest": {
             "type": "object",
+            "required": [
+                "icon",
+                "name"
+            ],
             "properties": {
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
@@ -1982,6 +2005,10 @@ const docTemplate = `{
         },
         "controller.CreateSubtopicRequest": {
             "type": "object",
+            "required": [
+                "icon",
+                "name"
+            ],
             "properties": {
                 "icon": {
                     "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
@@ -2090,6 +2117,9 @@ const docTemplate = `{
         },
         "controller.UserProfileResponse": {
             "type": "object",
+            "required": [
+                "username"
+            ],
             "properties": {
                 "username": {
                     "type": "string",
@@ -2099,6 +2129,10 @@ const docTemplate = `{
         },
         "httputil.HTTPError": {
             "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
             "properties": {
                 "code": {
                     "type": "integer",
@@ -2112,7 +2146,17 @@ const docTemplate = `{
         },
         "model.Asset": {
             "type": "object",
+            "required": [
+                "icon",
+                "id",
+                "mediaType",
+                "updatedAt"
+            ],
             "properties": {
+                "icon": {
+                    "type": "string",
+                    "example": "fa-gear"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -2128,6 +2172,14 @@ const docTemplate = `{
         },
         "model.Chat": {
             "type": "object",
+            "required": [
+                "chatMessages",
+                "id",
+                "mode",
+                "name",
+                "subtopicId",
+                "updatedAt"
+            ],
             "properties": {
                 "chatMessages": {
                     "type": "array",
@@ -2142,6 +2194,11 @@ const docTemplate = `{
                 "mode": {
                     "description": "the mode to be used for the UI",
                     "type": "integer",
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
                     "example": 0
                 },
                 "name": {
@@ -2161,6 +2218,13 @@ const docTemplate = `{
         },
         "model.ChatMessage": {
             "type": "object",
+            "required": [
+                "chatId",
+                "createdAt",
+                "id",
+                "modelMessage",
+                "userMessage"
+            ],
             "properties": {
                 "chatId": {
                     "type": "integer",
@@ -2190,17 +2254,99 @@ const docTemplate = `{
         },
         "model.Flashcard": {
             "type": "object",
+            "required": [
+                "content",
+                "id",
+                "name",
+                "updatedAt"
+            ],
             "properties": {
+                "content": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-17T13:47:33Z"
                 }
             }
         },
         "model.Subject": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "updatedAt"
+            ],
+            "properties": {
+                "assets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Asset"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Analysis"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-17T13:47:33Z"
+                }
+            }
         },
         "model.Subtopic": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "updatedAt"
+            ],
+            "properties": {
+                "assets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Asset"
+                    }
+                },
+                "chats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Chat"
+                    }
+                },
+                "flashcards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Flashcard"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "ordinary differential equations"
+                },
+                "subtopics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Subtopic"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-17T13:47:33Z"
+                }
+            }
         }
     },
     "tags": [
@@ -2238,7 +2384,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts`.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) need these substituted in the URL. That's something the SDK won't do for you\n",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts`.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using URL-Encoding)\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

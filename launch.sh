@@ -2,4 +2,4 @@
 
 set -e
 
-swag init --md ./apidocs/ && go run main.go
+swag init --md ./apidocs/ --requiredByDefault && go run main.go
