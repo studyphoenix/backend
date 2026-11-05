@@ -5,11 +5,9 @@ import (
 )
 
 type CreateAssetRequest struct {
-	Name string `json:"name" example:"Analysis" maxLength:"250" minLength:"3" validate:"required"`
-	// The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
-	MediaType string `json:"mediaType" example:"application/json" maxLength:"250" validate:"required"`
-	// The Icon of the asset. Must be an icon that can be rendered in the browser
-	Icon string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"required"`
+	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
+	MediaType string `json:"mediaType" example:"application/pdf" minLength:"3" maxLength:"40" validate:"required,contains=/,min=3,max=40,printascii"` // The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
+	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
 }
 
 // Request handler to create a new asset
@@ -45,8 +43,9 @@ func (m *Controller) GetAssetDetails(c *gin.Context) {
 }
 
 type UpdateAssetRequest struct {
-	Name *string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"optional"`
-	Icon *string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"optional"` // The Icon of the asset. Must be an icon that can be rendered in the browser
+	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"optional,min=3,max=250,printascii"`
+	MediaType string `json:"mediaType" example:"application/pdf" minLength:"3" maxLength:"40" validate:"optional,contains=/,min=3,max=40,printascii"` // The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
+	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"optional,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
 }
 
 // Request handler to update a asset

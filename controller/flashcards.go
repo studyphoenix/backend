@@ -5,9 +5,9 @@ import (
 )
 
 type CreateFlashcardRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"required,min=3,max=250"`
+	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
 	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,ascii"`
+	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,printascii"`
 }
 
 // Request handler to create a new flashcard

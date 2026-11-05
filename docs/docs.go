@@ -1917,7 +1917,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "icon": {
-                    "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
+                    "description": "Must be a valid identifier for vuetify",
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 0,
@@ -1926,14 +1926,15 @@ const docTemplate = `{
                 "mediaType": {
                     "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
                     "type": "string",
-                    "maxLength": 250,
-                    "example": "application/json"
+                    "maxLength": 40,
+                    "minLength": 3,
+                    "example": "application/pdf"
                 },
                 "name": {
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Script"
                 }
             }
         },
@@ -2029,17 +2030,24 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "icon": {
-                    "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
+                    "description": "Must be a valid identifier for vuetify",
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
+                "mediaType": {
+                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
+                    "type": "string",
+                    "maxLength": 40,
+                    "minLength": 3,
+                    "example": "application/pdf"
+                },
                 "name": {
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Script"
                 }
             }
         },
@@ -2279,6 +2287,7 @@ const docTemplate = `{
         "model.Subject": {
             "type": "object",
             "required": [
+                "icon",
                 "id",
                 "name",
                 "updatedAt"
@@ -2289,6 +2298,10 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Asset"
                     }
+                },
+                "icon": {
+                    "type": "string",
+                    "example": "fa-gear"
                 },
                 "id": {
                     "type": "integer"
@@ -2306,6 +2319,7 @@ const docTemplate = `{
         "model.Subtopic": {
             "type": "object",
             "required": [
+                "icon",
                 "id",
                 "name",
                 "updatedAt"
@@ -2328,6 +2342,10 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Flashcard"
                     }
+                },
+                "icon": {
+                    "type": "string",
+                    "example": "fa-gear"
                 },
                 "id": {
                     "type": "integer"
@@ -2384,7 +2402,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts`.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using URL-Encoding)\n",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts` in the frontend repo.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using e.g. URL-Encoding)\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

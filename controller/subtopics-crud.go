@@ -5,8 +5,8 @@ import (
 )
 
 type CreateSubtopicRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"required"`
-	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"required"` // The Icon of the subtopic. Must be an icon that can be rendered in the browser
+	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"required,printascii,min=3,max=250"`
+	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"required,printascii,min=0,max=250"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 }
 
 // Request handler to create a new subtopic
@@ -42,8 +42,8 @@ func (m *Controller) GetSubtopic(c *gin.Context) {
 }
 
 type UpdateSubtopicRequest struct {
-	Name *string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"optional"`
-	Icon *string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"optional"` // The Icon of the subtopic. Must be an icon that can be rendered in the browser
+	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"optional,printascii,min=3,max=250"`
+	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"optional,printascii,min=0,max=250"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 }
 
 // Request handler to update a subtopic
