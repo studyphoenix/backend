@@ -24,6 +24,245 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/flashcards/create": {
+            "put": {
+                "description": "Creates a new flashcard linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Create a new flashcard [WIP]",
+                "parameters": [
+                    {
+                        "description": "flashcard details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateFlashcardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given flashcard including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Deletes the given flashcard [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "flashcard not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/get/{id}": {
+            "get": {
+                "description": "Returns the specified flashcard details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Get the specified flashcard [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Flashcard"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/search": {
+            "get": {
+                "description": "Returns a list of user flashcards, without any subtopics. Those need to be requested separately",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Search for flashcards or get all [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The search query (matches name)",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of results to return. Defaults to 25",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The offset in the results list. Defaults to 0",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The subtopic the results should be associated with",
+                        "name": "subtopicId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The minimum number of times the flashcard was completed",
+                        "name": "minCompletionCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of times the flashcard was completed",
+                        "name": "maxCompletionCount",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Flashcard"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/update/{id}": {
+            "patch": {
+                "description": "Updates the flashcard. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Updates the specified flashcard [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Flashcard details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateFlashcardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "flashcard not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/subjects/associate/assets/{id}": {
             "patch": {
                 "description": "associates the specified asset(s) to this subject",
@@ -1110,6 +1349,24 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.CreateFlashcardRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
         "controller.CreateSubjectRequest": {
             "type": "object",
             "properties": {
@@ -1133,6 +1390,24 @@ const docTemplate = `{
             "properties": {
                 "icon": {
                     "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateFlashcardRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 0,
@@ -1204,6 +1479,9 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Flashcard": {
+            "type": "object"
+        },
         "model.Subject": {
             "type": "object"
         },
@@ -1246,7 +1524,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage\nCRUD = Create Retrieve Update Delete\n\nComing soon.\n\nPlease note that all endpoints marked with `[WIP]` are currently not functional\n",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts`.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) need these substituted in the URL. That's something the SDK won't do for you\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
