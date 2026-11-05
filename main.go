@@ -18,7 +18,7 @@ import (
 )
 
 // @title StudyPhoenix backend
-// @version         1.0
+// @version         0.1.0
 // @description.markdown
 // @termsOfService  https://janishutz.com/legal/tos/
 //

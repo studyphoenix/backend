@@ -33,7 +33,6 @@ go.work.sum
 .vscode/
 
 # Swagger files
-**/swagger.json
 **/swagger.yaml
 **/swagger.yml
 
