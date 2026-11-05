@@ -24,6 +24,103 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/subjects/associate/assets/{id}": {
+            "patch": {
+                "description": "associates the specified asset(s) to this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "associate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subject or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/associate/subtopics/{id}": {
+            "patch": {
+                "description": "associates the subtopic(s) from this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "associate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/subjects/create": {
             "put": {
                 "description": "Creates a new subject linked to the current user",
@@ -54,6 +151,103 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/deassociate/assets/{id}": {
+            "patch": {
+                "description": "deassociates the specified asset(s) to this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "deassociate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subject or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/deassociate/subtopics/{id}": {
+            "patch": {
+                "description": "deassociates the specified subtopic(s) from this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "deassociate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -298,16 +492,16 @@ const docTemplate = `{
                 }
             }
         },
-        "/subtopics/assets/{id}": {
+        "/subtopics/associate/assets/{id}": {
             "patch": {
-                "description": "(de)associates the asset(s) depending on the value of \"add\" to this subtopic",
+                "description": "associates the asset(s) depending on the value of \"add\" to this subtopic",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "subjects"
+                    "subtopics"
                 ],
-                "summary": "(de)associate asset(s) [WIP]",
+                "summary": "associate asset(s) [WIP]",
                 "parameters": [
                     {
                         "type": "string",
@@ -317,7 +511,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "The associations to add or remove",
+                        "description": "The associations to add",
                         "name": "payload",
                         "in": "body",
                         "required": true,
@@ -335,6 +529,103 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/chats/{id}": {
+            "patch": {
+                "description": "associates the chat(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate chat(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "chat or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/subtopics/{id}": {
+            "patch": {
+                "description": "associates the subtopic(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -375,6 +666,150 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/assets/{id}": {
+            "patch": {
+                "description": "deassociates the asset(s) from this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subject or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/chats/{id}": {
+            "patch": {
+                "description": "deassociates the chat(s) from this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate chat(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "chat or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/subtopics/{id}": {
+            "patch": {
+                "description": "deassociates the subtopic(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.AssociationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -454,56 +889,6 @@ const docTemplate = `{
                     },
                     "404": {
                         "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/subtopics/subtopics/{id}": {
-            "patch": {
-                "description": "(de)associates the subtopic(s) depending on the value of \"add\" to this subtopic",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subjects"
-                ],
-                "summary": "(de)associate subtopic(s) [WIP]",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The id of the subtopic to update",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "The associations to add or remove",
-                        "name": "payload",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "subject or id not found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -734,7 +1119,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage\nComing soon.\n\nPlease note that all endpoints marked with `[WIP]` are currently not functional\n",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage\nCRUD = Create Retrieve Update Delete\n\nComing soon.\n\nPlease note that all endpoints marked with `[WIP]` are currently not functional\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
