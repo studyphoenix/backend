@@ -2,7 +2,7 @@ package model
 
 type User struct {
 	ID         uint        `json:"id" gorm:"primaryKey"`
-	Uid        string      `json:"uid"` // UserID as specified by OIDC OP
+	Uid        string      `json:"-"` // UserID as specified by OIDC OP
 	Email      string      `json:"email"`
 	Username   string      `json:"username"`
 	Subjects   []Subject   `json:"-" gorm:"constraint:OnDelete:CASCADE"`
