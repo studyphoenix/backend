@@ -24,6 +24,520 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/assets/create": {
+            "put": {
+                "description": "Creates a new asset linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Create a new asset [WIP]",
+                "parameters": [
+                    {
+                        "description": "Asset details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given asset, including the file stored on disk",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Deletes the given asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "asset not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/get/{id}": {
+            "get": {
+                "description": "Returns the specified asset details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Get the specified asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Asset"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/update/{id}": {
+            "patch": {
+                "description": "Updates the asset. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Updates the specified asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Asset details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "asset not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/upload/{id}": {
+            "put": {
+                "description": "Upload a file to asset with id ` + "`" + `{id}` + "`" + `, overriding any previously existing files irreversibly",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Upload file to a given asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "The file to upload here",
+                        "name": "payload",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/create": {
+            "put": {
+                "description": "Creates a new chat linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Create a new chat [WIP]",
+                "parameters": [
+                    {
+                        "description": "chat details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given chat including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Deletes the given chat [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "chat not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/get/{id}": {
+            "get": {
+                "description": "Returns the specified chat details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Get the specified chat [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Chat"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/messages/add/{id}": {
+            "put": {
+                "description": "Creates a new subject linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Add a new chat message to the chat with id ` + "`" + `{id}` + "`" + ` [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Subject details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/messages/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given subject including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Deletes the given subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat message to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "chat or message not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/messages/update/{id}": {
+            "patch": {
+                "description": "Updates the chat message. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Updates the specified chat message [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat message to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Message content to update. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "message not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/update/{id}": {
+            "patch": {
+                "description": "Updates the chat. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Updates the specified chat [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Chat details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "chat not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/flashcards/create": {
             "put": {
                 "description": "Creates a new flashcard linked to the current user",
@@ -84,8 +598,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -242,8 +756,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -345,8 +859,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -438,8 +952,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subject or id not found"
@@ -488,8 +1002,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -522,15 +1036,15 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "The id of the subject to update",
+                        "description": "The id of the subject to delete",
                         "name": "id",
                         "in": "path",
                         "required": true
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -722,8 +1236,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -775,8 +1289,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subtopic or asset id not found"
@@ -825,8 +1339,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subtopic or chat id not found"
@@ -875,8 +1389,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subtopic or flashcard id not found"
@@ -925,8 +1439,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1018,8 +1532,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subtopic or asset id not found"
@@ -1068,8 +1582,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subtopic or flashcard id not found"
@@ -1118,8 +1632,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "subtopic or flashcard id not found"
@@ -1168,8 +1682,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1191,7 +1705,7 @@ const docTemplate = `{
         },
         "/subtopics/delete/{id}": {
             "delete": {
-                "description": "Deletes the given subtopic including all subtopics, assets and flashcards.",
+                "description": "Deletes the given subtopic including assets and flashcards.",
                 "produces": [
                     "application/json"
                 ],
@@ -1202,7 +1716,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "The id of the subtopic to update",
+                        "description": "The id of the subtopic to delete",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1349,6 +1863,42 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.CreateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.CreateChatRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
         "controller.CreateFlashcardRequest": {
             "type": "object",
             "properties": {
@@ -1390,6 +1940,42 @@ const docTemplate = `{
             "properties": {
                 "icon": {
                     "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateChatRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 0,
@@ -1478,6 +2064,12 @@ const docTemplate = `{
                     "example": "Error processing data due to db issue"
                 }
             }
+        },
+        "model.Asset": {
+            "type": "object"
+        },
+        "model.Chat": {
+            "type": "object"
         },
         "model.Flashcard": {
             "type": "object"

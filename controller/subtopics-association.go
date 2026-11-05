@@ -10,7 +10,7 @@ import "github.com/gin-gonic/gin"
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to add"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subtopic or subtopic(s) id not found"
@@ -28,7 +28,7 @@ func (m *Controller) AssociateSubtopicToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to remove"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subtopic or subtopic(s) id not found"
@@ -46,7 +46,7 @@ func (m *Controller) DeassociateSubtopicToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to add"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subtopic or asset id not found"
@@ -64,7 +64,7 @@ func (m *Controller) AssociateAssetToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to remove"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subtopic or asset id not found"
@@ -82,7 +82,7 @@ func (m *Controller) DeassociateAssetToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to add"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subtopic or chat id not found"
@@ -100,7 +100,7 @@ func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to remove"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subtopic or flashcard id not found"
@@ -118,7 +118,7 @@ func (m *Controller) DeassociateChatToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to add"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subtopic or flashcard id not found"
@@ -136,7 +136,7 @@ func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body AssociationRequest true "The associations to remove"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subtopic or flashcard id not found"

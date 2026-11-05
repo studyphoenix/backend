@@ -67,10 +67,10 @@ func (m *Controller) UpdateSubtopic(c *gin.Context) {
 // Request handler to delete a subtopic
 //
 // @Summary 	Deletes the given subtopic [WIP]
-// @Description	Deletes the given subtopic including all subtopics, assets and flashcards.
+// @Description	Deletes the given subtopic including assets and flashcards.
 // @Tags		subtopics
 // @Produce		json
-// @Param 		id path string true "The id of the subtopic to update"
+// @Param 		id path string true "The id of the subtopic to delete"
 // @Success		200	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subtopic not found"

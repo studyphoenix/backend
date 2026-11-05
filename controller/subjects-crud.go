@@ -54,7 +54,7 @@ type UpdateSubjectRequest struct {
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
 // @Param 		payload body UpdateSubjectRequest true "Subject details to update with. All attributes optional!"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subject not found"
@@ -70,8 +70,8 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 // @Description	Deletes the given subject including all subtopics, assets and flashcards.
 // @Tags		subjects
 // @Produce		json
-// @Param 		id path string true "The id of the subject to update"
-// @Success		200	{object}		nil
+// @Param 		id path string true "The id of the subject to delete"
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subject not found"
 // @Failure		500	{object}		httputil.HTTPError

@@ -10,7 +10,7 @@ import "github.com/gin-gonic/gin"
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
 // @Param 		payload body AssociationRequest true "The associations to add"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subject or id not found"
@@ -28,7 +28,7 @@ func (m *Controller) AssociateSubtopicToSubject(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
 // @Param 		payload body AssociationRequest true "The associations to remove"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subject or id not found"
@@ -64,7 +64,7 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
 // @Param 		payload body AssociationRequest true "The associations to remove"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	400 {object} 		nil "subject or id not found"

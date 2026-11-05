@@ -54,7 +54,7 @@ type UpdateFlashcardRequest struct {
 // @Produce		json
 // @Param 		id path string true "The id of the flashcard to update"
 // @Param 		payload body UpdateFlashcardRequest true "Flashcard details to update with. All attributes optional!"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "flashcard not found"
@@ -71,7 +71,7 @@ func (m *Controller) UpdateFlashcard(c *gin.Context) {
 // @Tags		flashcards
 // @Produce		json
 // @Param 		id path string true "The id of the flashcard to update"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "flashcard not found"
 // @Failure		500	{object}		httputil.HTTPError

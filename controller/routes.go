@@ -10,8 +10,11 @@ import (
 )
 
 func AddRoutes(c *Controller, r *gin.Engine) {
+	// Users
 	users := r.Group("/user", oidclogin.EnsureLogin(false))
 	users.GET("profile", c.GetUserProfile)
+
+	// Subjects
 	subjects := users.Group("subjects")
 	subjects.GET("search", c.QuerySubjects)
 
