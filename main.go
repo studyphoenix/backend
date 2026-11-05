@@ -17,20 +17,38 @@ import (
 	"github.com/gin-contrib/sessions/memstore"
 )
 
-// @title backend
-// @version         1.0
-// @description     This is the backend for <project name>.
+// @title StudyPhoenix backend
+// @version         0.1.0
+// @description.markdown
 // @termsOfService  https://janishutz.com/legal/tos/
 //
 // @contact.name   Support
-// @contact.url    https://janishutz.com/support
+// @contact.url    https://github.com/studyphoenix/backend#readme
 // @contact.email  support@janishutz.com
 //
 // @license.name  GNU Affero General Public License 3.0
 // @license.url   https://www.gnu.org/licenses/agpl-3.0.en.html
+// @schemes 	  http https
 //
-// @host      localhost:8080
-// @BasePath  /api/v1
+// @tag.name assets
+// @tag.description Asset CRUD (assets are any type of file the user can upload) [WIP]
+//
+// @tag.name chats
+// @tag.description Chat CRUD, chat message CRUD [WIP]
+//
+// @tag.name flashcards
+// @tag.description Flashcard CRUD [WIP]
+//
+// @tag.name subjects
+// @tag.description Subjects CRUD, association of subtopics and assets [WIP]
+//
+// @tag.name subtopics
+// @tag.description Subtopics CRUD, association of other subtopics, chats and assets [WIP]
+//
+// @tag.name user
+// @tag.description User data retrieval and deletion
+//
+// @BasePath  /
 func main() {
 	logr.Debug("Starting...")
 	r := gin.Default()

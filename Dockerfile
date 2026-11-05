@@ -7,7 +7,7 @@ COPY . /usr/src/build
 ENV PROD=true
 
 RUN apk add go go-swag
-RUN swag init
+RUN swag init --md ./apidocs
 RUN go build -o backend
 
 

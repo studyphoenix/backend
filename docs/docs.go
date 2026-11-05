@@ -12,7 +12,7 @@ const docTemplate = `{
         "termsOfService": "https://janishutz.com/legal/tos/",
         "contact": {
             "name": "Support",
-            "url": "https://janishutz.com/support",
+            "url": "https://github.com/studyphoenix/backend#readme",
             "email": "support@janishutz.com"
         },
         "license": {
@@ -24,6 +24,1859 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/assets/create": {
+            "put": {
+                "description": "Creates a new asset linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Create a new asset [WIP]",
+                "parameters": [
+                    {
+                        "description": "Asset details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given asset, including the file stored on disk",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Deletes the given asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "asset not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/download/{id}": {
+            "get": {
+                "description": "Download the file of asset with id ` + "`" + `{id}` + "`" + `",
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Download the file of a given asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to download",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The requested file is in the body",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/get/{id}": {
+            "get": {
+                "description": "Returns the specified asset details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Get the specified asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Asset"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/update/{id}": {
+            "patch": {
+                "description": "Updates the asset. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Updates the specified asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Asset details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "asset not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/upload/{id}": {
+            "put": {
+                "description": "Upload a file to asset with id ` + "`" + `{id}` + "`" + `, overriding any previously existing files irreversibly",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Upload file to a given asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to upload it to",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "The file to upload here",
+                        "name": "payload",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/create": {
+            "put": {
+                "description": "Creates a new chat linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Create a new chat [WIP]",
+                "parameters": [
+                    {
+                        "description": "chat details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given chat including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Deletes the given chat [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "chat not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/get/{id}": {
+            "get": {
+                "description": "Returns the specified chat details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Get the specified chat [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Chat"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/messages/add/{id}": {
+            "put": {
+                "description": "Creates a new subject linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Add a new chat message to the chat with id ` + "`" + `{id}` + "`" + ` [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Subject details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/messages/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given subject including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Deletes the given subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat message to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "chat or message not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/messages/update/{id}": {
+            "patch": {
+                "description": "Updates the chat message. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Updates the specified chat message [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat message to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Message content to update. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "message not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/update/{id}": {
+            "patch": {
+                "description": "Updates the chat. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Updates the specified chat [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the chat to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Chat details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "chat not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/create": {
+            "put": {
+                "description": "Creates a new flashcard linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Create a new flashcard [WIP]",
+                "parameters": [
+                    {
+                        "description": "flashcard details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateFlashcardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given flashcard including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Deletes the given flashcard [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "flashcard not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/get/{id}": {
+            "get": {
+                "description": "Returns the specified flashcard details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Get the specified flashcard [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Flashcard"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/search": {
+            "get": {
+                "description": "Returns a list of user flashcards, without any subtopics. Those need to be requested separately",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Search for flashcards or get all [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The search query (matches name)",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of results to return. Defaults to 25",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The offset in the results list. Defaults to 0",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The subtopic the results should be associated with",
+                        "name": "subtopicId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The minimum number of times the flashcard was completed",
+                        "name": "minCompletionCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of times the flashcard was completed",
+                        "name": "maxCompletionCount",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Flashcard"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/flashcards/update/{id}": {
+            "patch": {
+                "description": "Updates the flashcard. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Updates the specified flashcard [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Flashcard details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateFlashcardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "flashcard not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/associate/assets/{id}": {
+            "patch": {
+                "description": "associates the specified asset(s) to this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "associate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subject or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/associate/subtopics/{id}": {
+            "patch": {
+                "description": "associates the subtopic(s) from this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "associate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/create": {
+            "put": {
+                "description": "Creates a new subject linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Create a new subject [WIP]",
+                "parameters": [
+                    {
+                        "description": "Subject details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/deassociate/assets/{id}": {
+            "patch": {
+                "description": "deassociates the specified asset(s) to this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "deassociate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subject or id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/deassociate/subtopics/{id}": {
+            "patch": {
+                "description": "deassociates the specified subtopic(s) from this subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "deassociate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject or id not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given subject including all subtopics, assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Deletes the given subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/get/{id}": {
+            "get": {
+                "description": "Returns the specified subject details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Get the specified subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Subject"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/search": {
+            "get": {
+                "description": "Returns a list of user subjects, without any subtopics. Those need to be requested separately",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Search for subjects or get all [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The search query (matches name)",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of results to return. Defaults to 25",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The offset in the results list. Defaults to 0",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Whether or not the subject must have a subtopic. Defaults to false",
+                        "name": "subtopic",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The minimum number of assets the subject and its subtopics need to have. Defaults to 0",
+                        "name": "assetCount",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Subject"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/techtree/{id}": {
+            "get": {
+                "description": "Returns the tech tree data structure for rendering the tech tree",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Get a the tech tree for a given subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the subject to retrieve the techtree for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is simply a list of subtopics",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Subtopic"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/update/{id}": {
+            "patch": {
+                "description": "Updates the subject. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Updates the specified subject [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subject to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Subject details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subject not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/assets/{id}": {
+            "patch": {
+                "description": "associates the asset(s) depending on the value of \"add\" to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subtopic or asset id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/chats/{id}": {
+            "patch": {
+                "description": "associates the chat(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate chat(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subtopic or chat id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/flashcards/{id}": {
+            "patch": {
+                "description": "associates the flashcard(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate flashcard(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subtopic or flashcard id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/subtopics/{id}": {
+            "patch": {
+                "description": "associates the subtopic(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subtopic or subtopic(s) id not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/create": {
+            "put": {
+                "description": "Creates a new subtopic linked to the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "Create a new subtopic [WIP]",
+                "parameters": [
+                    {
+                        "description": "Subtopic details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateSubtopicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/assets/{id}": {
+            "patch": {
+                "description": "deassociates the asset(s) from this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate asset(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subtopic or asset id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/chats/{id}": {
+            "patch": {
+                "description": "deassociates the chat(s) from this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate chat(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subtopic or flashcard id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/flashcards/{id}": {
+            "patch": {
+                "description": "deassociates the chat(s) from this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate chat(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "subtopic or flashcard id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/subtopics/{id}": {
+            "patch": {
+                "description": "deassociates the subtopic(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate subtopic(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subtopic or subtopic(s) id not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/delete/{id}": {
+            "delete": {
+                "description": "Deletes the given subtopic including assets and flashcards.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "Deletes the given subtopic [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subtopic not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/get/{id}": {
+            "get": {
+                "description": "Returns the specified subtopic details, including extra metadata",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "Get the specified subtopic [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to retrieve",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Subtopic"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/update/{id}": {
+            "patch": {
+                "description": "Updates the subtopic. Note that all attributes in the body are optional and if omitted, will not be updated",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "Updates the specified subtopic [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Subtopic details to update with. All attributes optional!",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateSubtopicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "subtopic not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/user/profile": {
             "get": {
                 "description": "Get user's profile. Includes username",
@@ -52,41 +1905,189 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/user/subjects/get": {
-            "get": {
-                "description": "Returns a list of user subjects, without any topics. Those need to be requested separately",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subjects"
-                ],
-                "summary": "Get a user's subjects",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Subject"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
+        "controller.CreateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.CreateChatRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.CreateFlashcardRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.CreateSubjectRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.CreateSubtopicRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the asset. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateChatRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateFlashcardRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateSubjectRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "controller.UpdateSubtopicRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
         "controller.UserProfileResponse": {
             "type": "object",
             "properties": {
@@ -109,20 +2110,135 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Asset": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "mediaType": {
+                    "type": "string",
+                    "example": "application/pdf"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2027-01-01T00:00:00Z"
+                }
+            }
+        },
+        "model.Chat": {
+            "type": "object",
+            "properties": {
+                "chatMessages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ChatMessage"
+                    }
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "mode": {
+                    "description": "the mode to be used for the UI",
+                    "type": "integer",
+                    "example": 0
+                },
+                "name": {
+                    "type": "string",
+                    "example": "My nice chat name"
+                },
+                "subtopicId": {
+                    "description": "The id of the subtopic it belongs to",
+                    "type": "integer",
+                    "example": 0
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:32:08Z"
+                }
+            }
+        },
+        "model.ChatMessage": {
+            "type": "object",
+            "properties": {
+                "chatId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:32:08Z"
+                },
+                "editedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:34:12Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Certianly! This..."
+                },
+                "userMessage": {
+                    "type": "string",
+                    "example": "Explain why ..."
+                }
+            }
+        },
+        "model.Flashcard": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.Subject": {
             "type": "object"
+        },
+        "model.Subtopic": {
+            "type": "object"
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "Asset CRUD (assets are any type of file the user can upload) [WIP]",
+            "name": "assets"
+        },
+        {
+            "description": "Chat CRUD, chat message CRUD [WIP]",
+            "name": "chats"
+        },
+        {
+            "description": "Flashcard CRUD [WIP]",
+            "name": "flashcards"
+        },
+        {
+            "description": "Subjects CRUD, association of subtopics and assets [WIP]",
+            "name": "subjects"
+        },
+        {
+            "description": "Subtopics CRUD, association of other subtopics, chats and assets [WIP]",
+            "name": "subtopics"
+        },
+        {
+            "description": "User data retrieval and deletion",
+            "name": "user"
+        }
+    ]
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/api/v1",
-	Schemes:          []string{},
-	Title:            "janishutz Store",
-	Description:      "This is the backend for store.janishutz.com.",
+	Version:          "0.1.0",
+	Host:             "",
+	BasePath:         "/",
+	Schemes:          []string{"http", "https"},
+	Title:            "StudyPhoenix backend",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts`.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) need these substituted in the URL. That's something the SDK won't do for you\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
