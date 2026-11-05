@@ -2111,13 +2111,80 @@ const docTemplate = `{
             }
         },
         "model.Asset": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "mediaType": {
+                    "type": "string",
+                    "example": "application/pdf"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2027-01-01T00:00:00Z"
+                }
+            }
         },
         "model.Chat": {
             "type": "object",
             "properties": {
+                "chatMessages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ChatMessage"
+                    }
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
                 "mode": {
-                    "type": "string"
+                    "description": "the mode to be used for the UI",
+                    "type": "integer",
+                    "example": 0
+                },
+                "name": {
+                    "type": "string",
+                    "example": "My nice chat name"
+                },
+                "subtopicId": {
+                    "description": "The id of the subtopic it belongs to",
+                    "type": "integer",
+                    "example": 0
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:32:08Z"
+                }
+            }
+        },
+        "model.ChatMessage": {
+            "type": "object",
+            "properties": {
+                "chatId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:32:08Z"
+                },
+                "editedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:34:12Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Certianly! This..."
+                },
+                "userMessage": {
+                    "type": "string",
+                    "example": "Explain why ..."
                 }
             }
         },

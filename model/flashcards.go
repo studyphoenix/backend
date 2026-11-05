@@ -1,3 +1,5 @@
 package model
 
-type Flashcard struct{}
+type Flashcard struct{
+	ID uint `json:"id" gorm:"primaryKey"`
+}
