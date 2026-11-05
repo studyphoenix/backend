@@ -48,7 +48,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -95,7 +98,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -185,7 +191,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -232,7 +241,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -516,7 +528,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -525,7 +540,7 @@ const docTemplate = `{
                         "description": "OK"
                     },
                     "400": {
-                        "description": "subject or id not found"
+                        "description": "subtopic or asset id not found"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -552,7 +567,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "The id of the chat to update",
+                        "description": "The id of the subtopic to update",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -563,7 +578,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -572,7 +590,57 @@ const docTemplate = `{
                         "description": "OK"
                     },
                     "400": {
-                        "description": "chat or id not found"
+                        "description": "subtopic or chat id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/associate/flashcards/{id}": {
+            "patch": {
+                "description": "associates the flashcard(s) to this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "associate flashcard(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to add",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subtopic or flashcard id not found"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -610,7 +678,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -625,7 +696,7 @@ const docTemplate = `{
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "subject or id not found"
+                        "description": "subtopic or subtopic(s) id not found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -700,7 +771,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -709,7 +783,7 @@ const docTemplate = `{
                         "description": "OK"
                     },
                     "400": {
-                        "description": "subject or id not found"
+                        "description": "subtopic or asset id not found"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -736,7 +810,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "The id of the chat to update",
+                        "description": "The id of the subtopic to update",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -747,7 +821,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -756,7 +833,57 @@ const docTemplate = `{
                         "description": "OK"
                     },
                     "400": {
-                        "description": "chat or id not found"
+                        "description": "subtopic or flashcard id not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subtopics/deassociate/flashcards/{id}": {
+            "patch": {
+                "description": "deassociates the chat(s) from this subtopic",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtopics"
+                ],
+                "summary": "deassociate chat(s) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the subtopic to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The associations to remove",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "subtopic or flashcard id not found"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -794,7 +921,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AssociationRequest"
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     }
                 ],
@@ -809,7 +939,7 @@ const docTemplate = `{
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "subject or id not found"
+                        "description": "subtopic or subtopic(s) id not found"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -980,9 +1110,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.AssociationRequest": {
-            "type": "object"
-        },
         "controller.CreateSubjectRequest": {
             "type": "object",
             "properties": {
