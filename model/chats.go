@@ -1,3 +1,7 @@
 package model
 
-type Chat struct{}
+type Chat struct {
+	Mode string
+}
+
+type ChatMessage struct{}

@@ -15,8 +15,24 @@ func AddRoutes(c *Controller, r *gin.Engine) {
 	users.GET("profile", c.GetUserProfile)
 
 	// Subjects
-	subjects := users.Group("subjects")
+	subjects := r.Group("/subjects")
 	subjects.GET("search", c.QuerySubjects)
+
+	// Subtopics
+	subtopics := r.Group("/subtopics")
+	subtopics.GET("get/:id", c.GetSubtopic)
+
+	// Flashcards
+	flashcards := r.Group("/flashcards")
+	flashcards.GET("search", c.QueryFlashcards)
+
+	// Chats
+	chats := r.Group("/chats")
+	chats.GET("get/:id", c.GetChat)
+
+	// Flashcards
+	assets := r.Group("/assets")
+	assets.GET("get/:id", c.QueryFlashcards)
 
 	// ── Healthcheck ──────────────────────────────────────────────────
 	r.GET("/healthz", func(c *gin.Context) { c.JSON(200, gin.H{"status": true}) })

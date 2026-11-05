@@ -102,6 +102,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/assets/download/{id}": {
+            "get": {
+                "description": "Download the file of asset with id ` + "`" + `{id}` + "`" + `",
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Download the file of a given asset [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to download",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The requested file is in the body",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/assets/get/{id}": {
             "get": {
                 "description": "Returns the specified asset details, including extra metadata",
@@ -207,6 +245,13 @@ const docTemplate = `{
                 ],
                 "summary": "Upload file to a given asset [WIP]",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the asset to upload it to",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
                     {
                         "type": "file",
                         "description": "The file to upload here",
@@ -2069,7 +2114,12 @@ const docTemplate = `{
             "type": "object"
         },
         "model.Chat": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "mode": {
+                    "type": "string"
+                }
+            }
         },
         "model.Flashcard": {
             "type": "object"
