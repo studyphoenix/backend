@@ -54,6 +54,7 @@ func main() {
 	r := gin.Default()
 
 	conf := config.Load()
+	prod := os.Getenv("PROD") == "true"
 
 	// Load templates
 	r.LoadHTMLGlob("templates/*.tmpl")
@@ -87,13 +88,13 @@ func main() {
 	// ┌                                               ┐
 	// │               Routes, DB, Login               │
 	// └                                               ┘
-	db := model.Init()
+	db := model.Init(prod)
 	oidclogin.ConfigureFull(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, func(userid, name, email string, c *gin.Context) {
 		uid := db.UpdateOrCreateUser(userid, name, email)
 		ses := sessions.Default(c)
 		ses.Set("userid", uid)
 		ses.Set("username", name)
-	}, true, nil, os.Getenv("PROD") == "true")
+	}, true, nil, prod)
 
 	// Routes
 	c := controller.NewController(db)
