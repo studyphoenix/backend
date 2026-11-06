@@ -18,5 +18,6 @@ type ChatMessage struct {
 	EditedAt     time.Time `json:"updatedAt" example:"2026-12-31T08:34:12Z"`
 	UserMessage  string    `json:"userMessage" example:"Explain why ..."`
 	ModelMessage string    `json:"modelMessage" example:"Certianly! This..."`
+	Summary      string    `json:"summary" example:"summary for this message pair"`
 	// TODO: What other fields?
 }

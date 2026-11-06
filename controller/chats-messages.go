@@ -7,6 +7,7 @@ import (
 type AddChatMessageRequest struct {
 	UserMessage  string `example:"User's message" json:"name" maxLength:"20000" minLength:"3" validate:"required,min=3,max=20000"`
 	ModelMessage string `example:"Model's message" json:"icon" validate:"required"`
+	Summary      string `example:"test messages" json:"summary" validate:"required,min=0,max=250" maxLength:"250" minLength:"0"`
 }
 
 // Request handler to create a new subject
@@ -29,6 +30,7 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 type UpdateChatMessageRequest struct {
 	UserMessage  string `example:"User's message" json:"name" maxLength:"20000" minLength:"3" validate:"optional,min=3,max=20000"`
 	ModelMessage string `example:"Model's message" json:"icon" validate:"optional"`
+	Summary      string `example:"test messages" json:"summary" validate:"optional,min=0,max=250" maxLength:"250" minLength:"0"`
 }
 
 // Request handler to update a chat message
