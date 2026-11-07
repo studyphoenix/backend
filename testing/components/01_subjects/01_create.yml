@@ -11,7 +11,8 @@ http:
     type: json
     data: |
       {
-        '': ''
+        "icon": "fa-gear",
+        "name": "test"
       }
 
 runtime:

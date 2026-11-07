@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Update a subject (name too long)
+  seq: 8
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/subjects/update/0"
+  body:
+    type: json
+    data: |
+      {
+        "name": "toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"

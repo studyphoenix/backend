@@ -12,6 +12,8 @@ type Chat struct {
 	Subtopics    []Subtopic    `json:"-" gorm:"many2many:subtopics_chats;"`
 }
 
+// FIXME: May have to do many2many manually to be able to use constraints properly for consistency
+
 type ChatMessage struct {
 	ID           uint      `json:"id" gorm:"primaryKey" example:"10"`
 	ChatID       uint      `json:"chatId" example:"1"`

@@ -8,6 +8,8 @@ This tests the components individually, without assignments
 ## E2E
 This executes end to end tests, including associations and global deletes (i.e. checks user deletion, etc)
 
+TODO: Access Control testing!!
+
 ## CI
 Testing via CI will be added at some point in the near future
 

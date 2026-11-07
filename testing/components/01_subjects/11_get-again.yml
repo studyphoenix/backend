@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Check if subject was deleted
+  seq: 11
+
+http:
+  method: GET
+  url: "{{baseUrl}}/subjects/get/0"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"

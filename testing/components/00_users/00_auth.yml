@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Test
+  name: Authentication
   seq: 1
 
 http:
