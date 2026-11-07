@@ -261,8 +261,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "201": {
+                        "description": "Created"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -2066,13 +2066,6 @@ const docTemplate = `{
                     "minLength": 0,
                     "example": "fa-gear"
                 },
-                "mediaType": {
-                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
-                    "type": "string",
-                    "maxLength": 40,
-                    "minLength": 3,
-                    "example": "application/pdf"
-                },
                 "name": {
                     "type": "string",
                     "maxLength": 250,
@@ -2213,6 +2206,7 @@ const docTemplate = `{
                 "icon",
                 "id",
                 "mediaType",
+                "name",
                 "updatedAt"
             ],
             "properties": {
@@ -2226,6 +2220,10 @@ const docTemplate = `{
                 "mediaType": {
                     "type": "string",
                     "example": "application/pdf"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "my asset name"
                 },
                 "updatedAt": {
                     "type": "string",

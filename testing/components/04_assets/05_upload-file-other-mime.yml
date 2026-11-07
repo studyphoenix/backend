@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Upload an invalid file
+  seq: 5
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/assets/upload/0"
+  body:
+    type: multipart-form
+    data:
+      - name: file
+        type: file
+        value: ./invalid-asset.xml
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"

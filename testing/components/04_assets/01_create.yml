@@ -12,7 +12,8 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "äéë"
+        "mediaType": "application/json"
+        "name": "test"
       }
 
 runtime:
