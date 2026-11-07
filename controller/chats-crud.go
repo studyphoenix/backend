@@ -5,8 +5,8 @@ import (
 )
 
 type CreateChatRequest struct {
-	Name string `example:"Analysis Explanation" json:"name" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
-	Mode uint `example:"Analysis Explanation" json:"mode" enums:"1,2,3" validate:"required,min=1,max=3"`
+	Name string `example:"Analysis Explanation" json:"name" maxLength:"100" minLength:"3" validate:"required,min=3,max=100,printascii"`
+	Mode uint `example:"1" json:"mode" enums:"1,2,3" validate:"required,min=1,max=3"`
 }
 
 // Request handler to create a new chat
@@ -42,8 +42,8 @@ func (m *Controller) GetChat(c *gin.Context) {
 }
 
 type UpdateChatRequest struct {
-	Name string `example:"Analysis Explanation" json:"name" maxLength:"250" minLength:"3" validate:"optional,min=3,max=250,printascii"`
-	Mode uint `example:"Analysis Explanation" json:"mode" enums:"1,2,3" validate:"optional,min=1,max=3"`
+	Name string `example:"Analysis Explanation" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100,printascii"`
+	Mode uint `example:"2" json:"mode" enums:"1,2,3" validate:"optional,min=1,max=3"`
 }
 
 // Request handler to update a chat

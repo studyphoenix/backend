@@ -5,8 +5,8 @@ import (
 )
 
 type CreateSubtopicRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"required,printascii,min=3,max=250"`
-	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"required,printascii,min=0,max=250"` // The Icon of the subject. Must be an icon that can be rendered in the browser
+	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,printascii,min=3,max=100"`
+	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 }
 
 // Request handler to create a new subtopic
@@ -42,8 +42,8 @@ func (m *Controller) GetSubtopic(c *gin.Context) {
 }
 
 type UpdateSubtopicRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"optional,printascii,min=3,max=250"`
-	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"optional,printascii,min=0,max=250"` // The Icon of the subject. Must be an icon that can be rendered in the browser
+	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"optional,printascii,min=3,max=100"`
+	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 }
 
 // Request handler to update a subtopic
@@ -54,7 +54,7 @@ type UpdateSubtopicRequest struct {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
 // @Param 		payload body UpdateSubtopicRequest true "Subtopic details to update with. All attributes optional!"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subtopic not found"
@@ -71,7 +71,7 @@ func (m *Controller) UpdateSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to delete"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subtopic not found"
 // @Failure		500	{object}		httputil.HTTPError

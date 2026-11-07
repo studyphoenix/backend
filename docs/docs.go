@@ -1941,22 +1941,26 @@ const docTemplate = `{
         "controller.CreateChatRequest": {
             "type": "object",
             "required": [
-                "icon",
+                "mode",
                 "name"
             ],
             "properties": {
-                "icon": {
-                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "fa-gear"
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 1
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Explanation"
                 }
             }
         },
@@ -1970,13 +1974,13 @@ const docTemplate = `{
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -1992,13 +1996,13 @@ const docTemplate = `{
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2012,15 +2016,15 @@ const docTemplate = `{
             ],
             "properties": {
                 "icon": {
-                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2054,18 +2058,22 @@ const docTemplate = `{
         "controller.UpdateChatRequest": {
             "type": "object",
             "properties": {
-                "icon": {
-                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "fa-gear"
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 2
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Explanation"
                 }
             }
         },
@@ -2075,13 +2083,13 @@ const docTemplate = `{
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2093,13 +2101,13 @@ const docTemplate = `{
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2109,15 +2117,15 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "icon": {
-                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2185,7 +2193,6 @@ const docTemplate = `{
                 "id",
                 "mode",
                 "name",
-                "subtopicId",
                 "updatedAt"
             ],
             "properties": {
@@ -2207,16 +2214,11 @@ const docTemplate = `{
                         2,
                         3
                     ],
-                    "example": 0
+                    "example": 1
                 },
                 "name": {
                     "type": "string",
                     "example": "My nice chat name"
-                },
-                "subtopicId": {
-                    "description": "The id of the subtopic it belongs to",
-                    "type": "integer",
-                    "example": 0
                 },
                 "updatedAt": {
                     "type": "string",
@@ -2228,23 +2230,16 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "chatId",
-                "createdAt",
                 "id",
                 "modelMessage",
+                "summary",
+                "updatedAt",
                 "userMessage"
             ],
             "properties": {
                 "chatId": {
                     "type": "integer",
                     "example": 1
-                },
-                "createdAt": {
-                    "type": "string",
-                    "example": "2026-12-31T08:32:08Z"
-                },
-                "editedAt": {
-                    "type": "string",
-                    "example": "2026-12-31T08:34:12Z"
                 },
                 "id": {
                     "type": "integer",
@@ -2253,6 +2248,14 @@ const docTemplate = `{
                 "modelMessage": {
                     "type": "string",
                     "example": "Certianly! This..."
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "summary for this message pair"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:34:12Z"
                 },
                 "userMessage": {
                     "type": "string",
