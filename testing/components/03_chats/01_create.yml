@@ -5,7 +5,7 @@ info:
   seq: 1
 
 http:
-  method: POST
+  method: PUT
   url: "{{baseUrl}}/chats/create"
   body:
     type: json

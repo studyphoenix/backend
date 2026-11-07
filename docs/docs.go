@@ -422,7 +422,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                            "$ref": "#/definitions/controller.AddChatMessageRequest"
                         }
                     }
                 ],
@@ -507,7 +507,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                            "$ref": "#/definitions/controller.UpdateChatMessageRequest"
                         }
                     }
                 ],
@@ -1768,8 +1768,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1856,8 +1856,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1908,6 +1908,32 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.AddChatMessageRequest": {
+            "type": "object",
+            "required": [
+                "modelMessage",
+                "summary",
+                "userMessage"
+            ],
+            "properties": {
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
+                }
+            }
+        },
         "controller.CreateAssetRequest": {
             "type": "object",
             "required": [
@@ -2052,6 +2078,27 @@ const docTemplate = `{
                     "maxLength": 250,
                     "minLength": 3,
                     "example": "Analysis Script"
+                }
+            }
+        },
+        "controller.UpdateChatMessageRequest": {
+            "type": "object",
+            "properties": {
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
                 }
             }
         },

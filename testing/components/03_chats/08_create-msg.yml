@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create a message
+  seq: 8
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/chats/messages/add/0"
+  body:
+    type: json
+    data: |
+      {
+        "modelMessage": "Certainly! Testing this",
+        "userMessage": "User's question or message goes here"
+        "summary": "test message"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"

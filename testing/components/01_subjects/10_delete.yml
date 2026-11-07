@@ -5,7 +5,7 @@ info:
   seq: 10
 
 http:
-  method: GET
+  method: DELETE
   url: "{{baseUrl}}/subjects/delete/0"
 
 runtime:

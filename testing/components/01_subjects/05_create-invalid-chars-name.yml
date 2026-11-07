@@ -5,7 +5,7 @@ info:
   seq: 5
 
 http:
-  method: POST
+  method: PUT
   url: "{{baseUrl}}/subjects/create"
   body:
     type: json

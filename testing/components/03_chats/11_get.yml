@@ -22,6 +22,7 @@ runtime:
     - expression: res.body.id
       operator: eq
       value: "0"
+    # FIXME: This is obviously incorrect. Maybe tests for length?
     - expression: res.body.chatMessages
       operator: eq
       value: "[]"
