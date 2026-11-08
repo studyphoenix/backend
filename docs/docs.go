@@ -583,6 +583,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/flashcards/complete/{id}": {
+            "patch": {
+                "description": "Increments the completion count of the specified flashcard by one. Request body is ignored",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Mark flashcard as completed (again) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to mark",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "flashcard not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/flashcards/create": {
             "put": {
                 "description": "Creates a new flashcard linked to the current user",
@@ -2322,12 +2360,16 @@ const docTemplate = `{
         "model.Flashcard": {
             "type": "object",
             "required": [
+                "completionCount",
                 "content",
                 "id",
                 "name",
                 "updatedAt"
             ],
             "properties": {
+                "completionCount": {
+                    "type": "integer"
+                },
                 "content": {
                     "type": "string"
                 },
