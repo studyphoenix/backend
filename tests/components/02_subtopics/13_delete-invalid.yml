@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Delete a subtopic that doesn't exist
+  seq: 13
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/subjects/delete/99"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"

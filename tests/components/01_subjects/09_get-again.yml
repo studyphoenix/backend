@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Check the updated subject is still correct
+  seq: 9
+
+http:
+  method: GET
+  url: "{{baseUrl}}/subjects/get/0"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.icon
+      operator: eq
+      value: "fa-gear"
+    - expression: res.body.name
+      operator: eq
+      value: "updated-test"
+    - expression: res.body.id
+      operator: eq
+      value: "0"

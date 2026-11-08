@@ -258,8 +258,8 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "201": {
+                        "description": "Created"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -419,7 +419,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                            "$ref": "#/definitions/controller.AddChatMessageRequest"
                         }
                     }
                 ],
@@ -504,7 +504,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                            "$ref": "#/definitions/controller.UpdateChatMessageRequest"
                         }
                     }
                 ],
@@ -1765,8 +1765,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1853,8 +1853,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1905,6 +1905,32 @@
         }
     },
     "definitions": {
+        "controller.AddChatMessageRequest": {
+            "type": "object",
+            "required": [
+                "modelMessage",
+                "summary",
+                "userMessage"
+            ],
+            "properties": {
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
+                }
+            }
+        },
         "controller.CreateAssetRequest": {
             "type": "object",
             "required": [
@@ -1938,42 +1964,52 @@
         "controller.CreateChatRequest": {
             "type": "object",
             "required": [
-                "icon",
+                "mode",
                 "name"
             ],
             "properties": {
-                "icon": {
-                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "fa-gear"
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 1
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Explanation"
                 }
             }
         },
         "controller.CreateFlashcardRequest": {
             "type": "object",
             "required": [
+                "content",
                 "icon",
                 "name"
             ],
             "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -1989,13 +2025,13 @@
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2009,15 +2045,15 @@
             ],
             "properties": {
                 "icon": {
-                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2033,13 +2069,6 @@
                     "minLength": 0,
                     "example": "fa-gear"
                 },
-                "mediaType": {
-                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
-                    "type": "string",
-                    "maxLength": 40,
-                    "minLength": 3,
-                    "example": "application/pdf"
-                },
                 "name": {
                     "type": "string",
                     "maxLength": 250,
@@ -2048,39 +2077,69 @@
                 }
             }
         },
-        "controller.UpdateChatRequest": {
+        "controller.UpdateChatMessageRequest": {
             "type": "object",
             "properties": {
-                "icon": {
-                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 0,
-                    "example": "fa-gear"
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
+                }
+            }
+        },
+        "controller.UpdateChatRequest": {
+            "type": "object",
+            "properties": {
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 2
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Explanation"
                 }
             }
         },
         "controller.UpdateFlashcardRequest": {
             "type": "object",
             "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "ODEs"
                 }
             }
         },
@@ -2090,13 +2149,13 @@
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2106,15 +2165,15 @@
             "type": "object",
             "properties": {
                 "icon": {
-                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2155,6 +2214,7 @@
                 "icon",
                 "id",
                 "mediaType",
+                "name",
                 "updatedAt"
             ],
             "properties": {
@@ -2169,6 +2229,10 @@
                     "type": "string",
                     "example": "application/pdf"
                 },
+                "name": {
+                    "type": "string",
+                    "example": "my asset name"
+                },
                 "updatedAt": {
                     "type": "string",
                     "example": "2027-01-01T00:00:00Z"
@@ -2182,7 +2246,6 @@
                 "id",
                 "mode",
                 "name",
-                "subtopicId",
                 "updatedAt"
             ],
             "properties": {
@@ -2204,16 +2267,11 @@
                         2,
                         3
                     ],
-                    "example": 0
+                    "example": 1
                 },
                 "name": {
                     "type": "string",
                     "example": "My nice chat name"
-                },
-                "subtopicId": {
-                    "description": "The id of the subtopic it belongs to",
-                    "type": "integer",
-                    "example": 0
                 },
                 "updatedAt": {
                     "type": "string",
@@ -2225,23 +2283,16 @@
             "type": "object",
             "required": [
                 "chatId",
-                "createdAt",
                 "id",
                 "modelMessage",
+                "summary",
+                "updatedAt",
                 "userMessage"
             ],
             "properties": {
                 "chatId": {
                     "type": "integer",
                     "example": 1
-                },
-                "createdAt": {
-                    "type": "string",
-                    "example": "2026-12-31T08:32:08Z"
-                },
-                "editedAt": {
-                    "type": "string",
-                    "example": "2026-12-31T08:34:12Z"
                 },
                 "id": {
                     "type": "integer",
@@ -2250,6 +2301,14 @@
                 "modelMessage": {
                     "type": "string",
                     "example": "Certianly! This..."
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "summary for this message pair"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:34:12Z"
                 },
                 "userMessage": {
                     "type": "string",

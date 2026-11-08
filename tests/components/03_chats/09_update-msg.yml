@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Update a message
+  seq: 9
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/chats/messages/update/0"
+  body:
+    type: json
+    data: |
+      {
+        "summary": "test message updated"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"

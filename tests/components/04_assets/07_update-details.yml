@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create asset (too long filename)
+  seq: 7
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/assets/update/0"
+  body:
+    type: json
+    data: |
+      {
+        "name": "updated"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"

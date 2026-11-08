@@ -5,9 +5,10 @@ import (
 )
 
 type CreateFlashcardRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
+	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,min=3,max=100,printascii"`
 	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,printascii"`
+	Icon    string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,min=3,max=100,printascii"`
+	Content string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"required,min=0"`
 }
 
 // Request handler to create a new flashcard
@@ -43,9 +44,10 @@ func (m *Controller) GetFlashcard(c *gin.Context) {
 }
 
 type UpdateFlashcardRequest struct {
-	Name *string `example:"Analysis" json:"name" maxLength:"250" minLength:"3" validate:"optional,min=3,max=250"`
+	Name *string `example:"ODEs" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100"`
 	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon *string `example:"fa-gear" json:"icon" maxLength:"250" minLength:"0" validate:"optional,ascii,min=0,max=250"`
+	Icon    *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,ascii,min=0,max=100"`
+	Content *string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"optional,min=0"`
 }
 
 // Request handler to update a flashcard
@@ -63,6 +65,22 @@ type UpdateFlashcardRequest struct {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/update/{id} [patch]
 func (m *Controller) UpdateFlashcard(c *gin.Context) {
+	c.JSON(200, nil)
+}
+
+// Request handler to mark a flashcard as completed (again)
+//
+// @Summary 	Mark flashcard as completed (again) [WIP]
+// @Description	Increments the completion count of the specified flashcard by one. Request body is ignored
+// @Tags		flashcards
+// @Produce		json
+// @Param 		id path string true "The id of the flashcard to mark"
+// @Success		204	{object}		nil
+// @Failure		401	{object}		nil
+// @Failure 	404 {object} 		nil "flashcard not found"
+// @Failure		500	{object}		httputil.HTTPError
+// @Router		/flashcards/complete/{id} [patch]
+func (m *Controller) CompleteFlashcard(c *gin.Context) {
 	c.JSON(200, nil)
 }
 

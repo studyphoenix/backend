@@ -12,11 +12,14 @@ type Chat struct {
 	Subtopics    []Subtopic    `json:"-" gorm:"many2many:subtopics_chats;"`
 }
 
+// FIXME: May have to do many2many manually to be able to use constraints properly for consistency
+
 type ChatMessage struct {
 	ID           uint      `json:"id" gorm:"primaryKey" example:"10"`
 	ChatID       uint      `json:"chatId" example:"1"`
 	EditedAt     time.Time `json:"updatedAt" example:"2026-12-31T08:34:12Z"`
 	UserMessage  string    `json:"userMessage" example:"Explain why ..."`
 	ModelMessage string    `json:"modelMessage" example:"Certianly! This..."`
+	Summary      string    `json:"summary" example:"summary for this message pair"`
 	// TODO: What other fields?
 }

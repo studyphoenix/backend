@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Check the created chat is correct
+  seq: 5
+
+http:
+  method: GET
+  url: "{{baseUrl}}/chats/get/0"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.mode
+      operator: eq
+      value: "1"
+    - expression: res.body.name
+      operator: eq
+      value: "test"
+    - expression: res.body.id
+      operator: eq
+      value: "0"
+    # FIXME: This is obviously incorrect. Maybe tests for length?
+    - expression: res.body.chatMessages
+      operator: eq
+      value: "[]"

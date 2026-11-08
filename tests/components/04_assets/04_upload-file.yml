@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Upload a valid file
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/assets/upload/0"
+  body:
+    type: multipart-form
+    data:
+      - name: file
+        type: file
+        value: ./ok-asset.json
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"

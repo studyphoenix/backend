@@ -261,8 +261,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "201": {
+                        "description": "Created"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -422,7 +422,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                            "$ref": "#/definitions/controller.AddChatMessageRequest"
                         }
                     }
                 ],
@@ -507,7 +507,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                            "$ref": "#/definitions/controller.UpdateChatMessageRequest"
                         }
                     }
                 ],
@@ -1768,8 +1768,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1856,8 +1856,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1908,6 +1908,32 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.AddChatMessageRequest": {
+            "type": "object",
+            "required": [
+                "modelMessage",
+                "summary",
+                "userMessage"
+            ],
+            "properties": {
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
+                }
+            }
+        },
         "controller.CreateAssetRequest": {
             "type": "object",
             "required": [
@@ -1941,42 +1967,52 @@ const docTemplate = `{
         "controller.CreateChatRequest": {
             "type": "object",
             "required": [
-                "icon",
+                "mode",
                 "name"
             ],
             "properties": {
-                "icon": {
-                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "fa-gear"
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 1
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Explanation"
                 }
             }
         },
         "controller.CreateFlashcardRequest": {
             "type": "object",
             "required": [
+                "content",
                 "icon",
                 "name"
             ],
             "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -1992,13 +2028,13 @@ const docTemplate = `{
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2012,15 +2048,15 @@ const docTemplate = `{
             ],
             "properties": {
                 "icon": {
-                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2036,13 +2072,6 @@ const docTemplate = `{
                     "minLength": 0,
                     "example": "fa-gear"
                 },
-                "mediaType": {
-                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
-                    "type": "string",
-                    "maxLength": 40,
-                    "minLength": 3,
-                    "example": "application/pdf"
-                },
                 "name": {
                     "type": "string",
                     "maxLength": 250,
@@ -2051,39 +2080,69 @@ const docTemplate = `{
                 }
             }
         },
-        "controller.UpdateChatRequest": {
+        "controller.UpdateChatMessageRequest": {
             "type": "object",
             "properties": {
-                "icon": {
-                    "description": "The Icon of the chat. Must be an icon that can be rendered in the browser",
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
                     "type": "string",
                     "maxLength": 250,
                     "minLength": 0,
-                    "example": "fa-gear"
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
+                }
+            }
+        },
+        "controller.UpdateChatRequest": {
+            "type": "object",
+            "properties": {
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 2
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "Analysis Explanation"
                 }
             }
         },
         "controller.UpdateFlashcardRequest": {
             "type": "object",
             "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "ODEs"
                 }
             }
         },
@@ -2093,13 +2152,13 @@ const docTemplate = `{
                 "icon": {
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2109,15 +2168,15 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "icon": {
-                    "description": "The Icon of the subtopic. Must be an icon that can be rendered in the browser",
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 0,
                     "example": "fa-gear"
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
                 }
@@ -2158,6 +2217,7 @@ const docTemplate = `{
                 "icon",
                 "id",
                 "mediaType",
+                "name",
                 "updatedAt"
             ],
             "properties": {
@@ -2172,6 +2232,10 @@ const docTemplate = `{
                     "type": "string",
                     "example": "application/pdf"
                 },
+                "name": {
+                    "type": "string",
+                    "example": "my asset name"
+                },
                 "updatedAt": {
                     "type": "string",
                     "example": "2027-01-01T00:00:00Z"
@@ -2185,7 +2249,6 @@ const docTemplate = `{
                 "id",
                 "mode",
                 "name",
-                "subtopicId",
                 "updatedAt"
             ],
             "properties": {
@@ -2207,16 +2270,11 @@ const docTemplate = `{
                         2,
                         3
                     ],
-                    "example": 0
+                    "example": 1
                 },
                 "name": {
                     "type": "string",
                     "example": "My nice chat name"
-                },
-                "subtopicId": {
-                    "description": "The id of the subtopic it belongs to",
-                    "type": "integer",
-                    "example": 0
                 },
                 "updatedAt": {
                     "type": "string",
@@ -2228,23 +2286,16 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "chatId",
-                "createdAt",
                 "id",
                 "modelMessage",
+                "summary",
+                "updatedAt",
                 "userMessage"
             ],
             "properties": {
                 "chatId": {
                     "type": "integer",
                     "example": 1
-                },
-                "createdAt": {
-                    "type": "string",
-                    "example": "2026-12-31T08:32:08Z"
-                },
-                "editedAt": {
-                    "type": "string",
-                    "example": "2026-12-31T08:34:12Z"
                 },
                 "id": {
                     "type": "integer",
@@ -2253,6 +2304,14 @@ const docTemplate = `{
                 "modelMessage": {
                     "type": "string",
                     "example": "Certianly! This..."
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "summary for this message pair"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2026-12-31T08:34:12Z"
                 },
                 "userMessage": {
                     "type": "string",

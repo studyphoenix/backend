@@ -71,7 +71,10 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 	r.Use(util.DefaultHeaders)
-	r.Use(util.RateLimiter())
+
+	if !conf.TestingMode {
+		r.Use(util.RateLimiter())
+	}
 	// r.SetTrustedProxies(conf.Urls.TrustedProxies)
 
 	// ┌                                               ┐

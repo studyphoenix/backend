@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create asset (too long filename)
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/assets/create"
+  body:
+    type: json
+    data: |
+      {
+        "icon": "fa-gear",
+        "mediaType": "not a media type"
+        "name": "test"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"

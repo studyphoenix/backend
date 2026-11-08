@@ -11,7 +11,7 @@ import "github.com/gin-gonic/gin"
 // @Accept		multipart/form-data
 // @Param 		id path string true "The id of the asset to upload it to"
 // @Param 		payload formData file true "The file to upload here"
-// @Success		204	{object}		nil
+// @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
