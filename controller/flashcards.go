@@ -68,6 +68,22 @@ func (m *Controller) UpdateFlashcard(c *gin.Context) {
 	c.JSON(200, nil)
 }
 
+// Request handler to mark a flashcard as completed (again)
+//
+// @Summary 	Mark flashcard as completed (again) [WIP]
+// @Description	Increments the completion count of the specified flashcard by one. Request body is ignored
+// @Tags		flashcards
+// @Produce		json
+// @Param 		id path string true "The id of the flashcard to mark"
+// @Success		204	{object}		nil
+// @Failure		401	{object}		nil
+// @Failure 	404 {object} 		nil "flashcard not found"
+// @Failure		500	{object}		httputil.HTTPError
+// @Router		/flashcards/complete/{id} [patch]
+func (m *Controller) CompleteFlashcard(c *gin.Context) {
+	c.JSON(200, nil)
+}
+
 // Request handler to delete a flashcard
 //
 // @Summary 	Deletes the given flashcard [WIP]
