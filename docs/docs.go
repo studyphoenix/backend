@@ -1993,10 +1993,16 @@ const docTemplate = `{
         "controller.CreateFlashcardRequest": {
             "type": "object",
             "required": [
+                "content",
                 "icon",
                 "name"
             ],
             "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
@@ -2120,6 +2126,11 @@ const docTemplate = `{
         "controller.UpdateFlashcardRequest": {
             "type": "object",
             "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
                 "icon": {
                     "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
                     "type": "string",
@@ -2131,7 +2142,7 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 100,
                     "minLength": 3,
-                    "example": "Analysis"
+                    "example": "ODEs"
                 }
             }
         },

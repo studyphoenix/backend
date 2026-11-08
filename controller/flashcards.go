@@ -7,7 +7,8 @@ import (
 type CreateFlashcardRequest struct {
 	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,min=3,max=100,printascii"`
 	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,min=3,max=100,printascii"`
+	Icon    string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,min=3,max=100,printascii"`
+	Content string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"required,min=0"`
 }
 
 // Request handler to create a new flashcard
@@ -43,9 +44,10 @@ func (m *Controller) GetFlashcard(c *gin.Context) {
 }
 
 type UpdateFlashcardRequest struct {
-	Name *string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100"`
+	Name *string `example:"ODEs" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100"`
 	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,ascii,min=0,max=100"`
+	Icon    *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,ascii,min=0,max=100"`
+	Content *string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"optional,min=0"`
 }
 
 // Request handler to update a flashcard

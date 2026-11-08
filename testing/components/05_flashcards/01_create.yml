@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create a flashcard
+  seq: 1
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/flashcards/create"
+  body:
+    type: json
+    data: |
+      {
+        "icon": "fa-gear",
+        "name": "test"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
