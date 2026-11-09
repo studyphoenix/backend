@@ -36,6 +36,7 @@ func AddRoutes(c *Controller, r *gin.Engine) {
 	flashcards.GET("get/:id", c.GetFlashcard)
 	flashcards.GET("search", c.QueryFlashcards)
 	flashcards.PATCH("update/:id", c.UpdateFlashcard)
+	flashcards.PATCH("complete/:id", c.CompleteFlashcard)
 
 	// Subjects
 	subjects := r.Group("/subjects")

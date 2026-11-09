@@ -11,8 +11,10 @@ import "github.com/gin-gonic/gin"
 // @Param 		q query string false "The search query (matches name)"
 // @Param 		count query uint false "The maximum number of results to return. Defaults to 25"
 // @Param 		offset query uint false "The offset in the results list. Defaults to 0"
-// @Param 		subtopic query bool false "Whether or not the subject must have a subtopic. Defaults to false"
-// @Param 		assetCount query uint false "The minimum number of assets the subject and its subtopics need to have. Defaults to 0"
+// @Param 		minSubtopicCount query uint false "Minimum number of subtopics the subject needs to have. Defaults to 0"
+// @Param 		maxSubtopicCount query int false "Maximum number of subtopics the subject needs to have. Defaults to -1 (meaning not limited)"
+// @Param 		minAssetCount query uint false "The minimum number of assets the subject and its subtopics need to have. Defaults to 0"
+// @Param 		maxAssetCount query uint false "The maximum number of assets the subject and its subtopics need to have. Defaults to -1 (meaning not limited)"
 // @Success		200	{object}		[]model.Subject
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
