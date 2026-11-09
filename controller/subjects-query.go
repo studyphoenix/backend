@@ -9,6 +9,7 @@ import "github.com/gin-gonic/gin"
 // @Tags		subjects
 // @Produce		json
 // @Param 		q query string false "The search query (matches name)"
+// @Param 		exactMatch query bool false "When set to true (default false), name needs to match exactly for result to be returned"
 // @Param 		count query uint false "The maximum number of results to return. Defaults to 25"
 // @Param 		offset query uint false "The offset in the results list. Defaults to 0"
 // @Param 		minSubtopicCount query uint false "Minimum number of subtopics the subject needs to have. Defaults to 0"

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Retrieve subjects by name
+  seq: 10
+
+http:
+  method: GET
+  url: "{{baseUrl}}/subjects/search?q=test"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.length
+      operator: eq
+      value: "3"

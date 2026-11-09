@@ -1203,6 +1203,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "When set to true (default false), name needs to match exactly for result to be returned",
+                        "name": "exactMatch",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "The maximum number of results to return. Defaults to 25",
                         "name": "count",
