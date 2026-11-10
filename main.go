@@ -97,6 +97,7 @@ func main() {
 		ses := sessions.Default(c)
 		ses.Set("userid", uid)
 		ses.Set("username", name)
+		ses.Set("email", email)
 	}, true, nil, prod)
 
 	// Routes

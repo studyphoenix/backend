@@ -7,6 +7,7 @@ import (
 
 type UserProfileResponse struct {
 	Username string `json:"username" example:"My Nice Username"`
+	Email    string `json:"email" example:"jane.doe@example.com"`
 }
 
 // Request handler to get a user's profile
@@ -22,9 +23,10 @@ type UserProfileResponse struct {
 func (*Controller) GetUserProfile(c *gin.Context) {
 	ses := sessions.Default(c)
 	username, ok := ses.Get("username").(string)
-	if !ok {
+	email, okEmail := ses.Get("email").(string)
+	if !ok || !okEmail {
 		c.AbortWithStatus(401)
 		return
 	}
-	c.JSON(200, UserProfileResponse{Username: username})
+	c.JSON(200, UserProfileResponse{Username: username, Email: email})
 }

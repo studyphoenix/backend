@@ -5,6 +5,7 @@ type User struct {
 	Uid        string      `json:"-"` // UserID as specified by OIDC OP
 	Email      string      `json:"email"`
 	Username   string      `json:"username"`
+	Settings   Settings    `json:"-" gorm:"constraint:OnDelete:CASCADE"`
 	Subjects   []Subject   `json:"-" gorm:"constraint:OnDelete:CASCADE"`
 	Subtopics  []Subtopic  `json:"-" gorm:"constraint:OnDelete:CASCADE"`
 	Assets     []Asset     `json:"-" gorm:"constraint:OnDelete:CASCADE"`

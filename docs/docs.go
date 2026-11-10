@@ -2311,9 +2311,14 @@ const docTemplate = `{
         "controller.UserProfileResponse": {
             "type": "object",
             "required": [
+                "email",
                 "username"
             ],
             "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "jane.doe@example.com"
+                },
                 "username": {
                     "type": "string",
                     "example": "My Nice Username"
@@ -2474,7 +2479,26 @@ const docTemplate = `{
             }
         },
         "model.Settings": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "answerInBulletPoints",
+                "answerLength"
+            ],
+            "properties": {
+                "answerInBulletPoints": {
+                    "type": "boolean"
+                },
+                "answerLength": {
+                    "type": "string",
+                    "enum": [
+                        "very-short",
+                        "short",
+                        "default",
+                        "long",
+                        "very-long"
+                    ]
+                }
+            }
         },
         "model.Subject": {
             "type": "object",
