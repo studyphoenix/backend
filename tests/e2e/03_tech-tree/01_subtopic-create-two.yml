@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create a second subtopic
+  seq: 2
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/subtopics/create"
+  body:
+    type: json
+    data: |
+      {
+        "icon": "fa-gear",
+        "name": "test 2"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"

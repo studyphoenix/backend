@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Deassociate one subtopic from the subject
+  seq: 5
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/subjects/deassociate/subtopics/0"
+  body:
+    type: json
+    data: |
+      [0]
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"

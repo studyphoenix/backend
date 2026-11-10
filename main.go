@@ -104,7 +104,7 @@ func main() {
 	controller.AddRoutes(c, r)
 
 	if conf.TestingMode {
-		r.GET("/", func(c *gin.Context) {
+		r.GET("/", oidclogin.EnsureLogin(false), func(c *gin.Context) {
 			c.JSON(200, gin.H{"success": true})
 		})
 	}

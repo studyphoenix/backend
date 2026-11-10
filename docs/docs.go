@@ -583,6 +583,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/flashcards/complete/{id}": {
+            "patch": {
+                "description": "Increments the completion count of the specified flashcard by one. Request body is ignored",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "flashcards"
+                ],
+                "summary": "Mark flashcard as completed (again) [WIP]",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The id of the flashcard to mark",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "flashcard not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/flashcards/create": {
             "put": {
                 "description": "Creates a new flashcard linked to the current user",
@@ -1165,6 +1203,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "When set to true (default false), name needs to match exactly for result to be returned",
+                        "name": "exactMatch",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "The maximum number of results to return. Defaults to 25",
                         "name": "count",
@@ -1177,15 +1221,27 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "Whether or not the subject must have a subtopic. Defaults to false",
-                        "name": "subtopic",
+                        "type": "integer",
+                        "description": "Minimum number of subtopics the subject needs to have. Defaults to 0",
+                        "name": "minSubtopicCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Maximum number of subtopics the subject needs to have. Defaults to -1 (meaning not limited)",
+                        "name": "maxSubtopicCount",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "The minimum number of assets the subject and its subtopics need to have. Defaults to 0",
-                        "name": "assetCount",
+                        "name": "minAssetCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of assets the subject and its subtopics need to have. Defaults to -1 (meaning not limited)",
+                        "name": "maxAssetCount",
                         "in": "query"
                     }
                 ],
@@ -2322,12 +2378,16 @@ const docTemplate = `{
         "model.Flashcard": {
             "type": "object",
             "required": [
+                "completionCount",
                 "content",
                 "id",
                 "name",
                 "updatedAt"
             ],
             "properties": {
+                "completionCount": {
+                    "type": "integer"
+                },
                 "content": {
                     "type": "string"
                 },
