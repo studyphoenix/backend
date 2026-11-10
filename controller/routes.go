@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/TwiN/logr"
 	"github.com/gin-gonic/gin"
 	"github.com/hci-group-15/backend/docs"
 	"github.com/janishutz/oidclogin"
@@ -76,4 +77,6 @@ func AddRoutes(c *Controller, r *gin.Engine) {
 	// ── Swagger ──────────────────────────────────────────────────────
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	docs.SwaggerInfo.BasePath = "/"
+
+	logr.Info("\n\n\n==> API documentation available at http://localhost:8080/swagger/index.html <==\n\n\n")
 }

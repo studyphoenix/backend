@@ -3,7 +3,7 @@ To log in, open [this link](/auth/v2/login) in a new tab. That will log you in a
 If the frontend is not running, a "unable to connect" warning is expected and can be ignored.
 
 ## Usage of the API in the frontend
-Follow the example in `src/ts/util/api-example.ts` in the frontend repo.
+Follow the example in `src/ts/util/api-example.ts` in the [frontend repo](https://github.com/studyphoenix/frontend).
 You should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)
 
 ## Usage of these docs

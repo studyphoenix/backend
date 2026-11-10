@@ -7,4 +7,3 @@ if [[ $1 == "testing" ]]; then
 else
     go run main.go
 fi
-
