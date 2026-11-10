@@ -70,6 +70,8 @@ func AddRoutes(c *Controller, r *gin.Engine) {
 	// Users
 	users := r.Group("/user", oidclogin.EnsureLogin(false))
 	users.GET("profile", c.GetUserProfile)
+	users.GET("config", c.GetConfig)
+	users.PATCH("config", c.StoreConfig)
 
 	// ── Healthcheck ──────────────────────────────────────────────────
 	r.GET("/healthz", func(c *gin.Context) { c.JSON(200, gin.H{"status": true}) })

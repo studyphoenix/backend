@@ -1933,6 +1933,73 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/config": {
+            "get": {
+                "description": "Returns the user's stored configuration",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get the user's config [WIP]",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Settings"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update the user's config using the provided details. All of them are optional",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update the user's config [WIP]",
+                "parameters": [
+                    {
+                        "description": "Configuration Details to update",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateUserConfigRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Settings"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/user/profile": {
             "get": {
                 "description": "Get user's profile. Includes username",
@@ -2238,6 +2305,9 @@ const docTemplate = `{
                 }
             }
         },
+        "controller.UpdateUserConfigRequest": {
+            "type": "object"
+        },
         "controller.UserProfileResponse": {
             "type": "object",
             "required": [
@@ -2403,6 +2473,9 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Settings": {
+            "type": "object"
+        },
         "model.Subject": {
             "type": "object",
             "required": [
@@ -2521,7 +2594,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts` in the frontend repo.\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using e.g. URL-Encoding)\n",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts` in the [frontend repo](https://github.com/studyphoenix/frontend).\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using e.g. URL-Encoding)\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
