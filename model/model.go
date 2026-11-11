@@ -45,3 +45,11 @@ func Init(prod bool) *DBConnector {
 		DB: db,
 	}
 }
+
+func dereferenceOrDefault[T any](val *T, defaultValue T) T {
+	if val != nil {
+		return *val
+	} else {
+		return defaultValue
+	}
+}

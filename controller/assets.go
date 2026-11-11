@@ -4,19 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CreateAssetRequest struct {
-	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
-	MediaType string `json:"mediaType" example:"application/pdf" minLength:"3" maxLength:"40" validate:"required,contains=/,min=3,max=40,printascii"` // The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
-	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
-}
-
 // Request handler to create a new asset
 //
 // @Summary 	Create a new asset [WIP]
 // @Description	Creates a new asset linked to the current user
 // @Tags		assets
 // @Produce		json
-// @Param 		payload body CreateAssetRequest true "Asset details to store"
+// @Param 		payload body model.CreateAssetRequest true "Asset details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -40,11 +34,6 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 // @Router		/assets/get/{id} [get]
 func (m *Controller) GetAssetDetails(c *gin.Context) {
 	c.JSON(200, nil)
-}
-
-type UpdateAssetRequest struct {
-	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"optional,min=3,max=250,printascii"`
-	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"optional,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
 }
 
 // Request handler to update a asset
