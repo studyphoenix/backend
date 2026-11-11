@@ -17,7 +17,7 @@ func AddRoutes(c *Controller, r *gin.Engine) {
 	assets.DELETE("delete/:id", c.DeleteAsset)
 	assets.GET("get/:id", c.GetAssetDetails)
 	assets.GET("download/:id", c.DownloadAsset)
-	assets.PATCH("update/:id", c.UpdateAssetDeteails)
+	assets.PATCH("update/:id", c.UpdateAssetDetails)
 	assets.PUT("upload/:id", c.UploadAsset)
 
 	// Chats

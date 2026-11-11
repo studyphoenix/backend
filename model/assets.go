@@ -40,6 +40,7 @@ func (c *DBConnector) UpdateAsset(id uint, req UpdateAssetRequest) bool {
 
 	asset.Icon = dereferenceOrDefault(req.Icon, asset.Icon)
 	asset.Name = dereferenceOrDefault(req.Name, asset.Name)
+	asset.UpdatedAt = time.Now()
 
 	if c.DB.Save(&asset).Error != nil {
 		return false
@@ -52,6 +53,7 @@ func (c *DBConnector) CreateAsset(req CreateAssetRequest) bool {
 		Name:      req.Name,
 		MediaType: req.MediaType,
 		Icon:      req.Icon,
+		UpdatedAt: time.Now(),
 	}
 
 	if c.DB.Save(&asset).Error != nil {

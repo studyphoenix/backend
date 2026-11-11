@@ -25,7 +25,7 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 	var req model.CreateAssetRequest
 	err := c.BindJSON(&req)
 	if err != nil {
-		logr.Debug(fmt.Sprintf("Failed to parse body for update product, error: ", err))
+		logr.Debug(fmt.Sprintf("Failed to parse body to create asset, error: ", err))
 		c.Abort()
 		return
 	}
@@ -84,7 +84,7 @@ func (m *Controller) UpdateAssetDetails(c *gin.Context) {
 	var req model.UpdateAssetRequest
 	err = c.BindJSON(&req)
 	if err != nil {
-		logr.Debug(fmt.Sprintf("Failed to parse body for update product, error: ", err))
+		logr.Debug(fmt.Sprintf("Failed to parse body to update asset, error: ", err))
 		c.Abort()
 		return
 	}
