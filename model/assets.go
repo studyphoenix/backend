@@ -47,13 +47,8 @@ func (c *DBConnector) UpdateAsset(id uint, req UpdateAssetRequest) bool {
 	return true
 }
 
-func (c *DBConnector) CreateAsset(id uint, req CreateAssetRequest) bool {
-	asset, err := c.GetAsset(id)
-	if err == nil {
-		return false
-	}
-
-	asset = Asset{
+func (c *DBConnector) CreateAsset(req CreateAssetRequest) bool {
+	asset := Asset{
 		Name:      req.Name,
 		MediaType: req.MediaType,
 		Icon:      req.Icon,

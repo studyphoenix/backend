@@ -8,7 +8,7 @@ ENV PROD=true
 
 RUN apk add go go-swag
 RUN swag init --md ./apidocs
-RUN go build -o backend
+RUN go build -ldflags="-w -s" -o backend
 
 
 # Production image
