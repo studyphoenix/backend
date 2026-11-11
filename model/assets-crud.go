@@ -28,11 +28,12 @@ func (c *DBConnector) UpdateAsset(id uint, req UpdateAssetRequest) bool {
 	return true
 }
 
-func (c *DBConnector) CreateAsset(req CreateAssetRequest) bool {
+func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) bool {
 	asset := Asset{
 		Name:      req.Name,
 		MediaType: req.MediaType,
 		Icon:      req.Icon,
+		UserID:    userid,
 		UpdatedAt: time.Now(),
 	}
 
