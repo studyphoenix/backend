@@ -983,7 +983,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateSubjectRequest"
+                            "$ref": "#/definitions/model.CreateSubjectRequest"
                         }
                     }
                 ],
@@ -1335,7 +1335,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateSubjectRequest"
+                            "$ref": "#/definitions/model.UpdateSubjectRequest"
                         }
                     }
                 ],
@@ -2114,28 +2114,6 @@ const docTemplate = `{
                 }
             }
         },
-        "controller.CreateSubjectRequest": {
-            "type": "object",
-            "required": [
-                "icon",
-                "name"
-            ],
-            "properties": {
-                "icon": {
-                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis"
-                }
-            }
-        },
         "controller.CreateSubtopicRequest": {
             "type": "object",
             "required": [
@@ -2221,24 +2199,6 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "ODEs"
-                }
-            }
-        },
-        "controller.UpdateSubjectRequest": {
-            "type": "object",
-            "properties": {
-                "icon": {
-                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis"
                 }
             }
         },
@@ -2435,6 +2395,28 @@ const docTemplate = `{
                 }
             }
         },
+        "model.CreateSubjectRequest": {
+            "type": "object",
+            "required": [
+                "icon",
+                "name"
+            ],
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
         "model.Flashcard": {
             "type": "object",
             "required": [
@@ -2582,6 +2564,24 @@ const docTemplate = `{
                     "maxLength": 250,
                     "minLength": 3,
                     "example": "Analysis Script"
+                }
+            }
+        },
+        "model.UpdateSubjectRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis"
                 }
             }
         }

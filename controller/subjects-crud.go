@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
-)
+	"fmt"
+	"strconv"
 
-type CreateSubjectRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,printascii,min=3,max=100"`
-	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
-}
+	"github.com/TwiN/logr"
+	"github.com/gin-gonic/gin"
+	"github.com/hci-group-15/backend/model"
+)
 
 // Request handler to create a new subject
 //
@@ -15,13 +15,22 @@ type CreateSubjectRequest struct {
 // @Description	Creates a new subject linked to the current user
 // @Tags		subjects
 // @Produce		json
-// @Param 		payload body CreateSubjectRequest true "Subject details to store"
+// @Param 		payload body model.CreateSubjectRequest true "Subject details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/create [put]
 func (m *Controller) CreateSubject(c *gin.Context) {
+	var req model.CreateSubjectRequest
+	err := c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprintf("Failed to parse body to create subject: ", err))
+		c.Abort()
+		return
+	}
+	m.db.CreateSubject(req)
+
 	c.JSON(200, nil)
 }
 
@@ -38,12 +47,17 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/get/{id} [get]
 func (m *Controller) GetSubject(c *gin.Context) {
-	c.JSON(200, nil)
-}
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
 
-type UpdateSubjectRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"optional,printascii,min=3,max=100"`
-	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
+	subject, err := m.db.GetSubject(uint(id))
+	if err != nil {
+		c.AbortWithStatus(404)
+	}
+	c.JSON(200, subject)
 }
 
 // Request handler to update a subject
@@ -53,7 +67,7 @@ type UpdateSubjectRequest struct {
 // @Tags		subjects
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body UpdateSubjectRequest true "Subject details to update with. All attributes optional!"
+// @Param 		payload body model.UpdateSubjectRequest true "Subject details to update with. All attributes optional!"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -61,7 +75,25 @@ type UpdateSubjectRequest struct {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/update/{id} [patch]
 func (m *Controller) UpdateSubject(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.UpdateSubjectRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprintf("Failed to parse body to update subject, error: ", err))
+		c.Abort()
+		return
+	}
+
+	if m.db.UpdateSubject(uint(id), req) {
+		c.JSON(200, nil)
+	} else {
+		c.JSON(404, nil)
+	}
 }
 
 // Request handler to delete a subject
@@ -77,5 +109,15 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/delete/{id} [delete]
 func (m *Controller) DeleteSubject(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	if m.db.DeleteSubject(uint(id)) {
+		c.JSON(200, nil)
+	} else {
+		c.JSON(404, nil)
+	}
 }
