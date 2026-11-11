@@ -4,12 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AddChatMessageRequest struct {
-	UserMessage  string `example:"User's message" json:"userMessage" maxLength:"20000" minLength:"3" validate:"required,min=3,max=20000"`
-	ModelMessage string `example:"Model's message" json:"modelMessage" validate:"required"`
-	Summary      string `example:"test messages" json:"summary" validate:"required,min=0,max=250" maxLength:"250" minLength:"0"`
-}
-
 // Request handler to create a new subject
 //
 // @Summary 	Add a new chat message to the chat with id `{id}` [WIP]
@@ -17,7 +11,7 @@ type AddChatMessageRequest struct {
 // @Tags		chats
 // @Produce		json
 // @Param 		id path string true "The id of the subject to retrieve"
-// @Param 		payload body AddChatMessageRequest true "Subject details to store"
+// @Param 		payload body model.AddChatMessageRequest true "Subject details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -27,12 +21,6 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 	c.JSON(200, nil)
 }
 
-type UpdateChatMessageRequest struct {
-	UserMessage  string `example:"User's message" json:"userMessage" maxLength:"20000" minLength:"3" validate:"optional,min=3,max=20000"`
-	ModelMessage string `example:"Model's message" json:"modelMessage" validate:"optional"`
-	Summary      string `example:"test messages" json:"summary" validate:"optional,min=0,max=250" maxLength:"250" minLength:"0"`
-}
-
 // Request handler to update a chat message
 //
 // @Summary 	Updates the specified chat message [WIP]
@@ -40,7 +28,7 @@ type UpdateChatMessageRequest struct {
 // @Tags		chats
 // @Produce		json
 // @Param 		id path string true "The id of the chat message to update"
-// @Param 		payload body UpdateChatMessageRequest true "Message content to update. All attributes optional!"
+// @Param 		payload body model.UpdateChatMessageRequest true "Message content to update. All attributes optional!"
 // @Success		200	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil

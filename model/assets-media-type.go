@@ -1,4 +1,4 @@
-package controller
+package model
 
 type MediaTypeExtensionMap map[string]string
 

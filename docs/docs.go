@@ -299,7 +299,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateChatRequest"
+                            "$ref": "#/definitions/model.CreateChatRequest"
                         }
                     }
                 ],
@@ -425,7 +425,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.AddChatMessageRequest"
+                            "$ref": "#/definitions/model.AddChatMessageRequest"
                         }
                     }
                 ],
@@ -510,7 +510,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateChatMessageRequest"
+                            "$ref": "#/definitions/model.UpdateChatMessageRequest"
                         }
                     }
                 ],
@@ -560,7 +560,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateChatRequest"
+                            "$ref": "#/definitions/model.UpdateChatRequest"
                         }
                     }
                 ],
@@ -2034,58 +2034,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.AddChatMessageRequest": {
-            "type": "object",
-            "required": [
-                "modelMessage",
-                "summary",
-                "userMessage"
-            ],
-            "properties": {
-                "modelMessage": {
-                    "type": "string",
-                    "example": "Model's message"
-                },
-                "summary": {
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "test messages"
-                },
-                "userMessage": {
-                    "type": "string",
-                    "maxLength": 20000,
-                    "minLength": 3,
-                    "example": "User's message"
-                }
-            }
-        },
-        "controller.CreateChatRequest": {
-            "type": "object",
-            "required": [
-                "mode",
-                "name"
-            ],
-            "properties": {
-                "mode": {
-                    "type": "integer",
-                    "maximum": 3,
-                    "minimum": 1,
-                    "enum": [
-                        1,
-                        2,
-                        3
-                    ],
-                    "example": 1
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis Explanation"
-                }
-            }
-        },
         "controller.CreateFlashcardRequest": {
             "type": "object",
             "required": [
@@ -2133,49 +2081,6 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
-                }
-            }
-        },
-        "controller.UpdateChatMessageRequest": {
-            "type": "object",
-            "properties": {
-                "modelMessage": {
-                    "type": "string",
-                    "example": "Model's message"
-                },
-                "summary": {
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "test messages"
-                },
-                "userMessage": {
-                    "type": "string",
-                    "maxLength": 20000,
-                    "minLength": 3,
-                    "example": "User's message"
-                }
-            }
-        },
-        "controller.UpdateChatRequest": {
-            "type": "object",
-            "properties": {
-                "mode": {
-                    "type": "integer",
-                    "maximum": 3,
-                    "minimum": 1,
-                    "enum": [
-                        1,
-                        2,
-                        3
-                    ],
-                    "example": 2
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis Explanation"
                 }
             }
         },
@@ -2254,6 +2159,32 @@ const docTemplate = `{
                 "message": {
                     "type": "string",
                     "example": "Error processing data due to db issue"
+                }
+            }
+        },
+        "model.AddChatMessageRequest": {
+            "type": "object",
+            "required": [
+                "modelMessage",
+                "summary",
+                "userMessage"
+            ],
+            "properties": {
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
                 }
             }
         },
@@ -2392,6 +2323,32 @@ const docTemplate = `{
                     "maxLength": 250,
                     "minLength": 3,
                     "example": "Analysis Script"
+                }
+            }
+        },
+        "model.CreateChatRequest": {
+            "type": "object",
+            "required": [
+                "mode",
+                "name"
+            ],
+            "properties": {
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis Explanation"
                 }
             }
         },
@@ -2564,6 +2521,49 @@ const docTemplate = `{
                     "maxLength": 250,
                     "minLength": 3,
                     "example": "Analysis Script"
+                }
+            }
+        },
+        "model.UpdateChatMessageRequest": {
+            "type": "object",
+            "properties": {
+                "modelMessage": {
+                    "type": "string",
+                    "example": "Model's message"
+                },
+                "summary": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "test messages"
+                },
+                "userMessage": {
+                    "type": "string",
+                    "maxLength": 20000,
+                    "minLength": 3,
+                    "example": "User's message"
+                }
+            }
+        },
+        "model.UpdateChatRequest": {
+            "type": "object",
+            "properties": {
+                "mode": {
+                    "type": "integer",
+                    "maximum": 3,
+                    "minimum": 1,
+                    "enum": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "example": 2
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis Explanation"
                 }
             }
         },

@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hci-group-15/backend/model"
 )
 
 // Request handler to upload a new asset
@@ -41,12 +42,12 @@ func (m *Controller) UploadAsset(c *gin.Context) {
 		return
 	}
 
-	if MEDIA_TYPE_MAP[asset.MediaType] != filepath.Ext(file.Filename) {
+	if model.MEDIA_TYPE_MAP[asset.MediaType] != filepath.Ext(file.Filename) {
 		c.AbortWithStatus(409)
 		return
 	}
 
-	dest := filepath.Join("./uploads/", string(id), filepath.Ext(file.Filename))
+	dest := filepath.Join(m.db.Config.Datadir, string(id), filepath.Ext(file.Filename))
 	c.SaveUploadedFile(file, dest)
 
 	c.JSON(201, nil)
@@ -76,6 +77,6 @@ func (m *Controller) DownloadAsset(c *gin.Context) {
 		return
 	}
 
-	src := filepath.Join("./uploads/", string(id), "."+MEDIA_TYPE_MAP[asset.MediaType])
+	src := filepath.Join(m.db.Config.Datadir, string(id), "."+model.MEDIA_TYPE_MAP[asset.MediaType])
 	c.File(src)
 }

@@ -43,5 +43,6 @@ func (c *DBConnector) DeleteSubject(id uint) bool {
 	if rows, err := gorm.G[Subject](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
+	// TODO: Delete anything that can't really be done via DB consistency
 	return true
 }
