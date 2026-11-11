@@ -1,6 +1,11 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"path/filepath"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+)
 
 // Request handler to upload a new asset
 //
@@ -14,10 +19,37 @@ import "github.com/gin-gonic/gin"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
+// @Failure		409	{object}		nil "Expected file type didn't match actual file type"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/upload/{id} [put]
 func (m *Controller) UploadAsset(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	asset, err := m.db.GetAsset(uint(id))
+	if err != nil {
+		c.AbortWithStatus(404)
+		return
+	}
+
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	if MEDIA_TYPE_MAP[asset.MediaType] != filepath.Ext(file.Filename) {
+		c.AbortWithStatus(409)
+		return
+	}
+
+	dest := filepath.Join("./uploads/", string(id), filepath.Ext(file.Filename))
+	c.SaveUploadedFile(file, dest)
+
+	c.JSON(201, nil)
 }
 
 // Request handler to download an asset
@@ -32,5 +64,18 @@ func (m *Controller) UploadAsset(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/download/{id} [get]
 func (m *Controller) DownloadAsset(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	asset, err := m.db.GetAsset(uint(id))
+	if err != nil {
+		c.AbortWithStatus(404)
+		return
+	}
+
+	src := filepath.Join("./uploads/", string(id), "."+MEDIA_TYPE_MAP[asset.MediaType])
+	c.File(src)
 }

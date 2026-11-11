@@ -41,7 +41,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateAssetRequest"
+                            "$ref": "#/definitions/model.CreateAssetRequest"
                         }
                     }
                 ],
@@ -205,7 +205,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateAssetRequest"
+                            "$ref": "#/definitions/model.UpdateAssetRequest"
                         }
                     }
                 ],
@@ -269,6 +269,9 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized"
+                    },
+                    "409": {
+                        "description": "Expected file type didn't match actual file type"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -2057,36 +2060,6 @@ const docTemplate = `{
                 }
             }
         },
-        "controller.CreateAssetRequest": {
-            "type": "object",
-            "required": [
-                "icon",
-                "mediaType",
-                "name"
-            ],
-            "properties": {
-                "icon": {
-                    "description": "Must be a valid identifier for vuetify",
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "mediaType": {
-                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
-                    "type": "string",
-                    "maxLength": 40,
-                    "minLength": 3,
-                    "example": "application/pdf"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 3,
-                    "example": "Analysis Script"
-                }
-            }
-        },
         "controller.CreateChatRequest": {
             "type": "object",
             "required": [
@@ -2182,24 +2155,6 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
-                }
-            }
-        },
-        "controller.UpdateAssetRequest": {
-            "type": "object",
-            "properties": {
-                "icon": {
-                    "description": "Must be a valid identifier for vuetify",
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 250,
-                    "minLength": 3,
-                    "example": "Analysis Script"
                 }
             }
         },
@@ -2450,6 +2405,36 @@ const docTemplate = `{
                 }
             }
         },
+        "model.CreateAssetRequest": {
+            "type": "object",
+            "required": [
+                "icon",
+                "mediaType",
+                "name"
+            ],
+            "properties": {
+                "icon": {
+                    "description": "Must be a valid identifier for vuetify",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "mediaType": {
+                    "description": "The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type",
+                    "type": "string",
+                    "maxLength": 40,
+                    "minLength": 3,
+                    "example": "application/pdf"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis Script"
+                }
+            }
+        },
         "model.Flashcard": {
             "type": "object",
             "required": [
@@ -2579,6 +2564,24 @@ const docTemplate = `{
                 "updatedAt": {
                     "type": "string",
                     "example": "2026-12-17T13:47:33Z"
+                }
+            }
+        },
+        "model.UpdateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "Must be a valid identifier for vuetify",
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 3,
+                    "example": "Analysis Script"
                 }
             }
         }

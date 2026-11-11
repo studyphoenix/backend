@@ -1,14 +1,13 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
-)
+	"fmt"
+	"strconv"
 
-type CreateAssetRequest struct {
-	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
-	MediaType string `json:"mediaType" example:"application/pdf" minLength:"3" maxLength:"40" validate:"required,contains=/,min=3,max=40,printascii"` // The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
-	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
-}
+	"github.com/TwiN/logr"
+	"github.com/gin-gonic/gin"
+	"github.com/hci-group-15/backend/model"
+)
 
 // Request handler to create a new asset
 //
@@ -16,13 +15,22 @@ type CreateAssetRequest struct {
 // @Description	Creates a new asset linked to the current user
 // @Tags		assets
 // @Produce		json
-// @Param 		payload body CreateAssetRequest true "Asset details to store"
+// @Param 		payload body model.CreateAssetRequest true "Asset details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/create [put]
 func (m *Controller) CreateAsset(c *gin.Context) {
+	var req model.CreateAssetRequest
+	err := c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprintf("Failed to parse body for update product, error: ", err))
+		c.Abort()
+		return
+	}
+	m.db.CreateAsset(req)
+
 	c.JSON(200, nil)
 }
 
@@ -39,12 +47,17 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/get/{id} [get]
 func (m *Controller) GetAssetDetails(c *gin.Context) {
-	c.JSON(200, nil)
-}
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
 
-type UpdateAssetRequest struct {
-	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"optional,min=3,max=250,printascii"`
-	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"optional,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
+	asset, err := m.db.GetAsset(uint(id))
+	if err != nil {
+		c.AbortWithStatus(404)
+	}
+	c.JSON(200, asset)
 }
 
 // Request handler to update a asset
@@ -54,15 +67,33 @@ type UpdateAssetRequest struct {
 // @Tags		assets
 // @Produce		json
 // @Param 		id path string true "The id of the asset to update"
-// @Param 		payload body UpdateAssetRequest true "Asset details to update with. All attributes optional!"
+// @Param 		payload body model.UpdateAssetRequest true "Asset details to update with. All attributes optional!"
 // @Success		200	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "asset not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/update/{id} [patch]
-func (m *Controller) UpdateAssetDeteails(c *gin.Context) {
-	c.JSON(200, nil)
+func (m *Controller) UpdateAssetDetails(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.UpdateAssetRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprintf("Failed to parse body for update product, error: ", err))
+		c.Abort()
+		return
+	}
+
+	if m.db.UpdateAsset(uint(id), req) {
+		c.JSON(200, nil)
+	} else {
+		c.JSON(404, nil)
+	}
 }
 
 // Request handler to delete a asset
@@ -78,5 +109,15 @@ func (m *Controller) UpdateAssetDeteails(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/delete/{id} [delete]
 func (m *Controller) DeleteAsset(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	if m.db.DeleteAsset(uint(id)) {
+		c.JSON(200, nil)
+	} else {
+		c.JSON(404, nil)
+	}
 }

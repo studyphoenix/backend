@@ -108,6 +108,10 @@ func main() {
 		r.GET("/", oidclogin.EnsureLogin(false), func(c *gin.Context) {
 			c.JSON(200, gin.H{"success": true})
 		})
+	} else {
+		r.GET("/", func(c *gin.Context) {
+			c.Redirect(307, "/swagger/index.html")
+		})
 	}
 
 	r.Run()
