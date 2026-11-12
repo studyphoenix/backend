@@ -16,15 +16,13 @@ func (m *Controller) GetConfig(c *gin.Context) {
 	c.JSON(200, nil)
 }
 
-type UpdateUserConfigRequest struct{}
-
 // Request handler to update a user's config
 //
 // @Summary 	Update the user's config [WIP]
 // @Description	Update the user's config using the provided details. All of them are optional
 // @Tags		user
 // @Produce		json
-// @Param 		payload body UpdateUserConfigRequest true "Configuration Details to update"
+// @Param 		payload body model.UpdateUserConfigRequest true "Configuration Details to update"
 // @Success		200	{object}		model.Settings
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
