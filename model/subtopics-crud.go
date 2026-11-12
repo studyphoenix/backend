@@ -18,6 +18,9 @@ func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest) bool {
 
 	subtopic.Icon = dereferenceOrDefault(req.Icon, subtopic.Icon)
 	subtopic.Name = dereferenceOrDefault(req.Name, subtopic.Name)
+	// FIXME: 9.3 severity vulnerability CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N
+	// caused by not checking ownership of subject (also in all other retrieve, update, delete and associate endpoints)
+	subtopic.SubjectID = dereferenceOrDefault(req.Subject, subtopic.SubjectID)
 	subtopic.UpdatedAt = time.Now()
 
 	if c.DB.Save(&subtopic).Error != nil {
@@ -31,6 +34,7 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) boo
 		Name:      req.Name,
 		Icon:      req.Icon,
 		UserID:    userid,
+		SubjectID: req.Subject,
 		UpdatedAt: time.Now(),
 	}
 
