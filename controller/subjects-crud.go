@@ -28,7 +28,7 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 	var req model.CreateSubjectRequest
 	err := c.BindJSON(&req)
 	if err != nil {
-		logr.Debug(fmt.Sprintf("Failed to parse body to create subject: ", err))
+		logr.Debug(fmt.Sprint("Failed to parse body to create subject: ", err))
 		c.AbortWithStatus(400)
 		return
 	}
@@ -41,7 +41,7 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 	if m.db.CreateSubject(req, uid) {
 		c.JSON(200, nil)
 	} else {
-		httputil.NewError(c, 500, errors.New("ERR_CREATE_ASSET"))
+		httputil.NewError(c, 500, errors.New("ERR_CREATE_SUBJECT"))
 	}
 }
 
@@ -95,7 +95,7 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 	var req model.UpdateSubjectRequest
 	err = c.BindJSON(&req)
 	if err != nil {
-		logr.Debug(fmt.Sprintf("Failed to parse body to update subject, error: ", err))
+		logr.Debug(fmt.Sprint("Failed to parse body to update subject, error: ", err))
 		c.Abort()
 		return
 	}
