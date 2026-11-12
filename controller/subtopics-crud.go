@@ -67,6 +67,7 @@ func (m *Controller) GetSubtopic(c *gin.Context) {
 	subtopic, err := m.db.GetSubtopic(uint(id))
 	if err != nil {
 		c.AbortWithStatus(404)
+		return
 	}
 	c.JSON(200, subtopic)
 }
