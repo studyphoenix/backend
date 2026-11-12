@@ -2427,6 +2427,12 @@ const docTemplate = `{
                         "$ref": "#/definitions/model.Chat"
                     }
                 },
+                "flashcards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Flashcard"
+                    }
+                },
                 "icon": {
                     "type": "string",
                     "example": "fa-gear"
