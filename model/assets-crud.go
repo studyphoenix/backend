@@ -3,6 +3,7 @@ package model
 import (
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"gorm.io/gorm"
@@ -52,7 +53,7 @@ func (c *DBConnector) DeleteAsset(id uint) bool {
 		return false
 	}
 
-	os.Remove(filepath.Join(c.Config.Datadir, string(id), MEDIA_TYPE_MAP[asset.MediaType]))
+	os.Remove(filepath.Join(c.Config.Datadir, strconv.FormatUint(uint64(id), 10), MEDIA_TYPE_MAP[asset.MediaType]))
 
 	return true
 }

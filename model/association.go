@@ -1,3 +1,3 @@
-package controller
+package model
 
 type AssociationRequest []uint
