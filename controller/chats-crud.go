@@ -4,18 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CreateChatRequest struct {
-	Name string `example:"Analysis Explanation" json:"name" maxLength:"100" minLength:"3" validate:"required,min=3,max=100,printascii"`
-	Mode uint `example:"1" json:"mode" enums:"1,2,3" validate:"required,min=1,max=3"`
-}
-
 // Request handler to create a new chat
 //
 // @Summary 	Create a new chat [WIP]
 // @Description	Creates a new chat linked to the current user
 // @Tags		chats
 // @Produce		json
-// @Param 		payload body CreateChatRequest true "chat details to store"
+// @Param 		payload body model.CreateChatRequest true "chat details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -41,11 +36,6 @@ func (m *Controller) GetChat(c *gin.Context) {
 	c.JSON(200, nil)
 }
 
-type UpdateChatRequest struct {
-	Name string `example:"Analysis Explanation" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100,printascii"`
-	Mode uint `example:"2" json:"mode" enums:"1,2,3" validate:"optional,min=1,max=3"`
-}
-
 // Request handler to update a chat
 //
 // @Summary 	Updates the specified chat [WIP]
@@ -53,7 +43,7 @@ type UpdateChatRequest struct {
 // @Tags		chats
 // @Produce		json
 // @Param 		id path string true "The id of the chat to update"
-// @Param 		payload body UpdateChatRequest true "Chat details to update with. All attributes optional!"
+// @Param 		payload body model.UpdateChatRequest true "Chat details to update with. All attributes optional!"
 // @Success		200	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil

@@ -91,7 +91,7 @@ func main() {
 	// ┌                                               ┐
 	// │               Routes, DB, Login               │
 	// └                                               ┘
-	db := model.Init(prod)
+	db := model.Init(prod, &conf)
 	oidclogin.ConfigureFull(r, conf.Urls.BackendURL, conf.Urls.DefaultRedirect, func(userid, name, email string, c *gin.Context) {
 		uid := db.UpdateOrCreateUser(userid, name, email)
 		ses := sessions.Default(c)
@@ -102,7 +102,6 @@ func main() {
 
 	// Routes
 	c := controller.NewController(db)
-	controller.AddRoutes(c, r)
 
 	if conf.TestingMode {
 		r.GET("/", oidclogin.EnsureLogin(false), func(c *gin.Context) {
@@ -113,6 +112,8 @@ func main() {
 			c.Redirect(307, "/swagger/index.html")
 		})
 	}
+
+	c.AddRoutes(r)
 
 	r.Run()
 }

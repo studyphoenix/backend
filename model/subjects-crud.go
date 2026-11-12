@@ -26,10 +26,11 @@ func (c *DBConnector) UpdateSubject(id uint, req UpdateSubjectRequest) bool {
 	return true
 }
 
-func (c *DBConnector) CreateSubject(req CreateSubjectRequest) bool {
+func (c *DBConnector) CreateSubject(req CreateSubjectRequest, userid uint) bool {
 	subject := Subject{
 		Name:      req.Name,
 		Icon:      req.Icon,
+		UserID:    userid,
 		UpdatedAt: time.Now(),
 	}
 
@@ -43,5 +44,6 @@ func (c *DBConnector) DeleteSubject(id uint) bool {
 	if rows, err := gorm.G[Subject](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
+	// TODO: Delete anything that can't really be done via DB consistency
 	return true
 }

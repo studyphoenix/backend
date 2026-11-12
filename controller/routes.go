@@ -10,7 +10,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func AddRoutes(c *Controller, r *gin.Engine) {
+func (c *Controller) AddRoutes(r *gin.Engine) {
 	// Assets
 	assets := r.Group("/assets")
 	assets.PUT("create", c.CreateAsset)

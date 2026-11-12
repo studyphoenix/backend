@@ -4,28 +4,30 @@ import (
 	"context"
 	"log"
 
+	"github.com/hci-group-15/backend/config"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
 type DBConnector struct {
-	DB *gorm.DB
+	DB     *gorm.DB
+	Config *config.Config
 }
 
 var ctx = context.Background()
 
-func Init(prod bool) *DBConnector {
-	var conf gorm.Config
+func Init(prod bool, conf *config.Config) *DBConnector {
+	var gormConf gorm.Config
 	if prod {
-		conf = gorm.Config{}
+		gormConf = gorm.Config{}
 	} else {
-		conf = gorm.Config{
+		gormConf = gorm.Config{
 			Logger: logger.Default.LogMode(logger.Info),
 		}
 	}
 
-	db, err := gorm.Open(sqlite.Open("janishutz-store.db"), &conf)
+	db, err := gorm.Open(sqlite.Open("janishutz-store.db"), &gormConf)
 	if err != nil {
 		log.Fatal("[DB] Failed to connect to DB with error", err)
 	}
@@ -43,6 +45,7 @@ func Init(prod bool) *DBConnector {
 
 	return &DBConnector{
 		DB: db,
+		Config: conf,
 	}
 }
 

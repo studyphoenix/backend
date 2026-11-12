@@ -11,3 +11,13 @@ type Flashcard struct {
 	Content         string     `json:"content"`
 	CompletionCount uint       `json:"completionCount"`
 }
+
+type CreateFlashcardRequest struct {
+	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,min=3,max=100,printascii"`
+	Content string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"required,min=0"`
+}
+
+type UpdateFlashcardRequest struct {
+	Name *string `example:"ODEs" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100"`
+	Content *string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"optional,min=0"`
+}

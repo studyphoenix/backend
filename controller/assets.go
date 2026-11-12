@@ -1,11 +1,14 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
 	"github.com/TwiN/logr"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/hci-group-15/backend/httputil"
 	"github.com/hci-group-15/backend/model"
 )
 
@@ -26,12 +29,20 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 	err := c.BindJSON(&req)
 	if err != nil {
 		logr.Debug(fmt.Sprintf("Failed to parse body to create asset, error: ", err))
-		c.Abort()
+		c.AbortWithStatus(400)
 		return
 	}
-	m.db.CreateAsset(req)
 
-	c.JSON(200, nil)
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+	if m.db.CreateAsset(req, uid) {
+		c.JSON(200, nil)
+	} else {
+		httputil.NewError(c, 500, errors.New("ERR_CREATE_ASSET"))
+	}
 }
 
 // Request handler to get a asset
