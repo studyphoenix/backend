@@ -4,20 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CreateFlashcardRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,min=3,max=100,printascii"`
-	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon    string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,min=3,max=100,printascii"`
-	Content string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"required,min=0"`
-}
-
 // Request handler to create a new flashcard
 //
 // @Summary 	Create a new flashcard [WIP]
 // @Description	Creates a new flashcard linked to the current user
 // @Tags		flashcards
 // @Produce		json
-// @Param 		payload body CreateFlashcardRequest true "flashcard details to store"
+// @Param 		payload body model.CreateFlashcardRequest true "flashcard details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -43,13 +36,6 @@ func (m *Controller) GetFlashcard(c *gin.Context) {
 	c.JSON(200, nil)
 }
 
-type UpdateFlashcardRequest struct {
-	Name *string `example:"ODEs" json:"name" maxLength:"100" minLength:"3" validate:"optional,min=3,max=100"`
-	// The Icon of the flashcard. Must be an icon that can be rendered in the browser
-	Icon    *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,ascii,min=0,max=100"`
-	Content *string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"optional,min=0"`
-}
-
 // Request handler to update a flashcard
 //
 // @Summary 	Updates the specified flashcard [WIP]
@@ -57,7 +43,7 @@ type UpdateFlashcardRequest struct {
 // @Tags		flashcards
 // @Produce		json
 // @Param 		id path string true "The id of the flashcard to update"
-// @Param 		payload body UpdateFlashcardRequest true "Flashcard details to update with. All attributes optional!"
+// @Param 		payload body model.UpdateFlashcardRequest true "Flashcard details to update with. All attributes optional!"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil

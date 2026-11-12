@@ -7,7 +7,7 @@ import (
 )
 
 func (c *DBConnector) GetChat(id uint) (Chat, error) {
-	return gorm.G[Chat](c.DB).Where("id = ?", id).First(ctx)
+	return gorm.G[Chat](c.DB).Where("id = ?", id).Preload("ChatMessages", nil).First(ctx)
 }
 
 func (c *DBConnector) UpdateChat(id uint, req UpdateChatRequest) bool {
@@ -27,14 +27,14 @@ func (c *DBConnector) UpdateChat(id uint, req UpdateChatRequest) bool {
 }
 
 func (c *DBConnector) CreateChat(req CreateChatRequest, userid uint) bool {
-	asset := Chat{
+	chat := Chat{
 		Name:      req.Name,
 		Mode:      req.Mode,
 		UserID:    userid,
 		UpdatedAt: time.Now(),
 	}
 
-	if c.DB.Save(&asset).Error != nil {
+	if c.DB.Save(&chat).Error != nil {
 		return false
 	}
 	return true
