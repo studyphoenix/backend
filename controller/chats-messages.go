@@ -43,6 +43,7 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 		c.JSON(200, nil)
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_ADD_CHAT_MESSAGE"))
+		c.Abort()
 	}
 }
 

@@ -9,7 +9,7 @@ type Subject struct {
 	Name      string     `json:"name" example:"Analysis"`
 	Icon      string     `json:"icon" example:"fa-gear"`
 	Assets    []Asset    `json:"assets,omitempty" gorm:"many2many:subjects_assets;" validate:"optional"`
-	Subtopics []Subtopic `json:"-" gorm:"many2many:subtopics_subjects"`
+	Subtopics []Subtopic `json:"-" gorm:"constraint:OnDelete:CASCADE"`
 }
 
 type CreateSubjectRequest struct {

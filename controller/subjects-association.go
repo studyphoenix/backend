@@ -1,42 +1,13 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"strconv"
 
-// Request handler to associate subtopic(s)
-//
-// @Summary 	associate subtopic(s) [WIP]
-// @Description	associates the subtopic(s) from this subject
-// @Tags		subjects
-// @Produce		json
-// @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body model.AssociationRequest true "The associations to add"
-// @Success		204	{object}		nil
-// @Failure 	400 {object} 		nil
-// @Failure		401	{object}		nil
-// @Failure 	404 {object} 		nil "subject or id not found"
-// @Failure		500	{object}		httputil.HTTPError
-// @Router		/subjects/associate/subtopics/{id} [patch]
-func (m *Controller) AssociateSubtopicToSubject(c *gin.Context) {
-	c.JSON(200, nil)
-}
-
-// Request handler to deassociate subtopic(s)
-//
-// @Summary 	deassociate subtopic(s) [WIP]
-// @Description	deassociates the specified subtopic(s) from this subject
-// @Tags		subjects
-// @Produce		json
-// @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body model.AssociationRequest true "The associations to remove"
-// @Success		204	{object}		nil
-// @Failure 	400 {object} 		nil
-// @Failure		401	{object}		nil
-// @Failure 	404 {object} 		nil "subject or id not found"
-// @Failure		500	{object}		httputil.HTTPError
-// @Router		/subjects/deassociate/subtopics/{id} [patch]
-func (m *Controller) DeassociateSubtopicToSubject(c *gin.Context) {
-	c.JSON(200, nil)
-}
+	"github.com/TwiN/logr"
+	"github.com/gin-gonic/gin"
+	"github.com/hci-group-15/backend/model"
+)
 
 // Request handler to associate asset(s)
 //
@@ -49,11 +20,29 @@ func (m *Controller) DeassociateSubtopicToSubject(c *gin.Context) {
 // @Success		200	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
-// @Failure 	400 {object} 		nil "subject or id not found"
+// @Failure 	404 {object} 		nil "subject or id not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/associate/assets/{id} [patch]
 func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.AsociateAssetToSubject(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
 
 // Request handler to associate asset(s)
@@ -67,9 +56,27 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
-// @Failure 	400 {object} 		nil "subject or id not found"
+// @Failure 	404 {object} 		nil "subject or id not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/deassociate/assets/{id} [patch]
 func (m *Controller) DeassociateAssetToSubject(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.DeassociateAssetFromSubject(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
