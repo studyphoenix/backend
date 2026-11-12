@@ -1,7 +1,14 @@
 package controller
 
 import (
+	"errors"
+	"fmt"
+	"strconv"
+
+	"github.com/TwiN/logr"
 	"github.com/gin-gonic/gin"
+	"github.com/hci-group-15/backend/httputil"
+	"github.com/hci-group-15/backend/model"
 )
 
 // Request handler to create a new subject
@@ -18,7 +25,25 @@ import (
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/messages/add/{id} [put]
 func (m *Controller) AddChatMessageToChat(c *gin.Context) {
-	c.JSON(200, nil)
+	chatId, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AddChatMessageRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create chat message: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	if m.db.CreateChatMessage(req, uint(chatId)) {
+		c.JSON(200, nil)
+	} else {
+		httputil.NewError(c, 500, errors.New("ERR_ADD_CHAT_MESSAGE"))
+	}
 }
 
 // Request handler to update a chat message
@@ -36,7 +61,25 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/messages/update/{id} [patch]
 func (m *Controller) UpdateChatMessage(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.UpdateChatMessageRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to update chat message, error: ", err))
+		c.Abort()
+		return
+	}
+
+	if m.db.UpdateChatMessage(uint(id), req) {
+		c.JSON(200, nil)
+	} else {
+		c.JSON(404, nil)
+	}
 }
 
 // Request handler to delete a delete a chat message
@@ -52,5 +95,15 @@ func (m *Controller) UpdateChatMessage(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/messages/delete/{id} [delete]
 func (m *Controller) DeleteChatMessage(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	if m.db.DeleteChatMessage(uint(id)) {
+		c.JSON(200, nil)
+	} else {
+		c.JSON(404, nil)
+	}
 }
