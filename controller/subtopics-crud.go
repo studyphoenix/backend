@@ -10,7 +10,7 @@ import (
 // @Description	Creates a new subtopic linked to the current user
 // @Tags		subtopics
 // @Produce		json
-// @Param 		payload body CreateSubtopicRequest true "Subtopic details to store"
+// @Param 		payload body model.CreateSubtopicRequest true "Subtopic details to store"
 // @Success		201	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -43,7 +43,7 @@ func (m *Controller) GetSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body UpdateSubtopicRequest true "Subtopic details to update with. All attributes optional!"
+// @Param 		payload body model.UpdateSubtopicRequest true "Subtopic details to update with. All attributes optional!"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil

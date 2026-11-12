@@ -9,7 +9,7 @@ import "github.com/gin-gonic/gin"
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to add"
+// @Param 		payload body model.AssociationRequest true "The associations to add"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -27,7 +27,7 @@ func (m *Controller) AssociateSubtopicToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to remove"
+// @Param 		payload body model.AssociationRequest true "The associations to remove"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -45,7 +45,7 @@ func (m *Controller) DeassociateSubtopicToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to add"
+// @Param 		payload body model.AssociationRequest true "The associations to add"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -63,7 +63,7 @@ func (m *Controller) AssociateAssetToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to remove"
+// @Param 		payload body model.AssociationRequest true "The associations to remove"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -81,7 +81,7 @@ func (m *Controller) DeassociateAssetToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to add"
+// @Param 		payload body model.AssociationRequest true "The associations to add"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -99,7 +99,7 @@ func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to remove"
+// @Param 		payload body model.AssociationRequest true "The associations to remove"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -117,7 +117,7 @@ func (m *Controller) DeassociateChatToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to add"
+// @Param 		payload body model.AssociationRequest true "The associations to add"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -135,7 +135,7 @@ func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
 // @Tags		subtopics
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to update"
-// @Param 		payload body AssociationRequest true "The associations to remove"
+// @Param 		payload body model.AssociationRequest true "The associations to remove"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil

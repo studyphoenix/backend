@@ -641,7 +641,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateFlashcardRequest"
+                            "$ref": "#/definitions/model.CreateFlashcardRequest"
                         }
                     }
                 ],
@@ -837,7 +837,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateFlashcardRequest"
+                            "$ref": "#/definitions/model.UpdateFlashcardRequest"
                         }
                     }
                 ],
@@ -1581,7 +1581,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.CreateSubtopicRequest"
+                            "$ref": "#/definitions/model.CreateSubtopicRequest"
                         }
                     }
                 ],
@@ -1910,7 +1910,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateSubtopicRequest"
+                            "$ref": "#/definitions/model.UpdateSubtopicRequest"
                         }
                     }
                 ],
@@ -1980,7 +1980,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.UpdateUserConfigRequest"
+                            "$ref": "#/definitions/model.UpdateUserConfigRequest"
                         }
                     }
                 ],
@@ -2034,100 +2034,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.CreateFlashcardRequest": {
-            "type": "object",
-            "required": [
-                "content",
-                "icon",
-                "name"
-            ],
-            "properties": {
-                "content": {
-                    "type": "string",
-                    "minLength": 0,
-                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
-                },
-                "icon": {
-                    "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis"
-                }
-            }
-        },
-        "controller.CreateSubtopicRequest": {
-            "type": "object",
-            "required": [
-                "icon",
-                "name"
-            ],
-            "properties": {
-                "icon": {
-                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis"
-                }
-            }
-        },
-        "controller.UpdateFlashcardRequest": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string",
-                    "minLength": 0,
-                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
-                },
-                "icon": {
-                    "description": "The Icon of the flashcard. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "ODEs"
-                }
-            }
-        },
-        "controller.UpdateSubtopicRequest": {
-            "type": "object",
-            "properties": {
-                "icon": {
-                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 0,
-                    "example": "fa-gear"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Analysis"
-                }
-            }
-        },
-        "controller.UpdateUserConfigRequest": {
-            "type": "object"
-        },
         "controller.UserProfileResponse": {
             "type": "object",
             "required": [
@@ -2352,7 +2258,49 @@ const docTemplate = `{
                 }
             }
         },
+        "model.CreateFlashcardRequest": {
+            "type": "object",
+            "required": [
+                "content",
+                "name"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
         "model.CreateSubjectRequest": {
+            "type": "object",
+            "required": [
+                "icon",
+                "name"
+            ],
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "model.CreateSubtopicRequest": {
             "type": "object",
             "required": [
                 "icon",
@@ -2410,10 +2358,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "answerInBulletPoints": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": false
                 },
                 "answerLength": {
                     "type": "string",
+                    "default": "default",
                     "enum": [
                         "very-short",
                         "short",
@@ -2475,12 +2425,6 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.Chat"
-                    }
-                },
-                "flashcards": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Flashcard"
                     }
                 },
                 "icon": {
@@ -2567,6 +2511,22 @@ const docTemplate = `{
                 }
             }
         },
+        "model.UpdateFlashcardRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "minLength": 0,
+                    "example": "summarized content for this flashcard with everything needed for the model to ask sensible questions"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "ODEs"
+                }
+            }
+        },
         "model.UpdateSubjectRequest": {
             "type": "object",
             "properties": {
@@ -2582,6 +2542,44 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
+                }
+            }
+        },
+        "model.UpdateSubtopicRequest": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "example": "fa-gear"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Analysis"
+                }
+            }
+        },
+        "model.UpdateUserConfigRequest": {
+            "type": "object",
+            "properties": {
+                "answerInBulletPoints": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "answerLength": {
+                    "type": "string",
+                    "default": "default",
+                    "enum": [
+                        "very-short",
+                        "short",
+                        "default",
+                        "long",
+                        "very-long"
+                    ]
                 }
             }
         }

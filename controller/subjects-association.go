@@ -9,7 +9,7 @@ import "github.com/gin-gonic/gin"
 // @Tags		subjects
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body AssociationRequest true "The associations to add"
+// @Param 		payload body model.AssociationRequest true "The associations to add"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -27,7 +27,7 @@ func (m *Controller) AssociateSubtopicToSubject(c *gin.Context) {
 // @Tags		subjects
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body AssociationRequest true "The associations to remove"
+// @Param 		payload body model.AssociationRequest true "The associations to remove"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -45,7 +45,7 @@ func (m *Controller) DeassociateSubtopicToSubject(c *gin.Context) {
 // @Tags		subjects
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body AssociationRequest true "The associations to add"
+// @Param 		payload body model.AssociationRequest true "The associations to add"
 // @Success		200	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
@@ -63,7 +63,7 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 // @Tags		subjects
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
-// @Param 		payload body AssociationRequest true "The associations to remove"
+// @Param 		payload body model.AssociationRequest true "The associations to remove"
 // @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
