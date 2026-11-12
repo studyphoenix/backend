@@ -14,7 +14,7 @@ import (
 
 // Request handler to create a new subtopic
 //
-// @Summary 	Create a new subtopic [WIP]
+// @Summary 	Create a new subtopic
 // @Description	Creates a new subtopic linked to the current user
 // @Tags		subtopics
 // @Produce		json
@@ -47,7 +47,7 @@ func (m *Controller) CreateSubtopic(c *gin.Context) {
 
 // Request handler to get a subtopic
 //
-// @Summary 	Get the specified subtopic [WIP]
+// @Summary 	Get the specified subtopic
 // @Description	Returns the specified subtopic details, including extra metadata
 // @Tags		subtopics
 // @Produce		json
@@ -74,7 +74,7 @@ func (m *Controller) GetSubtopic(c *gin.Context) {
 
 // Request handler to update a subtopic
 //
-// @Summary 	Updates the specified subtopic [WIP]
+// @Summary 	Updates the specified subtopic
 // @Description	Updates the subtopic. Note that all attributes in the body are optional and if omitted, will not be updated
 // @Tags		subtopics
 // @Produce		json
@@ -110,7 +110,7 @@ func (m *Controller) UpdateSubtopic(c *gin.Context) {
 
 // Request handler to delete a subtopic
 //
-// @Summary 	Deletes the given subtopic [WIP]
+// @Summary 	Deletes the given subtopic
 // @Description	Deletes the given subtopic including assets and flashcards.
 // @Tags		subtopics
 // @Produce		json

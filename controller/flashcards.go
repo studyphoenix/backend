@@ -14,7 +14,7 @@ import (
 
 // Request handler to create a new flashcard
 //
-// @Summary 	Create a new flashcard [WIP]
+// @Summary 	Create a new flashcard
 // @Description	Creates a new flashcard linked to the current user
 // @Tags		flashcards
 // @Produce		json
@@ -47,7 +47,7 @@ func (m *Controller) CreateFlashcard(c *gin.Context) {
 
 // Request handler to get a flashcard
 //
-// @Summary 	Get the specified flashcard [WIP]
+// @Summary 	Get the specified flashcard
 // @Description	Returns the specified flashcard details, including extra metadata
 // @Tags		flashcards
 // @Produce		json
@@ -74,7 +74,7 @@ func (m *Controller) GetFlashcard(c *gin.Context) {
 
 // Request handler to update a flashcard
 //
-// @Summary 	Updates the specified flashcard [WIP]
+// @Summary 	Updates the specified flashcard
 // @Description	Updates the flashcard. Note that all attributes in the body are optional and if omitted, will not be updated
 // @Tags		flashcards
 // @Produce		json
@@ -110,7 +110,7 @@ func (m *Controller) UpdateFlashcard(c *gin.Context) {
 
 // Request handler to mark a flashcard as completed (again)
 //
-// @Summary 	Mark flashcard as completed (again) [WIP]
+// @Summary 	Mark flashcard as completed (again)
 // @Description	Increments the completion count of the specified flashcard by one. Request body is ignored
 // @Tags		flashcards
 // @Produce		json
@@ -136,7 +136,7 @@ func (m *Controller) CompleteFlashcard(c *gin.Context) {
 
 // Request handler to delete a flashcard
 //
-// @Summary 	Deletes the given flashcard [WIP]
+// @Summary 	Deletes the given flashcard
 // @Description	Deletes the given flashcard including all subtopics, assets and flashcards.
 // @Tags		flashcards
 // @Produce		json

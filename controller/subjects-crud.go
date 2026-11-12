@@ -14,7 +14,7 @@ import (
 
 // Request handler to create a new subject
 //
-// @Summary 	Create a new subject [WIP]
+// @Summary 	Create a new subject
 // @Description	Creates a new subject linked to the current user
 // @Tags		subjects
 // @Produce		json
@@ -47,7 +47,7 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 
 // Request handler to get a subject
 //
-// @Summary 	Get the specified subject [WIP]
+// @Summary 	Get the specified subject
 // @Description	Returns the specified subject details, including extra metadata
 // @Tags		subjects
 // @Produce		json
@@ -74,7 +74,7 @@ func (m *Controller) GetSubject(c *gin.Context) {
 
 // Request handler to update a subject
 //
-// @Summary 	Updates the specified subject [WIP]
+// @Summary 	Updates the specified subject
 // @Description	Updates the subject. Note that all attributes in the body are optional and if omitted, will not be updated
 // @Tags		subjects
 // @Produce		json
@@ -110,7 +110,7 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 
 // Request handler to delete a subject
 //
-// @Summary 	Deletes the given subject [WIP]
+// @Summary 	Deletes the given subject
 // @Description	Deletes the given subject including all subtopics, assets and flashcards.
 // @Tags		subjects
 // @Produce		json

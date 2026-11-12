@@ -14,7 +14,7 @@ import (
 
 // Request handler to create a new chat
 //
-// @Summary 	Create a new chat [WIP]
+// @Summary 	Create a new chat
 // @Description	Creates a new chat linked to the current user
 // @Tags		chats
 // @Produce		json
@@ -47,7 +47,7 @@ func (m *Controller) CreateChat(c *gin.Context) {
 
 // Request handler to get a chat
 //
-// @Summary 	Get the specified chat [WIP]
+// @Summary 	Get the specified chat
 // @Description	Returns the specified chat details, including extra metadata
 // @Tags		chats
 // @Produce		json
@@ -74,7 +74,7 @@ func (m *Controller) GetChat(c *gin.Context) {
 
 // Request handler to update a chat
 //
-// @Summary 	Updates the specified chat [WIP]
+// @Summary 	Updates the specified chat
 // @Description	Updates the chat. Note that all attributes in the body are optional and if omitted, will not be updated
 // @Tags		chats
 // @Produce		json
@@ -110,7 +110,7 @@ func (m *Controller) UpdateChat(c *gin.Context) {
 
 // Request handler to delete a chat
 //
-// @Summary 	Deletes the given chat [WIP]
+// @Summary 	Deletes the given chat
 // @Description	Deletes the given chat including all subtopics, assets and flashcards.
 // @Tags		chats
 // @Produce		json

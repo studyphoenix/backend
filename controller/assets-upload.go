@@ -10,7 +10,7 @@ import (
 
 // Request handler to upload a new asset
 //
-// @Summary 	Upload file to a given asset [WIP]
+// @Summary 	Upload file to a given asset
 // @Description	Upload a file to asset with id `{id}`, overriding any previously existing files irreversibly
 // @Tags		assets
 // @Produce		json
@@ -55,7 +55,7 @@ func (m *Controller) UploadAsset(c *gin.Context) {
 
 // Request handler to download an asset
 //
-// @Summary 	Download the file of a given asset [WIP]
+// @Summary 	Download the file of a given asset
 // @Description	Download the file of asset with id `{id}`
 // @Tags		assets
 // @Param 		id path string true "The id of the asset to download"

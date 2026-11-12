@@ -33,7 +33,7 @@ const docTemplate = `{
                 "tags": [
                     "assets"
                 ],
-                "summary": "Create a new asset [WIP]",
+                "summary": "Create a new asset",
                 "parameters": [
                     {
                         "description": "Asset details to store",
@@ -73,7 +73,7 @@ const docTemplate = `{
                 "tags": [
                     "assets"
                 ],
-                "summary": "Deletes the given asset [WIP]",
+                "summary": "Deletes the given asset",
                 "parameters": [
                     {
                         "type": "string",
@@ -108,7 +108,7 @@ const docTemplate = `{
                 "tags": [
                     "assets"
                 ],
-                "summary": "Download the file of a given asset [WIP]",
+                "summary": "Download the file of a given asset",
                 "parameters": [
                     {
                         "type": "string",
@@ -149,7 +149,7 @@ const docTemplate = `{
                 "tags": [
                     "assets"
                 ],
-                "summary": "Get the specified asset [WIP]",
+                "summary": "Get the specified asset",
                 "parameters": [
                     {
                         "type": "string",
@@ -190,7 +190,7 @@ const docTemplate = `{
                 "tags": [
                     "assets"
                 ],
-                "summary": "Updates the specified asset [WIP]",
+                "summary": "Updates the specified asset",
                 "parameters": [
                     {
                         "type": "string",
@@ -243,7 +243,7 @@ const docTemplate = `{
                 "tags": [
                     "assets"
                 ],
-                "summary": "Upload file to a given asset [WIP]",
+                "summary": "Upload file to a given asset",
                 "parameters": [
                     {
                         "type": "string",
@@ -291,7 +291,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Create a new chat [WIP]",
+                "summary": "Create a new chat",
                 "parameters": [
                     {
                         "description": "chat details to store",
@@ -331,7 +331,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Deletes the given chat [WIP]",
+                "summary": "Deletes the given chat",
                 "parameters": [
                     {
                         "type": "string",
@@ -369,7 +369,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Get the specified chat [WIP]",
+                "summary": "Get the specified chat",
                 "parameters": [
                     {
                         "type": "string",
@@ -410,7 +410,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Add a new chat message to the chat with id ` + "`" + `{id}` + "`" + ` [WIP]",
+                "summary": "Add a new chat message to the chat with id ` + "`" + `{id}` + "`" + `",
                 "parameters": [
                     {
                         "type": "string",
@@ -457,7 +457,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Deletes the given subject [WIP]",
+                "summary": "Deletes the given subject",
                 "parameters": [
                     {
                         "type": "string",
@@ -495,7 +495,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Updates the specified chat message [WIP]",
+                "summary": "Updates the specified chat message",
                 "parameters": [
                     {
                         "type": "string",
@@ -545,7 +545,7 @@ const docTemplate = `{
                 "tags": [
                     "chats"
                 ],
-                "summary": "Updates the specified chat [WIP]",
+                "summary": "Updates the specified chat",
                 "parameters": [
                     {
                         "type": "string",
@@ -595,7 +595,7 @@ const docTemplate = `{
                 "tags": [
                     "flashcards"
                 ],
-                "summary": "Mark flashcard as completed (again) [WIP]",
+                "summary": "Mark flashcard as completed (again)",
                 "parameters": [
                     {
                         "type": "string",
@@ -633,7 +633,7 @@ const docTemplate = `{
                 "tags": [
                     "flashcards"
                 ],
-                "summary": "Create a new flashcard [WIP]",
+                "summary": "Create a new flashcard",
                 "parameters": [
                     {
                         "description": "flashcard details to store",
@@ -673,7 +673,7 @@ const docTemplate = `{
                 "tags": [
                     "flashcards"
                 ],
-                "summary": "Deletes the given flashcard [WIP]",
+                "summary": "Deletes the given flashcard",
                 "parameters": [
                     {
                         "type": "string",
@@ -711,7 +711,7 @@ const docTemplate = `{
                 "tags": [
                     "flashcards"
                 ],
-                "summary": "Get the specified flashcard [WIP]",
+                "summary": "Get the specified flashcard",
                 "parameters": [
                     {
                         "type": "string",
@@ -822,7 +822,7 @@ const docTemplate = `{
                 "tags": [
                     "flashcards"
                 ],
-                "summary": "Updates the specified flashcard [WIP]",
+                "summary": "Updates the specified flashcard",
                 "parameters": [
                     {
                         "type": "string",
@@ -975,7 +975,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Create a new subject [WIP]",
+                "summary": "Create a new subject",
                 "parameters": [
                     {
                         "description": "Subject details to store",
@@ -1118,7 +1118,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Deletes the given subject [WIP]",
+                "summary": "Deletes the given subject",
                 "parameters": [
                     {
                         "type": "string",
@@ -1156,7 +1156,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Get the specified subject [WIP]",
+                "summary": "Get the specified subject",
                 "parameters": [
                     {
                         "type": "string",
@@ -1320,7 +1320,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Updates the specified subject [WIP]",
+                "summary": "Updates the specified subject",
                 "parameters": [
                     {
                         "type": "string",
@@ -1573,7 +1573,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "Create a new subtopic [WIP]",
+                "summary": "Create a new subtopic",
                 "parameters": [
                     {
                         "description": "Subtopic details to store",
@@ -1816,7 +1816,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "Deletes the given subtopic [WIP]",
+                "summary": "Deletes the given subtopic",
                 "parameters": [
                     {
                         "type": "string",
@@ -1854,7 +1854,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "Get the specified subtopic [WIP]",
+                "summary": "Get the specified subtopic",
                 "parameters": [
                     {
                         "type": "string",
@@ -1895,7 +1895,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "Updates the specified subtopic [WIP]",
+                "summary": "Updates the specified subtopic",
                 "parameters": [
                     {
                         "type": "string",
@@ -1945,7 +1945,7 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "Get the user's config [WIP]",
+                "summary": "Get the user's config",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1972,7 +1972,7 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "Update the user's config [WIP]",
+                "summary": "Update the user's config",
                 "parameters": [
                     {
                         "description": "Configuration Details to update",

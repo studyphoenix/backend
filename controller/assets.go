@@ -14,7 +14,7 @@ import (
 
 // Request handler to create a new asset
 //
-// @Summary 	Create a new asset [WIP]
+// @Summary 	Create a new asset
 // @Description	Creates a new asset linked to the current user
 // @Tags		assets
 // @Produce		json
@@ -47,7 +47,7 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 
 // Request handler to get a asset
 //
-// @Summary 	Get the specified asset [WIP]
+// @Summary 	Get the specified asset
 // @Description	Returns the specified asset details, including extra metadata
 // @Tags		assets
 // @Produce		json
@@ -73,7 +73,7 @@ func (m *Controller) GetAssetDetails(c *gin.Context) {
 
 // Request handler to update a asset
 //
-// @Summary 	Updates the specified asset [WIP]
+// @Summary 	Updates the specified asset
 // @Description	Updates the asset. Note that all attributes in the body are optional and if omitted, will not be updated
 // @Tags		assets
 // @Produce		json
@@ -109,7 +109,7 @@ func (m *Controller) UpdateAssetDetails(c *gin.Context) {
 
 // Request handler to delete a asset
 //
-// @Summary 	Deletes the given asset [WIP]
+// @Summary 	Deletes the given asset
 // @Description	Deletes the given asset, including the file stored on disk
 // @Tags		assets
 // @Produce		json

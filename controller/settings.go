@@ -13,7 +13,7 @@ import (
 
 // Request handler to get a user's config
 //
-// @Summary 	Get the user's config [WIP]
+// @Summary 	Get the user's config
 // @Description	Returns the user's stored configuration
 // @Tags		user
 // @Produce		json
@@ -37,7 +37,7 @@ func (m *Controller) GetConfig(c *gin.Context) {
 
 // Request handler to update a user's config
 //
-// @Summary 	Update the user's config [WIP]
+// @Summary 	Update the user's config
 // @Description	Update the user's config using the provided details. All of them are optional
 // @Tags		user
 // @Produce		json
