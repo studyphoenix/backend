@@ -46,3 +46,18 @@ func (c *DBConnector) DeleteFlashcard(id uint) bool {
 	}
 	return true
 }
+
+func (c *DBConnector) CompleteFlashcard(id uint) bool {
+	flashcard, err := c.GetFlashcard(id)
+	if err != nil {
+		return false
+	}
+
+	flashcard.CompletionCount += 1
+	flashcard.UpdatedAt = time.Now()
+
+	if c.DB.Save(&flashcard).Error != nil {
+		return false
+	}
+	return true
+}
