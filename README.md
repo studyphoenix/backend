@@ -10,8 +10,9 @@ TEST_MODE=true # used for running the tests via bruno
 ```
 
 ## Development
-> [!NOTE]
-> This is a MUCH more technical description than for the frontend
+> [!IMPORTANT]
+> To push any changes to this repo, all your commits must be signed.
+> If you are getting errors related to that, please ensure that you have enabled code signing in git and have uploaded your public key to GitHub.
 
 ### API docs
 API documentation is available at `<url>/swagger/index.html`, for local development typically at [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
