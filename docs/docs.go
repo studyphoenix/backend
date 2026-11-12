@@ -1986,10 +1986,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Settings"
-                        }
+                        "description": "OK"
                     },
                     "401": {
                         "description": "Unauthorized"
