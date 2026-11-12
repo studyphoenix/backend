@@ -42,10 +42,8 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	// Subjects
 	subjects := r.Group("/subjects")
 	subjects.PATCH("associate/assets/:id", c.AssociateAssetToSubject)
-	subjects.PATCH("associate/subtopic/:id", c.AssociateSubtopicToSubject)
 	subjects.PUT("create", c.CreateSubject)
 	subjects.PATCH("deassociate/assets/:id", c.DeassociateAssetToSubject)
-	subjects.PATCH("deassociate/subtopic/:id", c.DeassociateSubtopicToSubject)
 	subjects.DELETE("delete/:id", c.DeleteSubject)
 	subjects.GET("get/:id", c.GetSubject)
 	subjects.GET("search", c.QuerySubjects)

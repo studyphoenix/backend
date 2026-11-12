@@ -42,6 +42,7 @@ func (m *Controller) CreateChat(c *gin.Context) {
 		c.JSON(200, nil)
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_CHAT"))
+		c.Abort()
 	}
 }
 
