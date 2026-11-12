@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Build image
-        run: docker buildx build . --tag ghcr.io/hci-group-15/backend
+        run: docker buildx build . --tag ghcr.io/studyphoenix/backend
       - name: Publish to GitHub Container Registry
         run: |
-          docker push ghcr.io/hci-group-15/backend
+          docker push ghcr.io/studyphoenix/backend
