@@ -67,6 +67,7 @@ func (m *Controller) GetSubject(c *gin.Context) {
 	subject, err := m.db.GetSubject(uint(id))
 	if err != nil {
 		c.AbortWithStatus(404)
+		return
 	}
 	c.JSON(200, subject)
 }

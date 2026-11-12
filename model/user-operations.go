@@ -39,6 +39,9 @@ func (db *DBConnector) UpdateOrCreateUser(userid string, username string, email 
 	if wasUpdated {
 		u := User{}
 		db.DB.Save(&user).First(&u)
+		if !exists {
+			db.CreateSettings(u.ID)
+		}
 		return u.ID
 	} else {
 		return user.ID

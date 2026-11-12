@@ -67,6 +67,7 @@ func (m *Controller) GetChat(c *gin.Context) {
 	chat, err := m.db.GetChat(uint(id))
 	if err != nil {
 		c.AbortWithStatus(404)
+		return
 	}
 	c.JSON(200, chat)
 }
