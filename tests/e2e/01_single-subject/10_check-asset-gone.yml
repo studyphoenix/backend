@@ -1,22 +1,15 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Create a chat
-  seq: 6
+  name: Check the asset is gone
+  seq: 11
 
 http:
-  method: PUT
-  url: "{{baseUrl}}/chats/create"
-  body:
-    type: json
-    data: |
-      {
-        "mode": "1",
-        "name": "test"
-      }
+  method: GET
+  url: "{{baseUrl}}/assets/get/0"
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "201"
+      value: "404"

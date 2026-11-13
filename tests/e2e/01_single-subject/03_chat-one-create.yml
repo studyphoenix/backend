@@ -1,15 +1,22 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Check the subtopic is gone
-  seq: 12
+  name: Create a chat
+  seq: 4
 
 http:
-  method: GET
-  url: "{{baseUrl}}/subtopics/get/1"
+  method: PUT
+  url: "{{baseUrl}}/chats/create"
+  body:
+    type: json
+    data: |
+      {
+        "mode": "1",
+        "name": "test"
+      }
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "404"
+      value: "201"
