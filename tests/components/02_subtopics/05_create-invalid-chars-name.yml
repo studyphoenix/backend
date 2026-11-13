@@ -2,7 +2,7 @@
 info:
   type: http
   name: Create a subtopic (invalid name)
-  seq: 5
+  seq: 6
 
 http:
   method: PUT

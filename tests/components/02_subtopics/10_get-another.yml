@@ -2,7 +2,7 @@
 info:
   type: http
   name: Check the created subject is correct
-  seq: 10
+  seq: 11
 
 http:
   method: GET

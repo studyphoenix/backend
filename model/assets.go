@@ -14,12 +14,12 @@ type Asset struct {
 }
 
 type CreateAssetRequest struct {
-	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"required,min=3,max=250,printascii"`
-	MediaType string `json:"mediaType" example:"application/pdf" minLength:"3" maxLength:"40" validate:"required,contains=/,min=3,max=40,printascii"` // The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
-	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"required,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
+	Name      string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"required" binding:"required,min=3,max=250,printascii"`
+	MediaType string `json:"mediaType" example:"application/pdf" minLength:"3" maxLength:"40" validate:"required" binding:"required,contains=/,min=3,max=40,printascii"` // The mediatype (formerly MIME type) of the asset. Will block replacement with asset of another type
+	Icon      string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"required" binding:"required,min=3,max=250,printascii"`                       // Must be a valid identifier for vuetify
 }
 
 type UpdateAssetRequest struct {
-	Name *string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"optional,min=3,max=250,printascii"`
-	Icon *string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"optional,min=3,max=250,printascii"` // Must be a valid identifier for vuetify
+	Name *string `json:"name" example:"Analysis Script" maxLength:"250" minLength:"3" validate:"optional" binding:"min=3,max=250,printascii"`
+	Icon *string `json:"icon" example:"fa-gear" maxLength:"250" minLength:"0" validate:"optional" binding:"min=3,max=250,printascii"` // Must be a valid identifier for vuetify
 }

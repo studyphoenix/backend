@@ -1,8 +1,10 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/TwiN/logr"
 	"gorm.io/gorm"
 )
 
@@ -42,6 +44,7 @@ func (c *DBConnector) CreateFlashcard(req CreateFlashcardRequest, userid uint) b
 
 func (c *DBConnector) DeleteFlashcard(id uint) bool {
 	if rows, err := gorm.G[Flashcard](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
+		logr.Debug(fmt.Sprint(err))
 		return false
 	}
 	return true
@@ -56,7 +59,8 @@ func (c *DBConnector) CompleteFlashcard(id uint) bool {
 	flashcard.CompletionCount += 1
 	flashcard.UpdatedAt = time.Now()
 
-	if c.DB.Save(&flashcard).Error != nil {
+	if err := c.DB.Save(&flashcard).Error; err != nil {
+		logr.Debug(fmt.Sprint(err))
 		return false
 	}
 	return true

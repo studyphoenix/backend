@@ -2,7 +2,7 @@
 info:
   type: http
   name: Delete the subject
-  seq: 10
+  seq: 12
 
 http:
   method: DELETE

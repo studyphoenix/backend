@@ -2,7 +2,7 @@
 info:
   type: http
   name: Create a subtopic
-  seq: 1
+  seq: 2
 
 http:
   method: PUT
@@ -12,7 +12,8 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "test"
+        "name": "test",
+        "subject": 1
       }
 
 runtime:

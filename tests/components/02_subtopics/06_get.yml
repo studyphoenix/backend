@@ -2,7 +2,7 @@
 info:
   type: http
   name: Check the created subtopic is correct
-  seq: 6
+  seq: 7
 
 http:
   method: GET

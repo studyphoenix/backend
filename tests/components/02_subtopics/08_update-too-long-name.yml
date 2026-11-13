@@ -2,7 +2,7 @@
 info:
   type: http
   name: Update subtopic (too long name)
-  seq: 8
+  seq: 9
 
 http:
   method: PATCH

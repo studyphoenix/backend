@@ -2,7 +2,7 @@
 info:
   type: http
   name: Chekc that delete happened
-  seq: 12
+  seq: 13
 
 http:
   method: GET
