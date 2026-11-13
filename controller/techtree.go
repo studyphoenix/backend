@@ -10,7 +10,7 @@ import (
 
 // Request handler to get a subject's tech tree
 //
-// @Summary 	Get a the tech tree for a given subject [WIP]
+// @Summary 	Get a the tech tree for a given subject
 // @Description	Returns the tech tree data structure for rendering the tech tree
 // @Tags		subjects
 // @Produce		json

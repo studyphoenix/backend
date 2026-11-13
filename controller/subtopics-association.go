@@ -11,7 +11,7 @@ import (
 
 // Request handler to associate subtopic(s)
 //
-// @Summary 	associate subtopic(s) [WIP]
+// @Summary 	associate subtopic(s)
 // @Description	associates the subtopic(s) to this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -47,7 +47,7 @@ func (m *Controller) AssociateSubtopicToSubtopic(c *gin.Context) {
 
 // Request handler to deassociate subtopic(s)
 //
-// @Summary 	deassociate subtopic(s) [WIP]
+// @Summary 	deassociate subtopic(s)
 // @Description	deassociates the subtopic(s) to this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -83,7 +83,7 @@ func (m *Controller) DeassociateSubtopicFromSubtopic(c *gin.Context) {
 
 // Request handler to associate asset(s)
 //
-// @Summary 	associate asset(s) [WIP]
+// @Summary 	associate asset(s)
 // @Description	associates the asset(s) depending on the value of "add" to this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -119,7 +119,7 @@ func (m *Controller) AssociateAssetToSubtopic(c *gin.Context) {
 
 // Request handler to deassociate asset(s)
 //
-// @Summary 	deassociate asset(s) [WIP]
+// @Summary 	deassociate asset(s)
 // @Description	deassociates the asset(s) from this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -155,7 +155,7 @@ func (m *Controller) DeassociateAssetFromSubtopic(c *gin.Context) {
 
 // Request handler to associate chat(s)
 //
-// @Summary 	associate chat(s) [WIP]
+// @Summary 	associate chat(s)
 // @Description	associates the chat(s) to this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -191,7 +191,7 @@ func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
 
 // Request handler to deassociate chat(s)
 //
-// @Summary 	deassociate chat(s) [WIP]
+// @Summary 	deassociate chat(s)
 // @Description	deassociates the chat(s) from this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -227,7 +227,7 @@ func (m *Controller) DeassociateChatFromSubtopic(c *gin.Context) {
 
 // Request handler to associate flashcard(s)
 //
-// @Summary 	associate flashcard(s) [WIP]
+// @Summary 	associate flashcard(s)
 // @Description	associates the flashcard(s) to this subtopic
 // @Tags		subtopics
 // @Produce		json
@@ -263,7 +263,7 @@ func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
 
 // Request handler to deassociate flashcards(s)
 //
-// @Summary 	deassociate chat(s) [WIP]
+// @Summary 	deassociate chat(s)
 // @Description	deassociates the chat(s) from this subtopic
 // @Tags		subtopics
 // @Produce		json

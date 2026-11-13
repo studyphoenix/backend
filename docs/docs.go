@@ -872,7 +872,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "associate asset(s) [WIP]",
+                "summary": "associate asset(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -968,7 +968,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "deassociate asset(s) [WIP]",
+                "summary": "deassociate asset(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1182,7 +1182,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Get a the tech tree for a given subject [WIP]",
+                "summary": "Get a the tech tree for a given subject",
                 "parameters": [
                     {
                         "type": "string",
@@ -1273,7 +1273,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "associate asset(s) [WIP]",
+                "summary": "associate asset(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1323,7 +1323,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "associate chat(s) [WIP]",
+                "summary": "associate chat(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1373,7 +1373,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "associate flashcard(s) [WIP]",
+                "summary": "associate flashcard(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1423,7 +1423,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "associate subtopic(s) [WIP]",
+                "summary": "associate subtopic(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1519,7 +1519,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "deassociate asset(s) [WIP]",
+                "summary": "deassociate asset(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1569,7 +1569,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "deassociate chat(s) [WIP]",
+                "summary": "deassociate chat(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1619,7 +1619,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "deassociate chat(s) [WIP]",
+                "summary": "deassociate chat(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1669,7 +1669,7 @@ const docTemplate = `{
                 "tags": [
                     "subtopics"
                 ],
-                "summary": "deassociate subtopic(s) [WIP]",
+                "summary": "deassociate subtopic(s)",
                 "parameters": [
                     {
                         "type": "string",
@@ -2536,11 +2536,11 @@ const docTemplate = `{
     },
     "tags": [
         {
-            "description": "Asset CRUD (assets are any type of file the user can upload) [WIP]",
+            "description": "Asset CRUD (assets are any type of file the user can upload)",
             "name": "assets"
         },
         {
-            "description": "Chat CRUD, chat message CRUD [WIP]",
+            "description": "Chat CRUD, chat message CRUD",
             "name": "chats"
         },
         {
@@ -2552,7 +2552,7 @@ const docTemplate = `{
             "name": "subjects"
         },
         {
-            "description": "Subtopics CRUD, association of other subtopics, chats and assets [WIP]",
+            "description": "Subtopics CRUD, association of other subtopics, chats and assets",
             "name": "subtopics"
         },
         {

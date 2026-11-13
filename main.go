@@ -31,10 +31,10 @@ import (
 // @schemes 	  http https
 //
 // @tag.name assets
-// @tag.description Asset CRUD (assets are any type of file the user can upload) [WIP]
+// @tag.description Asset CRUD (assets are any type of file the user can upload)
 //
 // @tag.name chats
-// @tag.description Chat CRUD, chat message CRUD [WIP]
+// @tag.description Chat CRUD, chat message CRUD
 //
 // @tag.name flashcards
 // @tag.description Flashcard CRUD [WIP]
@@ -43,7 +43,7 @@ import (
 // @tag.description Subjects CRUD, association of subtopics and assets [WIP]
 //
 // @tag.name subtopics
-// @tag.description Subtopics CRUD, association of other subtopics, chats and assets [WIP]
+// @tag.description Subtopics CRUD, association of other subtopics, chats and assets
 //
 // @tag.name user
 // @tag.description User data retrieval and deletion
