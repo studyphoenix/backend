@@ -4,7 +4,7 @@ func remove[T any](slice []T, s int) []T {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func (c *DBConnector) AsociateAssetToSubject(subjectid uint, assetid uint) bool {
+func (c *DBConnector) AssociateAssetToSubject(subjectid uint, assetid uint) bool {
 	asset, err := c.GetAsset(assetid)
 	if err != nil {
 		return false
@@ -40,6 +40,8 @@ func (c *DBConnector) DeassociateAssetFromSubject(subjectid uint, assetid uint) 
 	}
 
 	subject.Assets = remove(subject.Assets, idx)
+
+	c.DB.Save(&subject)
 
 	return true
 }

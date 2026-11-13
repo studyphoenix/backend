@@ -11,7 +11,7 @@ import (
 
 // Request handler to associate asset(s)
 //
-// @Summary 	associate asset(s) [WIP]
+// @Summary 	associate asset(s)
 // @Description	associates the specified asset(s) to this subject
 // @Tags		subjects
 // @Produce		json
@@ -39,7 +39,7 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 	}
 
 	for _, assetId := range req {
-		m.db.AsociateAssetToSubject(uint(id), assetId)
+		m.db.AssociateAssetToSubject(uint(id), assetId)
 	}
 
 	c.JSON(204, nil)
@@ -47,7 +47,7 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 
 // Request handler to associate asset(s)
 //
-// @Summary 	deassociate asset(s) [WIP]
+// @Summary 	deassociate asset(s)
 // @Description	deassociates the specified asset(s) to this subject
 // @Tags		subjects
 // @Produce		json
@@ -59,7 +59,7 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 // @Failure 	404 {object} 		nil "subject or id not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/deassociate/assets/{id} [patch]
-func (m *Controller) DeassociateAssetToSubject(c *gin.Context) {
+func (m *Controller) DeassociateAssetFromSubject(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
