@@ -75,7 +75,7 @@ func (m *Controller) DeassociateSubtopicFromSubtopic(c *gin.Context) {
 	}
 
 	for _, assetId := range req {
-		m.db.DeassociateAssetFromSubject(uint(id), assetId)
+		m.db.DeassociateSubtopicFromSubtopic(uint(id), assetId)
 	}
 
 	c.JSON(204, nil)
@@ -96,7 +96,25 @@ func (m *Controller) DeassociateSubtopicFromSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/associate/assets/{id} [patch]
 func (m *Controller) AssociateAssetToSubtopic(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.AssociateAssetToSubtopic(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
 
 // Request handler to deassociate asset(s)
@@ -114,7 +132,25 @@ func (m *Controller) AssociateAssetToSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/deassociate/assets/{id} [patch]
 func (m *Controller) DeassociateAssetFromSubtopic(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.DeassociateAssetFromSubject(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
 
 // Request handler to associate chat(s)
@@ -132,7 +168,25 @@ func (m *Controller) DeassociateAssetFromSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/associate/chats/{id} [patch]
 func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.AssociateChatToSubtopic(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
 
 // Request handler to deassociate chat(s)
@@ -150,7 +204,25 @@ func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/deassociate/chats/{id} [patch]
 func (m *Controller) DeassociateChatFromSubtopic(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.DeassociateChatFromSubtopic(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
 
 // Request handler to associate flashcard(s)
@@ -168,7 +240,25 @@ func (m *Controller) DeassociateChatFromSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/associate/flashcards/{id} [patch]
 func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.AssociateFlashcardToSubtopic(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
 
 // Request handler to deassociate flashcards(s)
@@ -186,5 +276,23 @@ func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/deassociate/flashcards/{id} [patch]
 func (m *Controller) DeassociateFlashcardFromSubtopic(c *gin.Context) {
-	c.JSON(200, nil)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	var req model.AssociationRequest
+	err = c.BindJSON(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse body to create association: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	for _, assetId := range req {
+		m.db.DeassociateFlashcardFromSubtopic(uint(id), assetId)
+	}
+
+	c.JSON(204, nil)
 }
