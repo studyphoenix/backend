@@ -11,7 +11,7 @@ http:
     type: json
     data: |
       {
-        "name": "toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
+        "name": "tooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
       }
 
 runtime:

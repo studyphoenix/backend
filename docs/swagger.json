@@ -2469,7 +2469,7 @@
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 0,
+                    "minLength": 1,
                     "example": "fa-gear"
                 },
                 "name": {
