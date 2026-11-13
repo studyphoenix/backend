@@ -30,7 +30,7 @@ func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest) bool {
 	return true
 }
 
-func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) bool {
+func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) (uint, bool) {
 	subtopic := Subtopic{
 		Name:      req.Name,
 		Icon:      req.Icon,
@@ -40,10 +40,12 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) boo
 		UpdatedAt: time.Now(),
 	}
 
-	if c.DB.Save(&subtopic).Error != nil {
-		return false
+	result := gorm.WithResult()
+	gorm.G[Subtopic](c.DB, result).Create(ctx, &subtopic)
+	if c.DB.Create(&subtopic).Error != nil {
+		return subtopic.ID, false
 	}
-	return true
+	return 0, true
 }
 
 func (c *DBConnector) DeleteSubtopic(id uint) bool {
