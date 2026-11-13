@@ -6,13 +6,14 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/assets/upload/0"
+  url: "{{baseUrl}}/assets/upload/{{assets-1}}"
   body:
     type: multipart-form
     data:
       - name: file
         type: file
-        value: ./invalid-asset.xml
+        value: /invalid-asset.xml
+        disabled: false
 
 runtime:
   assertions:

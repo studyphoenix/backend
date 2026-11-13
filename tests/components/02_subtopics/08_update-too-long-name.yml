@@ -2,16 +2,16 @@
 info:
   type: http
   name: Update subtopic (too long name)
-  seq: 8
+  seq: 9
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subjects/update/0"
+  url: "{{baseUrl}}/subtopics/update/{{subtopics-subtopic-1}}"
   body:
     type: json
     data: |
       {
-        "name": "tooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
+        "name": "toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
       }
 
 runtime:

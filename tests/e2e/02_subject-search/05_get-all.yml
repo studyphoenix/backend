@@ -1,15 +1,18 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Chekc that delete happened
-  seq: 12
+  name: Retrieve all subjects
+  seq: 6
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/get/0"
+  url: "{{baseUrl}}/subjects/search"
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "404"
+      value: "200"
+    - expression: res.body.length
+      operator: eq
+      value: "3"

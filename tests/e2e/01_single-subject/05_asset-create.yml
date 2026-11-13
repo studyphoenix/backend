@@ -1,15 +1,22 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Delete the subject
-  seq: 10
+  name: Create asset
+  seq: 6
 
 http:
-  method: GET
-  url: "{{baseUrl}}/subjects/delete/0"
+  method: PUT
+  url: "{{baseUrl}}/assets/create"
+  body:
+    type: json
+    data: |
+      {
+        "icon": "fa-gear",
+        "name": "test"
+      }
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "204"
+      value: "201"

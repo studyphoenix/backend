@@ -29,7 +29,7 @@ func (c *DBConnector) UpdateAsset(id uint, req UpdateAssetRequest) bool {
 	return true
 }
 
-func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) bool {
+func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) (uint, bool) {
 	asset := Asset{
 		Name:      req.Name,
 		MediaType: req.MediaType,
@@ -38,10 +38,12 @@ func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) bool {
 		UpdatedAt: time.Now(),
 	}
 
-	if c.DB.Save(&asset).Error != nil {
-		return false
+	result := gorm.WithResult()
+	err := gorm.G[Asset](c.DB, result).Create(ctx, &asset)
+	if err != nil {
+		return 0, false
 	}
-	return true
+	return asset.ID, true
 }
 
 func (c *DBConnector) DeleteAsset(id uint) bool {

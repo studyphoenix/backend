@@ -12,14 +12,18 @@ import (
 	"github.com/hci-group-15/backend/model"
 )
 
+type CreatedResponse struct {
+	Id uint `json:"id" example:"0"`
+}
+
 // Request handler to create a new subtopic
 //
 // @Summary 	Create a new subtopic
-// @Description	Creates a new subtopic linked to the current user
+// @Description	Creates a new subtopic linked to the current user and returns the id of it
 // @Tags		subtopics
 // @Produce		json
 // @Param 		payload body model.CreateSubtopicRequest true "Subtopic details to store"
-// @Success		201	{object}		nil
+// @Success		201	{object}		CreatedResponse
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -38,8 +42,11 @@ func (m *Controller) CreateSubtopic(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateSubtopic(req, uid) {
-		c.JSON(200, nil)
+	id, ok := m.db.CreateSubtopic(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_SUBTOPIC"))
 		c.Abort()
@@ -59,7 +66,7 @@ func (m *Controller) CreateSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/get/{id} [get]
 func (m *Controller) GetSubtopic(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -88,7 +95,7 @@ func (m *Controller) GetSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/update/{id} [patch]
 func (m *Controller) UpdateSubtopic(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -103,7 +110,7 @@ func (m *Controller) UpdateSubtopic(c *gin.Context) {
 	}
 
 	if m.db.UpdateSubtopic(uint(id), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -122,14 +129,14 @@ func (m *Controller) UpdateSubtopic(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subtopics/delete/{id} [delete]
 func (m *Controller) DeleteSubtopic(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.DeleteSubtopic(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}

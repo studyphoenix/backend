@@ -6,7 +6,7 @@ info:
 
 http:
   method: DELETE
-  url: "{{baseUrl}}/chats/messages/delete/0"
+  url: "{{baseUrl}}/chats/messages/delete/{{chats-message-1}}"
 
 runtime:
   assertions:

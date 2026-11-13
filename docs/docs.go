@@ -84,8 +84,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -210,8 +210,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -342,8 +342,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -468,8 +468,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -515,8 +515,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -565,8 +565,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request"
@@ -895,56 +895,6 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "400": {
-                        "description": "subject or id not found"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/subjects/associate/subtopics/{id}": {
-            "patch": {
-                "description": "associates the subtopic(s) from this subject",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subjects"
-                ],
-                "summary": "associate subtopic(s) [WIP]",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The id of the subject to update",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "The associations to add",
-                        "name": "payload",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "integer"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
                     "204": {
                         "description": "No Content"
                     },
@@ -968,7 +918,7 @@ const docTemplate = `{
         },
         "/subjects/create": {
             "put": {
-                "description": "Creates a new subject linked to the current user",
+                "description": "Creates a new subject linked to the current user and returns the id of it",
                 "produces": [
                     "application/json"
                 ],
@@ -989,7 +939,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1016,56 +969,6 @@ const docTemplate = `{
                     "subjects"
                 ],
                 "summary": "deassociate asset(s) [WIP]",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The id of the subject to update",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "The associations to remove",
-                        "name": "payload",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "integer"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    },
-                    "400": {
-                        "description": "subject or id not found"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/subjects/deassociate/subtopics/{id}": {
-            "patch": {
-                "description": "deassociates the specified subtopic(s) from this subject",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subjects"
-                ],
-                "summary": "deassociate subtopic(s) [WIP]",
                 "parameters": [
                     {
                         "type": "string",
@@ -1566,7 +1469,7 @@ const docTemplate = `{
         },
         "/subtopics/create": {
             "put": {
-                "description": "Creates a new subtopic linked to the current user",
+                "description": "Creates a new subtopic linked to the current user and returns the id of it",
                 "produces": [
                     "application/json"
                 ],
@@ -1587,7 +1490,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1985,8 +1891,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "204": {
+                        "description": "No Content"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -2031,6 +1937,18 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.CreatedResponse": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 0
+                }
+            }
+        },
         "controller.UserProfileResponse": {
             "type": "object",
             "required": [
@@ -2223,7 +2141,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis Script"
                 }
@@ -2301,7 +2219,9 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "icon",
-                "name"
+                "name",
+                "progress",
+                "subject"
             ],
             "properties": {
                 "icon": {
@@ -2316,6 +2236,19 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
+                },
+                "progress": {
+                    "description": "Due to limitation of validator, has to be value + 1",
+                    "type": "integer",
+                    "default": 1,
+                    "maximum": 100,
+                    "minimum": 0,
+                    "example": 1
+                },
+                "subject": {
+                    "description": "Subject this subtopic belongs to",
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -2409,6 +2342,7 @@ const docTemplate = `{
                 "icon",
                 "id",
                 "name",
+                "progress",
                 "updatedAt"
             ],
             "properties": {
@@ -2434,6 +2368,13 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "example": "ordinary differential equations"
+                },
+                "progress": {
+                    "description": "value in [0, 100]",
+                    "type": "integer",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "example": 0
                 },
                 "subtopics": {
                     "type": "array",
@@ -2531,7 +2472,7 @@ const docTemplate = `{
                     "description": "The Icon of the subject. Must be an icon that can be rendered in the browser",
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 0,
+                    "minLength": 1,
                     "example": "fa-gear"
                 },
                 "name": {
@@ -2557,6 +2498,18 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis"
+                },
+                "progress": {
+                    "type": "integer",
+                    "default": 0,
+                    "maximum": 100,
+                    "minimum": 0,
+                    "example": 0
+                },
+                "subject": {
+                    "description": "Subject this subtopic belongs to",
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },

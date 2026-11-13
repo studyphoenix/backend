@@ -12,7 +12,8 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "test3"
+        "name": "test3",
+        "content": "my content"
       }
 
 runtime:

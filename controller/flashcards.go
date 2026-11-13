@@ -38,8 +38,11 @@ func (m *Controller) CreateFlashcard(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateFlashcard(req, uid) {
-		c.JSON(200, nil)
+	id, ok := m.db.CreateFlashcard(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_FLASHCARD"))
 		c.Abort()
@@ -59,7 +62,7 @@ func (m *Controller) CreateFlashcard(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/get/{id} [get]
 func (m *Controller) GetFlashcard(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -88,7 +91,7 @@ func (m *Controller) GetFlashcard(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/update/{id} [patch]
 func (m *Controller) UpdateFlashcard(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -103,7 +106,7 @@ func (m *Controller) UpdateFlashcard(c *gin.Context) {
 	}
 
 	if m.db.UpdateFlashcard(uint(id), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -122,14 +125,15 @@ func (m *Controller) UpdateFlashcard(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/complete/{id} [patch]
 func (m *Controller) CompleteFlashcard(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
+		logr.Debug(fmt.Sprint(err))
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.CompleteFlashcard(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -148,14 +152,14 @@ func (m *Controller) CompleteFlashcard(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/delete/{id} [delete]
 func (m *Controller) DeleteFlashcard(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.DeleteFlashcard(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}

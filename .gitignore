@@ -40,4 +40,4 @@ go.work.sum
 **/*.db
 
 # Testing report
-tests/report.*
+**/report.html

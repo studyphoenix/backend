@@ -19,4 +19,4 @@ runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "201"
+      value: "400"

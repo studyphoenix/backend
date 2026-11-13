@@ -38,8 +38,12 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateAsset(req, uid) {
-		c.JSON(200, nil)
+
+	id, ok := m.db.CreateAsset(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_ASSET"))
 		c.Abort()
@@ -59,7 +63,7 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/get/{id} [get]
 func (m *Controller) GetAssetDetails(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -80,14 +84,14 @@ func (m *Controller) GetAssetDetails(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the asset to update"
 // @Param 		payload body model.UpdateAssetRequest true "Asset details to update with. All attributes optional!"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "asset not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/update/{id} [patch]
 func (m *Controller) UpdateAssetDetails(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -102,7 +106,7 @@ func (m *Controller) UpdateAssetDetails(c *gin.Context) {
 	}
 
 	if m.db.UpdateAsset(uint(id), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -115,20 +119,20 @@ func (m *Controller) UpdateAssetDetails(c *gin.Context) {
 // @Tags		assets
 // @Produce		json
 // @Param 		id path string true "The id of the asset to delete"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "asset not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/delete/{id} [delete]
 func (m *Controller) DeleteAsset(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.DeleteAsset(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}

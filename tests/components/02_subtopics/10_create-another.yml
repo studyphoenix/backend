@@ -1,21 +1,26 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Create a chat
-  seq: 6
+  name: Create another subtopic
+  seq: 11
 
 http:
   method: PUT
-  url: "{{baseUrl}}/chats/create"
+  url: "{{baseUrl}}/subtopics/create"
   body:
     type: json
     data: |
       {
-        "mode": "1",
-        "name": "test"
+        "icon": "fa-gear",
+        "name": "another",
+        "subject": {{subtopics-subject-id}}
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("subtopics-subtopic-2", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

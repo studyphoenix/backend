@@ -27,7 +27,7 @@ func (c *DBConnector) UpdateChatMessage(id uint, req UpdateChatMessageRequest) b
 	return true
 }
 
-func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint) bool {
+func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint) (uint, bool) {
 	msg := ChatMessage{
 		UpdatedAt:    time.Now(),
 		ChatID:       chatid,
@@ -36,10 +36,12 @@ func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint) 
 		Summary:      req.Summary,
 	}
 
-	if c.DB.Save(&msg).Error != nil {
-		return false
+	result := gorm.WithResult()
+	err := gorm.G[ChatMessage](c.DB, result).Create(ctx, &msg)
+	if err != nil {
+		return 0, false
 	}
-	return true
+	return msg.ID, true
 }
 
 func (c *DBConnector) DeleteChatMessage(id uint) bool {

@@ -26,7 +26,7 @@ func (c *DBConnector) UpdateSubject(id uint, req UpdateSubjectRequest) bool {
 	return true
 }
 
-func (c *DBConnector) CreateSubject(req CreateSubjectRequest, userid uint) bool {
+func (c *DBConnector) CreateSubject(req CreateSubjectRequest, userid uint) (uint, bool) {
 	subject := Subject{
 		Name:      req.Name,
 		Icon:      req.Icon,
@@ -34,10 +34,12 @@ func (c *DBConnector) CreateSubject(req CreateSubjectRequest, userid uint) bool 
 		UpdatedAt: time.Now(),
 	}
 
-	if c.DB.Save(&subject).Error != nil {
-		return false
+	result := gorm.WithResult()
+	err := gorm.G[Subject](c.DB, result).Create(ctx, &subject)
+	if err != nil {
+		return 0, false
 	}
-	return true
+	return subject.ID, true
 }
 
 func (c *DBConnector) DeleteSubject(id uint) bool {

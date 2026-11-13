@@ -1,15 +1,22 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Delete the subject
-  seq: 10
+  name: Create a chat
+  seq: 4
 
 http:
-  method: DELETE
-  url: "{{baseUrl}}/subtopics/delete/0"
+  method: PUT
+  url: "{{baseUrl}}/chats/create"
+  body:
+    type: json
+    data: |
+      {
+        "mode": "1",
+        "name": "test"
+      }
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "204"
+      value: "201"

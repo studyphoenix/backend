@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Retrieve subjects without subtopics
-  seq: 9
+  name: Retrieve subjects by name
+  seq: 8
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/search?maxSubtopicCount=0"
+  url: "{{baseUrl}}/subjects/search?q=test"
 
 runtime:
   assertions:
@@ -15,4 +15,4 @@ runtime:
       value: "200"
     - expression: res.body.length
       operator: eq
-      value: "1"
+      value: "3"

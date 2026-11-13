@@ -2,7 +2,7 @@
 info:
   type: http
   name: Create a subtopic
-  seq: 1
+  seq: 2
 
 http:
   method: PUT
@@ -12,10 +12,16 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "test"
+        "name": "test",
+        "subject": {{subtopics-subject-id}},
+        "progress": 0
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("subtopics-subtopic-1", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

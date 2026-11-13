@@ -1,18 +1,19 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Retrieve subjects by name
-  seq: 10
+  name: Associate asset to the subject
+  seq: 7
 
 http:
-  method: GET
-  url: "{{baseUrl}}/subjects/search?q=test"
+  method: PUT
+  url: "{{baseUrl}}/subjects/associate/assets/0"
+  body:
+    type: json
+    data: |
+      [0]
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
       value: "200"
-    - expression: res.body.length
-      operator: eq
-      value: "3"

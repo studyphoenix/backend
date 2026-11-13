@@ -2,11 +2,11 @@
 info:
   type: http
   name: Update subtopic
-  seq: 7
+  seq: 8
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subtopics/update/0"
+  url: "{{baseUrl}}/subtopics/update/{{subtopics-subtopic-1}}"
   body:
     type: json
     data: |

@@ -2,11 +2,11 @@
 info:
   type: http
   name: Check the created subject is correct
-  seq: 10
+  seq: 12
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/get/1"
+  url: "{{baseUrl}}/subtopics/get/{{subtopics-subtopic-2}}"
 
 runtime:
   assertions:
@@ -19,6 +19,3 @@ runtime:
     - expression: res.body.name
       operator: eq
       value: "another"
-    - expression: res.body.id
-      operator: eq
-      value: "1"

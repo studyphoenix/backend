@@ -42,7 +42,7 @@ func (m *Controller) GetConfig(c *gin.Context) {
 // @Tags		user
 // @Produce		json
 // @Param 		payload body model.UpdateUserConfigRequest true "Configuration Details to update"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/user/config [patch]
@@ -61,7 +61,7 @@ func (m *Controller) StoreConfig(c *gin.Context) {
 	}
 
 	if m.db.StoreSettings(uint(uid), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}

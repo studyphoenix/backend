@@ -15,11 +15,11 @@ import (
 // Request handler to create a new subject
 //
 // @Summary 	Create a new subject
-// @Description	Creates a new subject linked to the current user
+// @Description	Creates a new subject linked to the current user and returns the id of it
 // @Tags		subjects
 // @Produce		json
 // @Param 		payload body model.CreateSubjectRequest true "Subject details to store"
-// @Success		201	{object}		nil
+// @Success		201	{object}		CreatedResponse
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -38,10 +38,14 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateSubject(req, uid) {
-		c.JSON(200, nil)
+	id, ok := m.db.CreateSubject(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_SUBJECT"))
+		c.Abort()
 	}
 }
 
@@ -58,7 +62,7 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/get/{id} [get]
 func (m *Controller) GetSubject(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -87,7 +91,7 @@ func (m *Controller) GetSubject(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/update/{id} [patch]
 func (m *Controller) UpdateSubject(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -102,7 +106,7 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 	}
 
 	if m.db.UpdateSubject(uint(id), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -121,14 +125,14 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/delete/{id} [delete]
 func (m *Controller) DeleteSubject(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.DeleteSubject(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}

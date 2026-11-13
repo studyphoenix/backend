@@ -6,7 +6,7 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/flashcards/update/0"
+  url: "{{baseUrl}}/flashcards/update/{{flashcards-1}}"
   body:
     type: json
     data: |

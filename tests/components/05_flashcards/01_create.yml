@@ -17,6 +17,10 @@ http:
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("flashcards-1", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

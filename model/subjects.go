@@ -13,11 +13,11 @@ type Subject struct {
 }
 
 type CreateSubjectRequest struct {
-	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required,printascii,min=3,max=100"`
-	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
+	Name string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required" binding:"required,printascii,min=3,max=100"`
+	Icon string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required" binding:"required,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 }
 
 type UpdateSubjectRequest struct {
-	Name *string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"optional,printascii,min=3,max=100"`
-	Icon *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
+	Name *string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"optional" binding:"omitempty,printascii,min=3,max=100"`
+	Icon *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"1" validate:"optional" binding:"omitempty,printascii,min=1,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 }

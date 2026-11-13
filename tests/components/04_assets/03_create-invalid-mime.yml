@@ -12,7 +12,7 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "mediaType": "not a media type"
+        "mediaType": "not a media type",
         "name": "test"
       }
 

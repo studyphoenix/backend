@@ -6,7 +6,7 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/flashcards/complete/1"
+  url: "{{baseUrl}}/flashcards/complete/{{flashcards-2}}"
 
 runtime:
   assertions:

@@ -27,7 +27,7 @@ func Init(prod bool, conf *config.Config) *DBConnector {
 		}
 	}
 
-	db, err := gorm.Open(sqlite.Open("janishutz-store.db"), &gormConf)
+	db, err := gorm.Open(sqlite.Open("studyphoenix.db"), &gormConf)
 	if err != nil {
 		log.Fatal("[DB] Failed to connect to DB with error", err)
 	}
@@ -42,6 +42,7 @@ func Init(prod bool, conf *config.Config) *DBConnector {
 	db.AutoMigrate(&Chat{})
 	db.AutoMigrate(&ChatMessage{})
 	db.AutoMigrate(&Flashcard{})
+	db.AutoMigrate(&Settings{})
 
 	return &DBConnector{
 		DB: db,
