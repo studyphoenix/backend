@@ -17,14 +17,14 @@ import (
 // @Produce		json
 // @Param 		id path string true "The id of the subject to update"
 // @Param 		payload body model.AssociationRequest true "The associations to add"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subject or id not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/associate/assets/{id} [patch]
 func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -60,7 +60,7 @@ func (m *Controller) AssociateAssetToSubject(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/deassociate/assets/{id} [patch]
 func (m *Controller) DeassociateAssetToSubject(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return

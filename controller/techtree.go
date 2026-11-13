@@ -20,7 +20,7 @@ import (
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/techtree/{id} [get]
 func (m *Controller) GetSubjectTechTree(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return

@@ -50,6 +50,7 @@ import (
 //
 // @BasePath  /
 func main() {
+	logr.SetThreshold(logr.LevelDebug)
 	logr.Debug("Starting...")
 	r := gin.Default()
 

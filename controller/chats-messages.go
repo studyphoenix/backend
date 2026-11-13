@@ -25,7 +25,7 @@ import (
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/messages/add/{id} [put]
 func (m *Controller) AddChatMessageToChat(c *gin.Context) {
-	chatId, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	chatId, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -40,7 +40,7 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 	}
 
 	if m.db.CreateChatMessage(req, uint(chatId)) {
-		c.JSON(200, nil)
+		c.JSON(201, nil)
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_ADD_CHAT_MESSAGE"))
 		c.Abort()
@@ -55,14 +55,14 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the chat message to update"
 // @Param 		payload body model.UpdateChatMessageRequest true "Message content to update. All attributes optional!"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "message not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/messages/update/{id} [patch]
 func (m *Controller) UpdateChatMessage(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -77,7 +77,7 @@ func (m *Controller) UpdateChatMessage(c *gin.Context) {
 	}
 
 	if m.db.UpdateChatMessage(uint(id), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -90,20 +90,20 @@ func (m *Controller) UpdateChatMessage(c *gin.Context) {
 // @Tags		chats
 // @Produce		json
 // @Param 		id path string true "The id of the chat message to delete"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "chat or message not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/messages/delete/{id} [delete]
 func (m *Controller) DeleteChatMessage(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.DeleteChatMessage(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}

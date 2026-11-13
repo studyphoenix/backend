@@ -39,7 +39,7 @@ func (m *Controller) CreateChat(c *gin.Context) {
 		return
 	}
 	if m.db.CreateChat(req, uid) {
-		c.JSON(200, nil)
+		c.JSON(201, nil)
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_CHAT"))
 		c.Abort()
@@ -59,7 +59,7 @@ func (m *Controller) CreateChat(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/get/{id} [get]
 func (m *Controller) GetChat(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -81,14 +81,14 @@ func (m *Controller) GetChat(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the chat to update"
 // @Param 		payload body model.UpdateChatRequest true "Chat details to update with. All attributes optional!"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "chat not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/update/{id} [patch]
 func (m *Controller) UpdateChat(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
@@ -103,7 +103,7 @@ func (m *Controller) UpdateChat(c *gin.Context) {
 	}
 
 	if m.db.UpdateChat(uint(id), req) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
@@ -116,20 +116,20 @@ func (m *Controller) UpdateChat(c *gin.Context) {
 // @Tags		chats
 // @Produce		json
 // @Param 		id path string true "The id of the chat to delete"
-// @Success		200	{object}		nil
+// @Success		204	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "chat not found"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/chats/delete/{id} [delete]
 func (m *Controller) DeleteChat(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
 	if m.db.DeleteChat(uint(id)) {
-		c.JSON(200, nil)
+		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
 	}
