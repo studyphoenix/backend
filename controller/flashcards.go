@@ -38,8 +38,11 @@ func (m *Controller) CreateFlashcard(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateFlashcard(req, uid) {
-		c.JSON(201, nil)
+	id, ok := m.db.CreateFlashcard(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_FLASHCARD"))
 		c.Abort()

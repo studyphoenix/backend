@@ -20,12 +20,12 @@ type CreateSubtopicRequest struct {
 	Name     string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"required" binding:"required,printascii,min=3,max=100"`
 	Icon     string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"required" binding:"required,printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
 	Subject  uint   `example:"1" json:"subject" validate:"required" binding:"required"`                                                           // Subject this subtopic belongs to
-	Progress uint   `example:"0" json:"progress" validate:"required" binding:"required,min=0,max=100" default:"0" minimum:"0" maximum:"100"`
+	Progress uint   `example:"1" json:"progress" validate:"required" binding:"required,min=1,max=101" default:"1" minimum:"1" maximum:"101"`      // Due to limitation of validator, has to be value + 1
 }
 
 type UpdateSubtopicRequest struct {
 	Name     *string `example:"Analysis" json:"name" maxLength:"100" minLength:"3" validate:"optional" binding:"printascii,min=3,max=100"`
 	Icon     *string `example:"fa-gear" json:"icon" maxLength:"100" minLength:"0" validate:"optional" binding:"printascii,min=0,max=100"` // The Icon of the subject. Must be an icon that can be rendered in the browser
-	Subject  *uint   `example:"1" json:"subject" validate:"optional"`                                                                              // Subject this subtopic belongs to
+	Subject  *uint   `example:"1" json:"subject" validate:"optional"`                                                                     // Subject this subtopic belongs to
 	Progress *uint   `example:"0" json:"progress" validate:"optional" binding:"min=0,max=100" default:"0" minimum:"0" maximum:"100"`
 }

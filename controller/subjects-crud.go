@@ -15,11 +15,11 @@ import (
 // Request handler to create a new subject
 //
 // @Summary 	Create a new subject
-// @Description	Creates a new subject linked to the current user
+// @Description	Creates a new subject linked to the current user and returns the id of it
 // @Tags		subjects
 // @Produce		json
 // @Param 		payload body model.CreateSubjectRequest true "Subject details to store"
-// @Success		201	{object}		nil
+// @Success		201	{object}		CreatedResponse
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -38,10 +38,14 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateSubject(req, uid) {
-		c.JSON(201, nil)
+	id, ok := m.db.CreateSubject(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_SUBJECT"))
+		c.Abort()
 	}
 }
 

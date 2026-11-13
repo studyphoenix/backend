@@ -12,14 +12,18 @@ import (
 	"github.com/hci-group-15/backend/model"
 )
 
+type CreatedResponse struct {
+	Id uint `json:"id" example:"0"`
+}
+
 // Request handler to create a new subtopic
 //
 // @Summary 	Create a new subtopic
-// @Description	Creates a new subtopic linked to the current user
+// @Description	Creates a new subtopic linked to the current user and returns the id of it
 // @Tags		subtopics
 // @Produce		json
 // @Param 		payload body model.CreateSubtopicRequest true "Subtopic details to store"
-// @Success		201	{object}		nil
+// @Success		201	{object}		CreatedResponse
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -38,8 +42,11 @@ func (m *Controller) CreateSubtopic(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateSubtopic(req, uid) {
-		c.JSON(201, nil)
+	id, ok := m.db.CreateSubtopic(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_SUBTOPIC"))
 		c.Abort()

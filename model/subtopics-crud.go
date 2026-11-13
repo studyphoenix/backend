@@ -41,11 +41,11 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) (ui
 	}
 
 	result := gorm.WithResult()
-	gorm.G[Subtopic](c.DB, result).Create(ctx, &subtopic)
-	if c.DB.Create(&subtopic).Error != nil {
-		return subtopic.ID, false
+	err := gorm.G[Subtopic](c.DB, result).Create(ctx, &subtopic)
+	if err != nil {
+		return 0, false
 	}
-	return 0, true
+	return subtopic.ID, true
 }
 
 func (c *DBConnector) DeleteSubtopic(id uint) bool {

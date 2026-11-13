@@ -28,7 +28,7 @@ func (c *DBConnector) UpdateFlashcard(id uint, req UpdateFlashcardRequest) bool 
 	return true
 }
 
-func (c *DBConnector) CreateFlashcard(req CreateFlashcardRequest, userid uint) bool {
+func (c *DBConnector) CreateFlashcard(req CreateFlashcardRequest, userid uint) (uint, bool) {
 	flashcard := Flashcard{
 		Name:      req.Name,
 		Content:   req.Content,
@@ -36,10 +36,12 @@ func (c *DBConnector) CreateFlashcard(req CreateFlashcardRequest, userid uint) b
 		UpdatedAt: time.Now(),
 	}
 
-	if c.DB.Save(&flashcard).Error != nil {
-		return false
+	result := gorm.WithResult()
+	err := gorm.G[Flashcard](c.DB, result).Create(ctx, &flashcard)
+	if err != nil {
+		return 0, false
 	}
-	return true
+	return flashcard.ID, true
 }
 
 func (c *DBConnector) DeleteFlashcard(id uint) bool {

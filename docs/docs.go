@@ -918,7 +918,7 @@ const docTemplate = `{
         },
         "/subjects/create": {
             "put": {
-                "description": "Creates a new subject linked to the current user",
+                "description": "Creates a new subject linked to the current user and returns the id of it",
                 "produces": [
                     "application/json"
                 ],
@@ -939,7 +939,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1466,7 +1469,7 @@ const docTemplate = `{
         },
         "/subtopics/create": {
             "put": {
-                "description": "Creates a new subtopic linked to the current user",
+                "description": "Creates a new subtopic linked to the current user and returns the id of it",
                 "produces": [
                     "application/json"
                 ],
@@ -1487,7 +1490,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1931,6 +1937,18 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.CreatedResponse": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 0
+                }
+            }
+        },
         "controller.UserProfileResponse": {
             "type": "object",
             "required": [
@@ -2220,11 +2238,12 @@ const docTemplate = `{
                     "example": "Analysis"
                 },
                 "progress": {
+                    "description": "Due to limitation of validator, has to be value + 1",
                     "type": "integer",
-                    "default": 0,
-                    "maximum": 100,
-                    "minimum": 0,
-                    "example": 0
+                    "default": 1,
+                    "maximum": 101,
+                    "minimum": 1,
+                    "example": 1
                 },
                 "subject": {
                     "description": "Subject this subtopic belongs to",

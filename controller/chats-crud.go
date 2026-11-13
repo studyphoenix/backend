@@ -38,8 +38,12 @@ func (m *Controller) CreateChat(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	if m.db.CreateChat(req, uid) {
-		c.JSON(201, nil)
+
+	id, ok := m.db.CreateChat(req, uid)
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_CREATE_CHAT"))
 		c.Abort()
