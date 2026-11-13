@@ -12,7 +12,8 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": ""
+        "name": "",
+        "subject": {{subtopics-subject-id}}
       }
 
 runtime:

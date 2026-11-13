@@ -6,7 +6,7 @@ info:
 
 http:
   method: DELETE
-  url: "{{baseUrl}}/subjects/delete/0"
+  url: "{{baseUrl}}/subjects/delete/{{subjects-subject-1}}"
 
 runtime:
   assertions:

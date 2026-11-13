@@ -6,7 +6,7 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subtopics/update/0"
+  url: "{{baseUrl}}/subtopics/update/{{subtopics-subtopic-1}}"
   body:
     type: json
     data: |

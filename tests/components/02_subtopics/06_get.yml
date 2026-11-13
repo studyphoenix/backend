@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/subtopics/get/0"
+  url: "{{baseUrl}}/subtopics/get/{{subtopics-subtopic-1}}"
 
 runtime:
   assertions:
@@ -19,6 +19,3 @@ runtime:
     - expression: res.body.name
       operator: eq
       value: "test"
-    - expression: res.body.id
-      operator: eq
-      value: "0"

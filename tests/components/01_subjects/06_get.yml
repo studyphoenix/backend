@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/get/0"
+  url: "{{baseUrl}}/subjects/get/{{subjects-subject-1}}"
 
 runtime:
   assertions:
@@ -19,6 +19,3 @@ runtime:
     - expression: res.body.name
       operator: eq
       value: "test"
-    - expression: res.body.id
-      operator: eq
-      value: "0"
