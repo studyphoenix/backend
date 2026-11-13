@@ -2141,7 +2141,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 250,
+                    "maxLength": 100,
                     "minLength": 3,
                     "example": "Analysis Script"
                 }
@@ -2241,8 +2241,8 @@ const docTemplate = `{
                     "description": "Due to limitation of validator, has to be value + 1",
                     "type": "integer",
                     "default": 1,
-                    "maximum": 101,
-                    "minimum": 1,
+                    "maximum": 100,
+                    "minimum": 0,
                     "example": 1
                 },
                 "subject": {

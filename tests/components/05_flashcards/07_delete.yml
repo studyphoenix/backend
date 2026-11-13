@@ -6,7 +6,7 @@ info:
 
 http:
   method: DELETE
-  url: "{{baseUrl}}/flashcards/delete/0"
+  url: "{{baseUrl}}/flashcards/delete/{{flashcards-1}}"
 
 runtime:
   assertions:

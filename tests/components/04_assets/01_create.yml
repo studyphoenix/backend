@@ -12,11 +12,15 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "mediaType": "application/json"
+        "mediaType": "application/json",
         "name": "test"
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("assets-1", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

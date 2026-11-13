@@ -13,7 +13,8 @@ http:
       {
         "icon": "fa-gear",
         "name": "test",
-        "subject": {{subtopics-subject-id}}
+        "subject": {{subtopics-subject-id}},
+        "progress": 0
       }
 
 runtime:

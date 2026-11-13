@@ -12,7 +12,7 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "mediaType": "application/json"
+        "mediaType": "application/json",
         "name": "toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
       }
 

@@ -6,16 +6,16 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/flashcards/get/0"
+  url: "{{baseUrl}}/flashcards/get/{{flashcards-1}}"
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
       value: "200"
-    - expression: res.body.icon
+    - expression: res.body.content
       operator: eq
-      value: "fa-gear"
+      value: "my content"
     - expression: res.body.name
       operator: eq
       value: "test"

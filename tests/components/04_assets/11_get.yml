@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/assets/get/0"
+  url: "{{baseUrl}}/assets/get/{{assets-1}}"
 
 runtime:
   assertions:

@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/chats/get/0"
+  url: "{{baseUrl}}/chats/get/{{chats-1}}"
 
 runtime:
   assertions:
@@ -19,9 +19,6 @@ runtime:
     - expression: res.body.name
       operator: eq
       value: "test"
-    - expression: res.body.id
+    - expression: res.body.chatMessages.length
       operator: eq
       value: "0"
-    - expression: res.body.chatMessages
-      operator: eq
-      value: "[]"

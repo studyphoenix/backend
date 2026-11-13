@@ -6,7 +6,7 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/assets/update/0"
+  url: "{{baseUrl}}/assets/update/{{assets-1}}"
   body:
     type: json
     data: |
@@ -18,4 +18,4 @@ runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "400"
+      value: "204"

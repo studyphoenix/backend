@@ -6,13 +6,13 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/chats/messages/add/0"
+  url: "{{baseUrl}}/chats/messages/add/{{chats-1}}"
   body:
     type: json
     data: |
       {
         "modelMessage": "Certainly! Testing this",
-        "userMessage": "User's question or message goes here"
+        "userMessage": "User's question or message goes here",
         "summary": "test message"
       }
 

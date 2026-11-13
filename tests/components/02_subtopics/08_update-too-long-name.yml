@@ -6,12 +6,12 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subjects/update/{{subtopics-subtopic-1}}"
+  url: "{{baseUrl}}/subtopics/update/{{subtopics-subtopic-1}}"
   body:
     type: json
     data: |
       {
-        "name": "tooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
+        "name": "toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo long name"
       }
 
 runtime:

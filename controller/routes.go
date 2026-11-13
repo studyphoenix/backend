@@ -22,7 +22,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 
 	// Chats
 	chats := r.Group("/chats")
-	chats.PUT("create")
+	chats.PUT("create", c.CreateChat)
 	chats.DELETE("delete/:id", c.DeleteChat)
 	chats.GET("get/:id", c.GetChat)
 	chats.PUT("messages/add/:id", c.AddChatMessageToChat)

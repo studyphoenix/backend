@@ -2,7 +2,7 @@
 info:
   type: http
   name: Delete a subtopic that doesn't exist
-  seq: 14
+  seq: 15
 
 http:
   method: DELETE

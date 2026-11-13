@@ -39,8 +39,11 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 		return
 	}
 
-	if m.db.CreateChatMessage(req, uint(chatId)) {
-		c.JSON(201, nil)
+	id, ok := m.db.CreateChatMessage(req, uint(chatId))
+	if ok {
+		c.JSON(201, CreatedResponse{
+			Id: id,
+		})
 	} else {
 		httputil.NewError(c, 500, errors.New("ERR_ADD_CHAT_MESSAGE"))
 		c.Abort()

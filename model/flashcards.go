@@ -18,6 +18,6 @@ type CreateFlashcardRequest struct {
 }
 
 type UpdateFlashcardRequest struct {
-	Name    *string `example:"ODEs" json:"name" maxLength:"100" minLength:"3" validate:"optional" binding:"min=3,max=100"`
-	Content *string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"optional" binding:"min=0"`
+	Name    *string `example:"ODEs" json:"name" maxLength:"100" minLength:"3" validate:"optional" binding:"omitempty,min=3,max=100"`
+	Content *string `example:"summarized content for this flashcard with everything needed for the model to ask sensible questions" json:"content" validate:"optional" binding:"omitempty,min=0"`
 }

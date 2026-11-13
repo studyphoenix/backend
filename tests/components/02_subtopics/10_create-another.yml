@@ -2,7 +2,7 @@
 info:
   type: http
   name: Create another subtopic
-  seq: 10
+  seq: 11
 
 http:
   method: PUT
