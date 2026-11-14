@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hci-group-15/backend/httputil"
+	"github.com/studyphoenix/backend/httputil"
 )
 
 // Request handler to get a subject's tech tree

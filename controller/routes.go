@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/TwiN/logr"
 	"github.com/gin-gonic/gin"
-	"github.com/hci-group-15/backend/docs"
+	"github.com/studyphoenix/backend/docs"
 	"github.com/janishutz/oidclogin"
 
 	swaggerfiles "github.com/swaggo/files"

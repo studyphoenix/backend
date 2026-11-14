@@ -6,7 +6,7 @@ import (
 
 	"github.com/TwiN/logr"
 	"github.com/gin-gonic/gin"
-	"github.com/hci-group-15/backend/model"
+	"github.com/studyphoenix/backend/model"
 )
 
 // Request handler to associate subtopic(s)

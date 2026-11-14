@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/hci-group-15/backend/model"
+import "github.com/studyphoenix/backend/model"
 
 type Controller struct {
 	db *model.DBConnector

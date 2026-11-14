@@ -1,4 +1,4 @@
-module github.com/hci-group-15/backend
+module github.com/studyphoenix/backend
 
 go 1.26.0
 
