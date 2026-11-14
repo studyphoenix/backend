@@ -1,6 +1,15 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"errors"
+	"fmt"
+
+	"github.com/TwiN/logr"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/studyphoenix/backend/httputil"
+	"github.com/studyphoenix/backend/model"
+)
 
 // Request handler to get a user's flashcards
 //
@@ -19,5 +28,24 @@ import "github.com/gin-gonic/gin"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/search [get]
 func (m *Controller) QueryFlashcards(c *gin.Context) {
-	c.JSON(200, nil)
+	var req model.FlashcardQuery
+	err := c.BindQuery(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse query: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+	flashcards, err := m.db.QueryFlashcards(req, uid)
+	if err != nil {
+		httputil.NewError(c, 500, errors.New("Failed to process query request"))
+		c.Abort()
+	} else {
+		c.JSON(201, flashcards)
+	}
 }
