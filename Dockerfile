@@ -19,6 +19,7 @@ ENV GIN_MODE=release
 
 COPY --from=build /usr/src/build/backend /app/backend
 COPY ./templates/ /app/templates
+COPY ./config.yml /app/config.yml
 RUN ls /app
 
 CMD ["/app/backend"]
