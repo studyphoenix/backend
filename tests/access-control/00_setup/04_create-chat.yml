@@ -19,7 +19,7 @@ runtime:
   scripts:
     - type: after-response
       code: |-
-        bru.setVar("chats-1", res.body.id)
+        bru.setVar("chat-1", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

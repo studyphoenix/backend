@@ -12,7 +12,7 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "subtopics-1",
+        "name": "subtopic-1",
         "progress": 0,
         "subject": {{subject-1}}
       }
@@ -21,7 +21,7 @@ runtime:
   scripts:
     - type: after-response
       code: |-
-        bru.setVar("subtopics-1", res.body.id)
+        bru.setVar("subtopic-1", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

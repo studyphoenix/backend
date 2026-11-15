@@ -2,7 +2,7 @@
 info:
   type: http
   name: Delete the asset
-  seq: 10
+  seq: 6
 
 http:
   method: DELETE

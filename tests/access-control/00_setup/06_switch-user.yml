@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/testing/uid?userid=test"
+  url: "{{baseUrl}}/testing/uid?userid=1000"
 
 settings:
   followRedirects: true
@@ -16,3 +16,6 @@ runtime:
     - expression: res.status
       operator: eq
       value: "200"
+    - expression: res.body.userid
+      operator: eq
+      value: "1000"

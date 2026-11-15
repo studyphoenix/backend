@@ -2,7 +2,7 @@
 info:
   type: http
   name: Associate asset to the subject
-  seq: 7
+  seq: 9
 
 http:
   method: PATCH
@@ -16,4 +16,4 @@ runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "404"
+      value: "204"

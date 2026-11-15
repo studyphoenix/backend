@@ -6,7 +6,7 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subtopic/deassociate/assets/{{subtopic-1}}"
+  url: "{{baseUrl}}/subtopics/deassociate/assets/{{subtopic-1}}"
   body:
     type: json
     data: |
@@ -16,4 +16,4 @@ runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "404"
+      value: "204"

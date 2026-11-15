@@ -1,18 +1,21 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Get asset
-  seq: 3
+  name: Switch User ID
+  seq: 1
 
 http:
   method: GET
-  url: "{{baseUrl}}/assets/get/{{asset-1}}"
+  url: "{{baseUrl}}/testing/uid?userid=1"
+
+settings:
+  followRedirects: true
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
       value: "200"
-    - expression: res.body.name
+    - expression: res.body.userid
       operator: eq
-      value: "asset-1"
+      value: "1"

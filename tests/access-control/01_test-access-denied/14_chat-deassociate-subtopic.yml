@@ -2,11 +2,11 @@
 info:
   type: http
   name: Deassociate chat from the subtopic
-  seq: 7
+  seq: 15
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subtopic/deassociate/chats/{{subtopic-1}}"
+  url: "{{baseUrl}}/subtopics/deassociate/chats/{{subtopic-1}}"
   body:
     type: json
     data: |
@@ -16,4 +16,4 @@ runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "404"
+      value: "204"
