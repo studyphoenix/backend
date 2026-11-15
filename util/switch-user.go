@@ -10,5 +10,8 @@ func SwitchUser(r *gin.Engine, prod bool) {
 	r.GET("/testing/uid", func(c *gin.Context) {
 		sess := sessions.Default(c)
 		sess.Set("userid", c.Query("userid"))
+		c.JSON(200, gin.H{
+			"userid": c.Query("userid"),
+		})
 	})
 }

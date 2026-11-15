@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create an asset
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/assets/create"
+  body:
+    type: json
+    data: |
+      {
+        "icon": "fa-gear",
+        "name": "test",
+        "mediaType": "application/json"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("asset-1", res.body.id)
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"

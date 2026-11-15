@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create a subtopic
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/subtopics/create"
+  body:
+    type: json
+    data: |
+      {
+        "icon": "fa-gear",
+        "name": "subtopics-1",
+        "progress": 0,
+        "subject": {{subject-1}}
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("subtopics-1", res.body.id)
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"

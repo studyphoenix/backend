@@ -16,3 +16,6 @@ runtest $1
 
 cd ../e2e/
 runtest $1
+
+cd ../access-control/
+runtest $1

@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Deassociate flashcard from the subject
+  seq: 19
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/subtopics/deassociate/flashcard/{{subtopic-1}}"
+  body:
+    type: json
+    data: |
+      [{{flashcard-1}}]
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"
