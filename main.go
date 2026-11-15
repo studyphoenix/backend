@@ -7,11 +7,11 @@ import (
 	"github.com/TwiN/logr"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/janishutz/oidclogin"
 	"github.com/studyphoenix/backend/config"
 	"github.com/studyphoenix/backend/controller"
 	"github.com/studyphoenix/backend/model"
 	"github.com/studyphoenix/backend/util"
-	"github.com/janishutz/oidclogin"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/memstore"
@@ -108,6 +108,7 @@ func main() {
 		r.GET("/", oidclogin.EnsureLogin(false), func(c *gin.Context) {
 			c.JSON(200, gin.H{"success": true})
 		})
+		util.SwitchUser(r, prod)
 	} else {
 		r.GET("/", func(c *gin.Context) {
 			c.Redirect(307, "/swagger/index.html")
