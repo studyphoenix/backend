@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/subtopics/get/0"
+  url: "{{baseUrl}}/subtopics/get/{{subtopic-1}}"
 
 runtime:
   assertions:

@@ -6,11 +6,11 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subtopics/associate/subtopics/1"
+  url: "{{baseUrl}}/subtopics/associate/subtopics/{{subtopic-2}}"
   body:
     type: json
     data: |
-      [4, 5]
+      [{{techtree-st-1}}, {{techtree-st-2}}]
 
 runtime:
   assertions:

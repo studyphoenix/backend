@@ -12,11 +12,15 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "test 3",
+        "name": "flashcard-3",
         "content": "my content"
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("flashcard-3", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

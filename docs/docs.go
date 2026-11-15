@@ -1106,7 +1106,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Search for subjects or get all [WIP]",
+                "summary": "Search for subjects or get all",
                 "parameters": [
                     {
                         "type": "string",
@@ -2550,11 +2550,11 @@ const docTemplate = `{
             "name": "chats"
         },
         {
-            "description": "Flashcard CRUD [WIP]",
+            "description": "Flashcard CRUD",
             "name": "flashcards"
         },
         {
-            "description": "Subjects CRUD, association of subtopics and assets [WIP]",
+            "description": "Subjects CRUD, association of subtopics and assets",
             "name": "subjects"
         },
         {

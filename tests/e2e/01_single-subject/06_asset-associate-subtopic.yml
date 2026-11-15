@@ -5,15 +5,15 @@ info:
   seq: 7
 
 http:
-  method: PUT
-  url: "{{baseUrl}}/subjects/associate/assets/0"
+  method: PATCH
+  url: "{{baseUrl}}/subjects/associate/assets/{{subtopic-1}}"
   body:
     type: json
     data: |
-      [0]
+      [{{asset-1}}]
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "200"
+      value: "204"

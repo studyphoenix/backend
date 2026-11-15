@@ -5,8 +5,8 @@ info:
   seq: 8
 
 http:
-  method: GET
-  url: "{{baseUrl}}/subjects/delete/0"
+  method: DELETE
+  url: "{{baseUrl}}/subjects/delete/{{subject-1}}"
 
 runtime:
   assertions:

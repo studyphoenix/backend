@@ -22,7 +22,7 @@ func (c *DBConnector) QuerySubject(query SubjectQuery, uid uint) ([]Subject, err
 
 	// Name
 	if query.Name != nil {
-		if query.ExactMatch != nil && !*query.ExactMatch {
+		if query.ExactMatch != nil && *query.ExactMatch {
 			sql = sql.Where("name = ?", *query.Name)
 		} else {
 			sql = sql.Where("name LIKE ?", "%"+*query.Name+"%")
@@ -35,14 +35,14 @@ func (c *DBConnector) QuerySubject(query SubjectQuery, uid uint) ([]Subject, err
 
 		sq2 := c.DB.Select("subject_id")
 		if query.MaxSubtopicCount != nil {
-			sq2.Where("cnt < ?", *query.MaxSubtopicCount+1)
+			sq2.Where("cnt > ?", *query.MaxSubtopicCount)
 		}
 		if query.MinSubtopicCount != nil {
-			sq2.Where("cnt > ?", *query.MinSubtopicCount-1)
+			sq2.Where("cnt < ?", *query.MinSubtopicCount)
 		}
 		sq2 = sq2.Table("(?)", sq)
 
-		sql = sql.Where("id = (?)", sq2)
+		sql = sql.Where("id NOT IN (?)", sq2)
 	}
 
 	// Asset count
@@ -51,14 +51,14 @@ func (c *DBConnector) QuerySubject(query SubjectQuery, uid uint) ([]Subject, err
 
 		sq2 := c.DB.Select("subject_id")
 		if query.MaxAssetCount != nil {
-			sq2.Where("cnt < ?", *query.MaxAssetCount+1)
+			sq2.Where("cnt > ?", *query.MaxAssetCount)
 		}
 		if query.MinAssetCount != nil {
-			sq2.Where("cnt > ?", *query.MinAssetCount-1)
+			sq2.Where("cnt < ?", *query.MinAssetCount)
 		}
 		sq2 = sq2.Table("(?)", sq)
 
-		sql = sql.Where("id = (?)", sq2)
+		sql = sql.Where("id NOT IN (?)", sq2)
 	}
 
 	// Offset

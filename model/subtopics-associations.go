@@ -1,5 +1,7 @@
 package model
 
+import "github.com/TwiN/logr"
+
 func (c *DBConnector) AssociateSubtopicToSubtopic(parent uint, child uint) bool {
 	subtopic, err := c.GetSubtopic(child)
 	if err != nil {
@@ -91,6 +93,7 @@ func (c *DBConnector) DeassociateAssetFromSubtopic(subtopicid uint, assetid uint
 func (c *DBConnector) AssociateChatToSubtopic(subtopicid uint, chatid uint) bool {
 	chat, err := c.GetChat(chatid)
 	if err != nil {
+		logr.Debugf("Failed to get chat %e", err)
 		return false
 	}
 	subtopic, err := c.GetSubtopic(subtopicid)

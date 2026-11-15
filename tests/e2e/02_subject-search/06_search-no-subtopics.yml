@@ -15,4 +15,4 @@ runtime:
       value: "200"
     - expression: res.body.length
       operator: eq
-      value: "1"
+      value: "2"

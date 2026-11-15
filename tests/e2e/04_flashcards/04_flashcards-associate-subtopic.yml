@@ -1,16 +1,16 @@
 # yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
 info:
   type: http
-  name: Associate both subtopics to subtopic
+  name: Associate all flashcards to subtopic
   seq: 5
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/subtopics/associate/flashcards/0"
+  url: "{{baseUrl}}/subtopics/associate/flashcards/{{subtopic-3}}"
   body:
     type: json
     data: |
-      [0, 1, 2, 3]
+      [{{flashcard-1}}, {{flashcard-2}}, {{flashcard-3}}, {{flashcard-4}}]
 
 runtime:
   assertions:

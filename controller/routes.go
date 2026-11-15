@@ -53,7 +53,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	// Subtopics
 	subtopics := r.Group("/subtopics")
 	subtopics.PATCH("associate/assets/:id", c.AssociateAssetToSubtopic)
-	subtopics.PATCH("associate/subtopic/:id", c.AssociateSubtopicToSubtopic)
+	subtopics.PATCH("associate/subtopics/:id", c.AssociateSubtopicToSubtopic)
 	subtopics.PATCH("associate/flashcards/:id", c.AssociateFlashcardToSubtopic)
 	subtopics.PATCH("associate/chats/:id", c.AssociateChatToSubtopic)
 	subtopics.PUT("create", c.CreateSubtopic)

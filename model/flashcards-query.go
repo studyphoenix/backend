@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 )
 
 type FlashcardQuery struct {
@@ -40,8 +39,8 @@ func (c *DBConnector) QueryFlashcards(query FlashcardQuery, uid uint) ([]Flashca
 
 	// SubtopicID
 	if query.SubtopicID != nil {
-		// TEST: This is probably incorrect
-		sql = sql.Joins(clause.InnerJoin.Association("subtopics_flashcards"), nil).Where("subtopic_id = ?", *query.SubtopicID)
+		sq := c.DB.Select("flashcard_id").Where("subtopic_id = ?", *query.SubtopicID).Table("subtopics_flashcards")
+		sql = sql.Where("id IN (?)", sq)
 	}
 
 	// Offset

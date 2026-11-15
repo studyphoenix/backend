@@ -12,11 +12,15 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "test",
-        "subject": 1
+        "name": "subtopic-3",
+        "subject": {{subject-2}}
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("subtopic-3", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

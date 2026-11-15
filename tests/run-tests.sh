@@ -4,15 +4,15 @@
 # TODO: Proper CLI interface
 
 runtest() {
-	if [[ $1 == "html" ]]; then
-		docker run --rm -v $(pwd):/bruno usebruno/cli run --env-var baseUrl="http://$(ip route get 1.1.1.1 | head -1 | cut -d ' ' -f7):8080" --reporter-html report.html --verbose
-	else
-		docker run --rm -v $(pwd):/bruno usebruno/cli run --env-var baseUrl="http://$(ip route get 1.1.1.1 | head -1 | cut -d ' ' -f7):8080" --verbose
-	fi
+    if [[ $1 == "html" ]]; then
+        docker run --rm -v $(pwd):/bruno usebruno/cli run --env-var baseUrl="http://$(ip route get 1.1.1.1 | head -1 | cut -d ' ' -f7):8080" --reporter-html report.html --verbose
+    else
+        docker run --rm -v $(pwd):/bruno usebruno/cli run --env-var baseUrl="http://$(ip route get 1.1.1.1 | head -1 | cut -d ' ' -f7):8080" --verbose
+    fi
 }
 
 cd ./components/
 runtest $1
 
-# cd ../e2e/
-# runtest $1
+cd ../e2e/
+runtest $1

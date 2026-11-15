@@ -12,10 +12,14 @@ http:
     data: |
       {
         "icon": "fa-gear",
-        "name": "test 2"
+        "name": "subject search 2"
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("subject-3", res.body.id)
   assertions:
     - expression: res.status
       operator: eq

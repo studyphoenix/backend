@@ -11,11 +11,15 @@ http:
     type: json
     data: |
       {
-        "mode": "1",
+        "mode": 1,
         "name": "test"
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("chat-1", res.body.id)
   assertions:
     - expression: res.status
       operator: eq
