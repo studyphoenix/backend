@@ -45,8 +45,8 @@ func (m *Controller) AssociateSubtopicToSubtopic(c *gin.Context) {
 		return
 	}
 
-	for _, assetId := range req {
-		m.db.AssociateSubtopicToSubtopic(uint(id), assetId, uid)
+	for _, subtopicId := range req {
+		m.db.AssociateSubtopicToSubtopic(uint(id), subtopicId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -87,8 +87,8 @@ func (m *Controller) DeassociateSubtopicFromSubtopic(c *gin.Context) {
 		return
 	}
 
-	for _, assetId := range req {
-		m.db.DeassociateSubtopicFromSubtopic(uint(id), assetId, uid)
+	for _, subtopicId := range req {
+		m.db.DeassociateSubtopicFromSubtopic(uint(id), subtopicId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -172,7 +172,7 @@ func (m *Controller) DeassociateAssetFromSubtopic(c *gin.Context) {
 	}
 
 	for _, assetId := range req {
-		m.db.DeassociateAssetFromSubject(uint(id), assetId, uid)
+		m.db.DeassociateAssetFromSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -213,8 +213,8 @@ func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
 		return
 	}
 
-	for _, assetId := range req {
-		m.db.AssociateChatToSubtopic(uint(id), assetId, uid)
+	for _, chatId := range req {
+		m.db.AssociateChatToSubtopic(uint(id), chatId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -255,8 +255,8 @@ func (m *Controller) DeassociateChatFromSubtopic(c *gin.Context) {
 		return
 	}
 
-	for _, assetId := range req {
-		m.db.DeassociateChatFromSubtopic(uint(id), assetId, uid)
+	for _, chatId := range req {
+		m.db.DeassociateChatFromSubtopic(uint(id), chatId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -297,8 +297,8 @@ func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
 		return
 	}
 
-	for _, assetId := range req {
-		m.db.AssociateFlashcardToSubtopic(uint(id), assetId, uid)
+	for _, flashcardId := range req {
+		m.db.AssociateFlashcardToSubtopic(uint(id), flashcardId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -339,8 +339,8 @@ func (m *Controller) DeassociateFlashcardFromSubtopic(c *gin.Context) {
 		return
 	}
 
-	for _, assetId := range req {
-		m.db.DeassociateFlashcardFromSubtopic(uint(id), assetId, uid)
+	for _, flashcardId := range req {
+		m.db.DeassociateFlashcardFromSubtopic(uint(id), flashcardId, uid)
 	}
 
 	c.JSON(204, nil)

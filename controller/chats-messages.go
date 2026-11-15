@@ -1,14 +1,12 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 
 	"github.com/TwiN/logr"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/studyphoenix/backend/httputil"
 	"github.com/studyphoenix/backend/model"
 )
 
@@ -52,8 +50,7 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 			Id: id,
 		})
 	} else {
-		httputil.NewError(c, 500, errors.New("ERR_ADD_CHAT_MESSAGE"))
-		c.Abort()
+		c.AbortWithStatus(404)
 	}
 }
 

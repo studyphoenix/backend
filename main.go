@@ -99,6 +99,7 @@ func main() {
 		ses.Set("userid", uid)
 		ses.Set("username", name)
 		ses.Set("email", email)
+		ses.Save()
 	}, true, nil, prod)
 
 	// Routes

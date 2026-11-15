@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Deassociate asset from the subject
+  seq: 7
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/subtopics/deassociate/assets/{{subtopic-1}}"
+  body:
+    type: json
+    data: |
+      [{{asset-1}}]
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
