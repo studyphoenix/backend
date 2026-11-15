@@ -68,7 +68,13 @@ func (m *Controller) GetFlashcard(c *gin.Context) {
 		return
 	}
 
-	chat, err := m.db.GetFlashcard(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	chat, err := m.db.GetFlashcard(uint(id), uid)
 	if err != nil {
 		c.AbortWithStatus(404)
 		return
@@ -105,7 +111,13 @@ func (m *Controller) UpdateFlashcard(c *gin.Context) {
 		return
 	}
 
-	if m.db.UpdateFlashcard(uint(id), req) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.UpdateFlashcard(uint(id), req, uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
@@ -132,7 +144,13 @@ func (m *Controller) CompleteFlashcard(c *gin.Context) {
 		return
 	}
 
-	if m.db.CompleteFlashcard(uint(id)) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.CompleteFlashcard(uint(id), uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
@@ -158,7 +176,13 @@ func (m *Controller) DeleteFlashcard(c *gin.Context) {
 		return
 	}
 
-	if m.db.DeleteFlashcard(uint(id)) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.DeleteFlashcard(uint(id), uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strconv"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/studyphoenix/backend/httputil"
 )
@@ -26,7 +27,13 @@ func (m *Controller) GetSubjectTechTree(c *gin.Context) {
 		return
 	}
 
-	tree, err := m.db.GetTechTreeForSubject(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	tree, err := m.db.GetTechTreeForSubject(uint(id), uid)
 	if err != nil {
 		httputil.NewError(c, 500, errors.New("ERR_TECH_TREE_RETRIEVE"))
 		c.Abort()

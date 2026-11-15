@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/TwiN/logr"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/studyphoenix/backend/model"
 )
@@ -38,8 +39,14 @@ func (m *Controller) AssociateSubtopicToSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.AssociateSubtopicToSubtopic(uint(id), assetId)
+		m.db.AssociateSubtopicToSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -74,8 +81,14 @@ func (m *Controller) DeassociateSubtopicFromSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.DeassociateSubtopicFromSubtopic(uint(id), assetId)
+		m.db.DeassociateSubtopicFromSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -110,8 +123,14 @@ func (m *Controller) AssociateAssetToSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.AssociateAssetToSubtopic(uint(id), assetId)
+		m.db.AssociateAssetToSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -146,8 +165,14 @@ func (m *Controller) DeassociateAssetFromSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.DeassociateAssetFromSubject(uint(id), assetId)
+		m.db.DeassociateAssetFromSubject(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -182,8 +207,14 @@ func (m *Controller) AssociateChatToSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.AssociateChatToSubtopic(uint(id), assetId)
+		m.db.AssociateChatToSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -218,8 +249,14 @@ func (m *Controller) DeassociateChatFromSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.DeassociateChatFromSubtopic(uint(id), assetId)
+		m.db.DeassociateChatFromSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -254,8 +291,14 @@ func (m *Controller) AssociateFlashcardToSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.AssociateFlashcardToSubtopic(uint(id), assetId)
+		m.db.AssociateFlashcardToSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)
@@ -290,8 +333,14 @@ func (m *Controller) DeassociateFlashcardFromSubtopic(c *gin.Context) {
 		return
 	}
 
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
 	for _, assetId := range req {
-		m.db.DeassociateFlashcardFromSubtopic(uint(id), assetId)
+		m.db.DeassociateFlashcardFromSubtopic(uint(id), assetId, uid)
 	}
 
 	c.JSON(204, nil)

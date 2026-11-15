@@ -6,12 +6,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c *DBConnector) GetSubject(id uint) (Subject, error) {
-	return gorm.G[Subject](c.DB).Where("id = ?", id).First(ctx)
+func (c *DBConnector) GetSubject(id uint, uid uint) (Subject, error) {
+	return gorm.G[Subject](c.DB).Where("id = ? AND user_id = ?", id, uid).First(ctx)
 }
 
-func (c *DBConnector) UpdateSubject(id uint, req UpdateSubjectRequest) bool {
-	subject, err := c.GetSubject(id)
+func (c *DBConnector) UpdateSubject(id uint, req UpdateSubjectRequest, uid uint) bool {
+	subject, err := c.GetSubject(id, uid)
 	if err != nil {
 		return false
 	}
@@ -42,14 +42,19 @@ func (c *DBConnector) CreateSubject(req CreateSubjectRequest, userid uint) (uint
 	return subject.ID, true
 }
 
-func (c *DBConnector) DeleteSubject(id uint) bool {
+func (c *DBConnector) DeleteSubject(id uint, uid uint) bool {
+	_, err := c.GetSubject(id, uid)
+	if err != nil {
+		return false
+	}
+
 	// Delete flashcards (if possible)
 	assets, err := gorm.G[uint](c.DB).Raw("SELECT asset_id FROM subjects_assets WHERE subject_id = ?", id).Find(ctx)
 	if err != nil {
 		return false
 	}
 	for _, asset := range assets {
-		c.DeleteAsset(asset)
+		c.DeleteAsset(asset, uid)
 	}
 
 	subtopics, err := gorm.G[uint](c.DB).Raw("SELECT id FROM subtopics WHERE subject_id = ?", id).Find(ctx)
@@ -57,7 +62,7 @@ func (c *DBConnector) DeleteSubject(id uint) bool {
 		return false
 	}
 	for _, subtopic := range subtopics {
-		c.DeleteSubtopic(subtopic)
+		c.DeleteSubtopic(subtopic, uid)
 	}
 
 	// Actually delete the subject

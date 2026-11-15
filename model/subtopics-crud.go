@@ -6,20 +6,18 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c *DBConnector) GetSubtopic(id uint) (Subtopic, error) {
-	return gorm.G[Subtopic](c.DB).Where("id = ?", id).Preload("Children", nil).Preload("Assets", nil).Preload("Chats", nil).First(ctx)
+func (c *DBConnector) GetSubtopic(id uint, uid uint) (Subtopic, error) {
+	return gorm.G[Subtopic](c.DB).Where("id = ? AND user_id = ?", id, uid).Preload("Children", nil).Preload("Assets", nil).Preload("Chats", nil).First(ctx)
 }
 
-func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest) bool {
-	subtopic, err := c.GetSubtopic(id)
+func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest, uid uint) bool {
+	subtopic, err := c.GetSubtopic(id, uid)
 	if err != nil {
 		return false
 	}
 
 	subtopic.Icon = dereferenceOrDefault(req.Icon, subtopic.Icon)
 	subtopic.Name = dereferenceOrDefault(req.Name, subtopic.Name)
-	// FIXME: 9.3 severity vulnerability CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N
-	// caused by not checking ownership of subject (also in all other retrieve, update, delete and associate endpoints)
 	subtopic.SubjectID = dereferenceOrDefault(req.Subject, subtopic.SubjectID)
 	subtopic.Progress = dereferenceOrDefault(req.Progress, subtopic.Progress)
 	subtopic.UpdatedAt = time.Now()
@@ -48,14 +46,18 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) (ui
 	return subtopic.ID, true
 }
 
-func (c *DBConnector) DeleteSubtopic(id uint) bool {
+func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
+	_, err := c.GetSubtopic(id, uid)
+	if err != nil {
+		return false
+	}
 	// Delete assets (if possible)
 	assets, err := gorm.G[uint](c.DB).Raw("SELECT asset_id FROM subtopics_assets WHERE subtopic_id = ?", id).Find(ctx)
 	if err != nil {
 		return false
 	}
 	for _, asset := range assets {
-		c.DeleteAsset(asset)
+		c.DeleteAsset(asset, uid)
 	}
 
 	// Delete subtopics (if possible)
@@ -64,7 +66,7 @@ func (c *DBConnector) DeleteSubtopic(id uint) bool {
 		return false
 	}
 	for _, subtopic := range subtopics {
-		c.DeleteAsset(subtopic)
+		c.DeleteAsset(subtopic, uid)
 	}
 
 	// Delete flashcards (if possible)
@@ -73,7 +75,7 @@ func (c *DBConnector) DeleteSubtopic(id uint) bool {
 		return false
 	}
 	for _, flashcard := range flashcards {
-		c.DeleteFlashcard(flashcard)
+		c.DeleteFlashcard(flashcard, uid)
 	}
 
 	// Delete chats (if possible)
@@ -82,7 +84,7 @@ func (c *DBConnector) DeleteSubtopic(id uint) bool {
 		return false
 	}
 	for _, chat := range chats {
-		c.DeleteChat(chat)
+		c.DeleteChat(chat, uid)
 	}
 
 	// Actually delete the subtopic

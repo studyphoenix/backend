@@ -69,7 +69,13 @@ func (m *Controller) GetAssetDetails(c *gin.Context) {
 		return
 	}
 
-	asset, err := m.db.GetAsset(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	asset, err := m.db.GetAsset(uint(id), uid)
 	if err != nil {
 		c.AbortWithStatus(404)
 	}
@@ -105,7 +111,13 @@ func (m *Controller) UpdateAssetDetails(c *gin.Context) {
 		return
 	}
 
-	if m.db.UpdateAsset(uint(id), req) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.UpdateAsset(uint(id), req, uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
@@ -131,7 +143,13 @@ func (m *Controller) DeleteAsset(c *gin.Context) {
 		return
 	}
 
-	if m.db.DeleteAsset(uint(id)) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.DeleteAsset(uint(id), uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)

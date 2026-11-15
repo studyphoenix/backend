@@ -4,12 +4,12 @@ func remove[T any](slice []T, s int) []T {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func (c *DBConnector) AssociateAssetToSubject(subjectid uint, assetid uint) bool {
-	asset, err := c.GetAsset(assetid)
+func (c *DBConnector) AssociateAssetToSubject(subjectid uint, assetid uint, uid uint) bool {
+	asset, err := c.GetAsset(assetid, uid)
 	if err != nil {
 		return false
 	}
-	subject, err := c.GetSubject(subjectid)
+	subject, err := c.GetSubject(subjectid, uid)
 	if err != nil {
 		return false
 	}
@@ -21,8 +21,8 @@ func (c *DBConnector) AssociateAssetToSubject(subjectid uint, assetid uint) bool
 	return true
 }
 
-func (c *DBConnector) DeassociateAssetFromSubject(subjectid uint, assetid uint) bool {
-	subject, err := c.GetSubject(subjectid)
+func (c *DBConnector) DeassociateAssetFromSubject(subjectid uint, assetid uint, uid uint) bool {
+	subject, err := c.GetSubject(subjectid, uid)
 	if err != nil {
 		return false
 	}

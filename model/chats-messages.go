@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// TODO: Think about access control concept here
 func (c *DBConnector) GetChatMessage(id uint) (ChatMessage, error) {
 	return gorm.G[ChatMessage](c.DB).Where("id = ?", id).First(ctx)
 }

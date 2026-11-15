@@ -69,7 +69,13 @@ func (m *Controller) GetChat(c *gin.Context) {
 		return
 	}
 
-	chat, err := m.db.GetChat(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	chat, err := m.db.GetChat(uint(id), uid)
 	if err != nil {
 		c.AbortWithStatus(404)
 		return
@@ -106,7 +112,13 @@ func (m *Controller) UpdateChat(c *gin.Context) {
 		return
 	}
 
-	if m.db.UpdateChat(uint(id), req) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+	
+	if m.db.UpdateChat(uint(id), req, uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
@@ -132,7 +144,13 @@ func (m *Controller) DeleteChat(c *gin.Context) {
 		return
 	}
 
-	if m.db.DeleteChat(uint(id)) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.DeleteChat(uint(id), uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)

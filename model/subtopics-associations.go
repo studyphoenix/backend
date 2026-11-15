@@ -2,12 +2,12 @@ package model
 
 import "github.com/TwiN/logr"
 
-func (c *DBConnector) AssociateSubtopicToSubtopic(parent uint, child uint) bool {
-	subtopic, err := c.GetSubtopic(child)
+func (c *DBConnector) AssociateSubtopicToSubtopic(parent uint, child uint, uid uint) bool {
+	subtopic, err := c.GetSubtopic(child, uid)
 	if err != nil {
 		return false
 	}
-	parentSubtopic, err := c.GetSubject(parent)
+	parentSubtopic, err := c.GetSubject(parent, uid)
 	if err != nil {
 		return false
 	}
@@ -19,8 +19,8 @@ func (c *DBConnector) AssociateSubtopicToSubtopic(parent uint, child uint) bool 
 	return true
 }
 
-func (c *DBConnector) DeassociateSubtopicFromSubtopic(parent uint, child uint) bool {
-	parentSubtopic, err := c.GetSubtopic(parent)
+func (c *DBConnector) DeassociateSubtopicFromSubtopic(parent uint, child uint, uid uint) bool {
+	parentSubtopic, err := c.GetSubtopic(parent, uid)
 	if err != nil {
 		return false
 	}
@@ -46,12 +46,12 @@ func (c *DBConnector) DeassociateSubtopicFromSubtopic(parent uint, child uint) b
 
 // ───────────────────────────────────────────────────────────────────
 
-func (c *DBConnector) AssociateAssetToSubtopic(subtopicid uint, assetid uint) bool {
-	asset, err := c.GetAsset(assetid)
+func (c *DBConnector) AssociateAssetToSubtopic(subtopicid uint, assetid uint, uid uint) bool {
+	asset, err := c.GetAsset(assetid, uid)
 	if err != nil {
 		return false
 	}
-	subtopic, err := c.GetSubtopic(subtopicid)
+	subtopic, err := c.GetSubtopic(subtopicid, uid)
 	if err != nil {
 		return false
 	}
@@ -63,8 +63,8 @@ func (c *DBConnector) AssociateAssetToSubtopic(subtopicid uint, assetid uint) bo
 	return true
 }
 
-func (c *DBConnector) DeassociateAssetFromSubtopic(subtopicid uint, assetid uint) bool {
-	subtopic, err := c.GetSubtopic(subtopicid)
+func (c *DBConnector) DeassociateAssetFromSubtopic(subtopicid uint, assetid uint, uid uint) bool {
+	subtopic, err := c.GetSubtopic(subtopicid, uid)
 	if err != nil {
 		return false
 	}
@@ -90,13 +90,13 @@ func (c *DBConnector) DeassociateAssetFromSubtopic(subtopicid uint, assetid uint
 
 // ───────────────────────────────────────────────────────────────────
 
-func (c *DBConnector) AssociateChatToSubtopic(subtopicid uint, chatid uint) bool {
-	chat, err := c.GetChat(chatid)
+func (c *DBConnector) AssociateChatToSubtopic(subtopicid uint, chatid uint, uid uint) bool {
+	chat, err := c.GetChat(chatid, uid)
 	if err != nil {
 		logr.Debugf("Failed to get chat %e", err)
 		return false
 	}
-	subtopic, err := c.GetSubtopic(subtopicid)
+	subtopic, err := c.GetSubtopic(subtopicid, uid)
 	if err != nil {
 		return false
 	}
@@ -108,8 +108,8 @@ func (c *DBConnector) AssociateChatToSubtopic(subtopicid uint, chatid uint) bool
 	return true
 }
 
-func (c *DBConnector) DeassociateChatFromSubtopic(subtopicid uint, chatid uint) bool {
-	subtopic, err := c.GetSubtopic(subtopicid)
+func (c *DBConnector) DeassociateChatFromSubtopic(subtopicid uint, chatid uint, uid uint) bool {
+	subtopic, err := c.GetSubtopic(subtopicid, uid)
 	if err != nil {
 		return false
 	}
@@ -135,12 +135,12 @@ func (c *DBConnector) DeassociateChatFromSubtopic(subtopicid uint, chatid uint) 
 
 // ───────────────────────────────────────────────────────────────────
 
-func (c *DBConnector) AssociateFlashcardToSubtopic(subtopicid uint, flashcardid uint) bool {
-	flashcard, err := c.GetFlashcard(flashcardid)
+func (c *DBConnector) AssociateFlashcardToSubtopic(subtopicid uint, flashcardid uint, uid uint) bool {
+	flashcard, err := c.GetFlashcard(flashcardid, uid)
 	if err != nil {
 		return false
 	}
-	subtopic, err := c.GetSubtopic(subtopicid)
+	subtopic, err := c.GetSubtopic(subtopicid, uid)
 	if err != nil {
 		return false
 	}
@@ -152,8 +152,8 @@ func (c *DBConnector) AssociateFlashcardToSubtopic(subtopicid uint, flashcardid 
 	return true
 }
 
-func (c *DBConnector) DeassociateFlashcardFromSubtopic(subtopicid uint, flashcardid uint) bool {
-	subtopic, err := c.GetSubtopic(subtopicid)
+func (c *DBConnector) DeassociateFlashcardFromSubtopic(subtopicid uint, flashcardid uint, uid uint) bool {
+	subtopic, err := c.GetSubtopic(subtopicid, uid)
 	if err != nil {
 		return false
 	}
