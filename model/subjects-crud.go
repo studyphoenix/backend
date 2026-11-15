@@ -43,9 +43,27 @@ func (c *DBConnector) CreateSubject(req CreateSubjectRequest, userid uint) (uint
 }
 
 func (c *DBConnector) DeleteSubject(id uint) bool {
+	// Delete flashcards (if possible)
+	assets, err := gorm.G[uint](c.DB).Raw("SELECT asset_id FROM subjects_assets WHERE subject_id = ?", id).Find(ctx)
+	if err != nil {
+		return false
+	}
+	for _, asset := range assets {
+		c.DeleteAsset(asset)
+	}
+
+	subtopics, err := gorm.G[uint](c.DB).Raw("SELECT id FROM subtopics WHERE subject_id = ?", id).Find(ctx)
+	if err != nil {
+		return false
+	}
+	for _, subtopic := range subtopics {
+		c.DeleteSubtopic(subtopic)
+	}
+
+	// Actually delete the subject
 	if rows, err := gorm.G[Subject](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
-	// TODO: Delete anything that can't really be done via DB consistency
+
 	return true
 }

@@ -5,12 +5,12 @@ info:
   seq: 5
 
 http:
-  method: PUT
-  url: "{{baseUrl}}/subtopics/associate/chats/0"
+  method: PATCH
+  url: "{{baseUrl}}/subtopics/associate/chats/{{subtopic-1}}"
   body:
     type: json
     data: |
-      [0]
+      [{{chat-1}}]
 
 runtime:
   assertions:

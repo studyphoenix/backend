@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/search?q=test&exactMatch=true"
+  url: "{{baseUrl}}/subjects/search?q=subject%20search&exactMatch=true"
 
 runtime:
   assertions:

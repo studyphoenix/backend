@@ -8,8 +8,8 @@ type Subject struct {
 	UpdatedAt time.Time  `json:"updatedAt" example:"2026-12-17T13:47:33Z"`
 	Name      string     `json:"name" example:"Analysis"`
 	Icon      string     `json:"icon" example:"fa-gear"`
-	Assets    []Asset    `json:"assets,omitempty" gorm:"many2many:subjects_assets;" validate:"optional"`
-	Subtopics []Subtopic `json:"-" gorm:"constraint:OnDelete:CASCADE"`
+	Assets    []Asset    `json:"assets,omitempty" gorm:"many2many:subjects_assets" validate:"optional"`
+	Subtopics []Subtopic `json:"-"`
 }
 
 type CreateSubjectRequest struct {

@@ -1106,7 +1106,7 @@ const docTemplate = `{
                 "tags": [
                     "subjects"
                 ],
-                "summary": "Search for subjects or get all [WIP]",
+                "summary": "Search for subjects or get all",
                 "parameters": [
                     {
                         "type": "string",
@@ -2364,6 +2364,12 @@ const docTemplate = `{
                         "$ref": "#/definitions/model.Chat"
                     }
                 },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Subtopic"
+                    }
+                },
                 "icon": {
                     "type": "string",
                     "example": "fa-gear"
@@ -2381,12 +2387,6 @@ const docTemplate = `{
                     "maximum": 100,
                     "minimum": 0,
                     "example": 0
-                },
-                "subtopics": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Subtopic"
-                    }
                 },
                 "updatedAt": {
                     "type": "string",
@@ -2550,11 +2550,11 @@ const docTemplate = `{
             "name": "chats"
         },
         {
-            "description": "Flashcard CRUD [WIP]",
+            "description": "Flashcard CRUD",
             "name": "flashcards"
         },
         {
-            "description": "Subjects CRUD, association of subtopics and assets [WIP]",
+            "description": "Subjects CRUD, association of subtopics and assets",
             "name": "subjects"
         },
         {

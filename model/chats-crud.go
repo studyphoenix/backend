@@ -43,6 +43,8 @@ func (c *DBConnector) CreateChat(req CreateChatRequest, userid uint) (uint, bool
 }
 
 func (c *DBConnector) DeleteChat(id uint) bool {
+	c.DB.Exec("DELETE FROM `subtopics_chats` WHERE chat_id = ?", id)
+
 	if rows, err := gorm.G[Chat](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}

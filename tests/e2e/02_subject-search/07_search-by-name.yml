@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/search?q=test"
+  url: "{{baseUrl}}/subjects/search?q=subject%20search"
 
 runtime:
   assertions:

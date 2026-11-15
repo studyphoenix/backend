@@ -6,17 +6,21 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/subjects/create"
+  url: "{{baseUrl}}/subtopics/create"
   body:
     type: json
     data: |
       {
         "icon": "fa-gear",
-        "name": "test",
-        "subject": 1
+        "name": "subtopic-4",
+        "subject": {{subject-2}}
       }
 
 runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("subtopic-4", res.body.id)
   assertions:
     - expression: res.status
       operator: eq
