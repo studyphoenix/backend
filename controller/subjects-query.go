@@ -1,10 +1,19 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"errors"
+	"fmt"
+
+	"github.com/TwiN/logr"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/studyphoenix/backend/httputil"
+	"github.com/studyphoenix/backend/model"
+)
 
 // Request handler to get a user's subjects
 //
-// @Summary 	Search for subjects or get all [WIP]
+// @Summary 	Search for subjects or get all
 // @Description	Returns a list of user subjects, without any subtopics. Those need to be requested separately
 // @Tags		subjects
 // @Produce		json
@@ -21,5 +30,25 @@ import "github.com/gin-gonic/gin"
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/search [get]
 func (m *Controller) QuerySubjects(c *gin.Context) {
-	c.JSON(200, nil)
+	var req model.SubjectQuery
+	err := c.BindQuery(&req)
+	if err != nil {
+		logr.Debug(fmt.Sprint("Failed to parse query: ", err))
+		c.AbortWithStatus(400)
+		return
+	}
+
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+	flashcards, err := m.db.QuerySubject(req, uid)
+	logr.Debugf("Count: %d", len(flashcards))
+	if err != nil {
+		httputil.NewError(c, 500, errors.New("Failed to process query request"))
+		c.Abort()
+	} else {
+		c.JSON(200, flashcards)
+	}
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/hci-group-15/backend/config"
+	"github.com/studyphoenix/backend/config"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

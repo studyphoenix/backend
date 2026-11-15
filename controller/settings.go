@@ -7,8 +7,8 @@ import (
 	"github.com/TwiN/logr"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/hci-group-15/backend/httputil"
-	"github.com/hci-group-15/backend/model"
+	"github.com/studyphoenix/backend/httputil"
+	"github.com/studyphoenix/backend/model"
 )
 
 // Request handler to get a user's config

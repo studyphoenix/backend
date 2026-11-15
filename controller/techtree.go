@@ -5,12 +5,12 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hci-group-15/backend/httputil"
+	"github.com/studyphoenix/backend/httputil"
 )
 
 // Request handler to get a subject's tech tree
 //
-// @Summary 	Get a the tech tree for a given subject [WIP]
+// @Summary 	Get a the tech tree for a given subject
 // @Description	Returns the tech tree data structure for rendering the tech tree
 // @Tags		subjects
 // @Produce		json
