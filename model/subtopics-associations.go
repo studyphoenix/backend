@@ -26,7 +26,7 @@ func (c *DBConnector) DeassociateSubtopicFromSubtopic(parent uint, child uint) b
 	}
 
 	idx := -1
-	for i, subtopic := range parentSubtopic.Subtopics {
+	for i, subtopic := range parentSubtopic.Children {
 		if subtopic.ID == child {
 			idx = i
 			break
@@ -37,7 +37,7 @@ func (c *DBConnector) DeassociateSubtopicFromSubtopic(parent uint, child uint) b
 		return false
 	}
 
-	parentSubtopic.Subtopics = remove(parentSubtopic.Subtopics, idx)
+	parentSubtopic.Children = remove(parentSubtopic.Children, idx)
 
 	c.DB.Save(&parentSubtopic)
 

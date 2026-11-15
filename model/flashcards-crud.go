@@ -45,10 +45,13 @@ func (c *DBConnector) CreateFlashcard(req CreateFlashcardRequest, userid uint) (
 }
 
 func (c *DBConnector) DeleteFlashcard(id uint) bool {
+	c.DB.Exec("DELETE FROM `subtopics_flashcards` WHERE flashcard_id = ?", id)
+
 	if rows, err := gorm.G[Flashcard](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		logr.Debug(fmt.Sprint(err))
 		return false
 	}
+
 	return true
 }
 

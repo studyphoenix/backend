@@ -11,7 +11,7 @@ type Subtopic struct {
 	Progress   uint        `json:"progress" example:"0" maximum:"100" minimum:"0"` // value in [0, 100]
 	Assets     []Asset     `json:"assets,omitempty" gorm:"many2many:subtopics_assets;" validate:"optional"`
 	Chats      []Chat      `json:"chats,omitempty" gorm:"many2many:subtopics_chats;constraint:OnDelete:CASCADE,OnUpdate:CASCADE" validate:"optional"`
-	Subtopics  []Subtopic  `json:"subtopics,omitempty" gorm:"many2many:subtopics_subtopics;" validate:"optional"`
+	Children   []*Subtopic `json:"children,omitempty" gorm:"many2many:subtopics_subtopics;" validate:"optional"`
 	Flashcards []Flashcard `json:"-" gorm:"many2many:subtopics_flashcards;"`
 	SubjectID  uint        `json:"-"`
 }

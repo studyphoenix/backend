@@ -2364,6 +2364,12 @@ const docTemplate = `{
                         "$ref": "#/definitions/model.Chat"
                     }
                 },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Subtopic"
+                    }
+                },
                 "icon": {
                     "type": "string",
                     "example": "fa-gear"
@@ -2381,12 +2387,6 @@ const docTemplate = `{
                     "maximum": 100,
                     "minimum": 0,
                     "example": 0
-                },
-                "subtopics": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Subtopic"
-                    }
                 },
                 "updatedAt": {
                     "type": "string",

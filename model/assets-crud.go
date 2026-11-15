@@ -51,6 +51,7 @@ func (c *DBConnector) DeleteAsset(id uint) bool {
 	if err != nil {
 		return false
 	}
+	c.DB.Exec("DELETE FROM `subtopics_assets` WHERE asset_id = ?; DELETE FROM `subjects_assets` WHERE asset_id = ?", id, id)
 	if rows, err := gorm.G[Asset](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
