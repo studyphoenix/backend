@@ -6,11 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/flashcards/search"
-  params:
-    - name: maxCompletionCount
-      value: "0"
-      type: query
+  url: "{{baseUrl}}/flashcards/search?maxCompletionCount=0"
 
 runtime:
   assertions:

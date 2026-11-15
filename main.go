@@ -37,10 +37,10 @@ import (
 // @tag.description Chat CRUD, chat message CRUD
 //
 // @tag.name flashcards
-// @tag.description Flashcard CRUD [WIP]
+// @tag.description Flashcard CRUD
 //
 // @tag.name subjects
-// @tag.description Subjects CRUD, association of subtopics and assets [WIP]
+// @tag.description Subjects CRUD, association of subtopics and assets
 //
 // @tag.name subtopics
 // @tag.description Subtopics CRUD, association of other subtopics, chats and assets

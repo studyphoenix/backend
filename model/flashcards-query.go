@@ -8,7 +8,8 @@ import (
 )
 
 type FlashcardQuery struct {
-	Name               *string `form:"name" binding:"omitempty,printascii"`
+	Name               *string `form:"q" binding:"omitempty,printascii"`
+	ExactMatch         *bool   `form:"exactMatch" binding:"omitempty,boolean"`
 	Offset             *uint   `form:"offset" binding:"omitempty,min=5,max=50"` // OFFSET
 	Limit              *uint   `form:"count" binding:"omitempty,min=5,max=50"`  // LIMIT
 	SubtopicID         *uint   `form:"subtopicId" binding:"omitempty,min=0"`
@@ -17,17 +18,15 @@ type FlashcardQuery struct {
 }
 
 func (c *DBConnector) QueryFlashcards(query FlashcardQuery, uid uint) ([]Flashcard, error) {
-	sql := gorm.G[Flashcard](c.DB).Where("uid = ?", uid)
+	sql := gorm.G[Flashcard](c.DB).Where("user_id = ?", uid)
 
 	// Name
 	if query.Name != nil {
-		sql = sql.Where("name = ?", *query.Name)
-	}
-
-	// SubtopicID
-	if query.Name != nil {
-		// TEST: This is probably incorrect
-		sql = sql.Joins(clause.InnerJoin.Association("subtopics_flashcards"), nil).Where("subtopic_id = ?", *query.SubtopicID)
+		if query.ExactMatch != nil && !*query.ExactMatch {
+			sql = sql.Where("name = ?", *query.Name)
+		} else {
+			sql = sql.Where("name LIKE ?", "%"+*query.Name+"%")
+		}
 	}
 
 	// CompletionCount
@@ -36,7 +35,13 @@ func (c *DBConnector) QueryFlashcards(query FlashcardQuery, uid uint) ([]Flashca
 	}
 
 	if query.MinCompletionCount != nil {
-		sql = sql.Where("completion_count > ?", *query.MinCompletionCount+1)
+		sql = sql.Where("completion_count > ?", *query.MinCompletionCount-1)
+	}
+
+	// SubtopicID
+	if query.SubtopicID != nil {
+		// TEST: This is probably incorrect
+		sql = sql.Joins(clause.InnerJoin.Association("subtopics_flashcards"), nil).Where("subtopic_id = ?", *query.SubtopicID)
 	}
 
 	// Offset

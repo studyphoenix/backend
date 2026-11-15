@@ -11,12 +11,11 @@ http:
     type: json
     data: |
       {
-        "name": "test",
-        "content": "my content"
+        "name": "test"
       }
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "201"
+      value: "400"

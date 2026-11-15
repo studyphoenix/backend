@@ -752,12 +752,18 @@ const docTemplate = `{
                 "tags": [
                     "flashcards"
                 ],
-                "summary": "Search for flashcards or get all [WIP]",
+                "summary": "Search for flashcards or get all",
                 "parameters": [
                     {
                         "type": "string",
                         "description": "The search query (matches name)",
                         "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "When set to true (default false), name needs to match exactly for result to be returned",
+                        "name": "exactMatch",
                         "in": "query"
                     },
                     {
