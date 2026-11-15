@@ -6,13 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
-// TODO: Think about access control concept here
 func (c *DBConnector) GetChatMessage(id uint) (ChatMessage, error) {
 	return gorm.G[ChatMessage](c.DB).Where("id = ?", id).First(ctx)
 }
 
-func (c *DBConnector) UpdateChatMessage(id uint, req UpdateChatMessageRequest) bool {
+func (c *DBConnector) UpdateChatMessage(id uint, req UpdateChatMessageRequest, uid uint) bool {
 	msg, err := c.GetChatMessage(id)
+	if err != nil {
+		return false
+	}
+
+	_, err = c.GetChat(msg.ChatID, uid)
 	if err != nil {
 		return false
 	}
@@ -28,7 +32,11 @@ func (c *DBConnector) UpdateChatMessage(id uint, req UpdateChatMessageRequest) b
 	return true
 }
 
-func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint) (uint, bool) {
+func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint, uid uint) (uint, bool) {
+	_, err := c.GetChat(chatid, uid)
+	if err != nil {
+		return 0, false
+	}
 	msg := ChatMessage{
 		UpdatedAt:    time.Now(),
 		ChatID:       chatid,
@@ -38,14 +46,24 @@ func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint) 
 	}
 
 	result := gorm.WithResult()
-	err := gorm.G[ChatMessage](c.DB, result).Create(ctx, &msg)
+	err = gorm.G[ChatMessage](c.DB, result).Create(ctx, &msg)
 	if err != nil {
 		return 0, false
 	}
 	return msg.ID, true
 }
 
-func (c *DBConnector) DeleteChatMessage(id uint) bool {
+func (c *DBConnector) DeleteChatMessage(id uint, uid uint) bool {
+	msg, err := c.GetChatMessage(id)
+	if err != nil {
+		return false
+	}
+
+	_, err = c.GetChat(msg.ChatID, uid)
+	if err != nil {
+		return false
+	}
+
 	if rows, err := gorm.G[ChatMessage](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
