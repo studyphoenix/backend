@@ -6,12 +6,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c *DBConnector) GetChat(id uint) (Chat, error) {
-	return gorm.G[Chat](c.DB).Where("id = ?", id).Preload("ChatMessages", nil).First(ctx)
+func (c *DBConnector) GetChat(id uint, uid uint) (Chat, error) {
+	return gorm.G[Chat](c.DB).Where("id = ? AND user_id = ?", id, uid).Preload("ChatMessages", nil).First(ctx)
 }
 
-func (c *DBConnector) UpdateChat(id uint, req UpdateChatRequest) bool {
-	chat, err := c.GetChat(id)
+func (c *DBConnector) UpdateChat(id uint, req UpdateChatRequest, uid uint) bool {
+	chat, err := c.GetChat(id, uid)
 	if err != nil {
 		return false
 	}
@@ -42,7 +42,12 @@ func (c *DBConnector) CreateChat(req CreateChatRequest, userid uint) (uint, bool
 	return chat.ID, true
 }
 
-func (c *DBConnector) DeleteChat(id uint) bool {
+func (c *DBConnector) DeleteChat(id uint, uid uint) bool {
+	_, err := c.GetChat(id, uid)
+	if err != nil {
+		return false
+	}
+
 	c.DB.Exec("DELETE FROM `subtopics_chats` WHERE chat_id = ?", id)
 
 	if rows, err := gorm.G[Chat](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {

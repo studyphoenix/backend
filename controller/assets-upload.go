@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 	"strconv"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/studyphoenix/backend/model"
 )
@@ -30,7 +31,13 @@ func (m *Controller) UploadAsset(c *gin.Context) {
 		return
 	}
 
-	asset, err := m.db.GetAsset(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	asset, err := m.db.GetAsset(uint(id), uid)
 	if err != nil {
 		c.AbortWithStatus(404)
 		return
@@ -71,7 +78,13 @@ func (m *Controller) DownloadAsset(c *gin.Context) {
 		return
 	}
 
-	asset, err := m.db.GetAsset(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	asset, err := m.db.GetAsset(uint(id), uid)
 	if err != nil {
 		c.AbortWithStatus(404)
 		return

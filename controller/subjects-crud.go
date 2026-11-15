@@ -68,7 +68,13 @@ func (m *Controller) GetSubject(c *gin.Context) {
 		return
 	}
 
-	subject, err := m.db.GetSubject(uint(id))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	subject, err := m.db.GetSubject(uint(id), uid)
 	if err != nil {
 		c.AbortWithStatus(404)
 		return
@@ -105,7 +111,13 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 		return
 	}
 
-	if m.db.UpdateSubject(uint(id), req) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.UpdateSubject(uint(id), req, uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
@@ -131,7 +143,13 @@ func (m *Controller) DeleteSubject(c *gin.Context) {
 		return
 	}
 
-	if m.db.DeleteSubject(uint(id)) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.DeleteSubject(uint(id), uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)

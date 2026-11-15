@@ -9,12 +9,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c *DBConnector) GetAsset(id uint) (Asset, error) {
-	return gorm.G[Asset](c.DB).Where("id = ?", id).First(ctx)
+func (c *DBConnector) GetAsset(id uint, uid uint) (Asset, error) {
+	return gorm.G[Asset](c.DB).Where("id = ? AND user_id = ?", id, uid).First(ctx)
 }
 
-func (c *DBConnector) UpdateAsset(id uint, req UpdateAssetRequest) bool {
-	asset, err := c.GetAsset(id)
+func (c *DBConnector) UpdateAsset(id uint, req UpdateAssetRequest, uid uint) bool {
+	asset, err := c.GetAsset(id, uid)
 	if err != nil {
 		return false
 	}
@@ -46,13 +46,14 @@ func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) (uint, bo
 	return asset.ID, true
 }
 
-func (c *DBConnector) DeleteAsset(id uint) bool {
-	asset, err := c.GetAsset(id)
+func (c *DBConnector) DeleteAsset(id uint, uid uint) bool {
+	asset, err := c.GetAsset(id, uid)
 	if err != nil {
 		return false
 	}
+
 	c.DB.Exec("DELETE FROM `subtopics_assets` WHERE asset_id = ?; DELETE FROM `subjects_assets` WHERE asset_id = ?", id, id)
-	if rows, err := gorm.G[Asset](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
+	if rows, err := gorm.G[Asset](c.DB).Where("id = ? AND user_id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
 

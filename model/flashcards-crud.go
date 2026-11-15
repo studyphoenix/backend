@@ -8,12 +8,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c *DBConnector) GetFlashcard(id uint) (Flashcard, error) {
-	return gorm.G[Flashcard](c.DB).Where("id = ?", id).First(ctx)
+func (c *DBConnector) GetFlashcard(id uint, uid uint) (Flashcard, error) {
+	return gorm.G[Flashcard](c.DB).Where("id = ? AND user_id = ?", id, uid).First(ctx)
 }
 
-func (c *DBConnector) UpdateFlashcard(id uint, req UpdateFlashcardRequest) bool {
-	flashcard, err := c.GetFlashcard(id)
+func (c *DBConnector) UpdateFlashcard(id uint, req UpdateFlashcardRequest, uid uint) bool {
+	flashcard, err := c.GetFlashcard(id, uid)
 	if err != nil {
 		return false
 	}
@@ -44,7 +44,12 @@ func (c *DBConnector) CreateFlashcard(req CreateFlashcardRequest, userid uint) (
 	return flashcard.ID, true
 }
 
-func (c *DBConnector) DeleteFlashcard(id uint) bool {
+func (c *DBConnector) DeleteFlashcard(id uint, uid uint) bool {
+	_, err := c.GetFlashcard(id, uid)
+	if err != nil {
+		return false
+	}
+
 	c.DB.Exec("DELETE FROM `subtopics_flashcards` WHERE flashcard_id = ?", id)
 
 	if rows, err := gorm.G[Flashcard](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
@@ -55,8 +60,8 @@ func (c *DBConnector) DeleteFlashcard(id uint) bool {
 	return true
 }
 
-func (c *DBConnector) CompleteFlashcard(id uint) bool {
-	flashcard, err := c.GetFlashcard(id)
+func (c *DBConnector) CompleteFlashcard(id uint, uid uint) bool {
+	flashcard, err := c.GetFlashcard(id, uid)
 	if err != nil {
 		return false
 	}

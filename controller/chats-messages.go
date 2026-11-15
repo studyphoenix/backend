@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/TwiN/logr"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/studyphoenix/backend/httputil"
 	"github.com/studyphoenix/backend/model"
@@ -39,7 +40,13 @@ func (m *Controller) AddChatMessageToChat(c *gin.Context) {
 		return
 	}
 
-	id, ok := m.db.CreateChatMessage(req, uint(chatId))
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	id, ok := m.db.CreateChatMessage(req, uint(chatId), uid)
 	if ok {
 		c.JSON(201, CreatedResponse{
 			Id: id,
@@ -79,7 +86,13 @@ func (m *Controller) UpdateChatMessage(c *gin.Context) {
 		return
 	}
 
-	if m.db.UpdateChatMessage(uint(id), req) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.UpdateChatMessage(uint(id), req, uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
@@ -105,7 +118,13 @@ func (m *Controller) DeleteChatMessage(c *gin.Context) {
 		return
 	}
 
-	if m.db.DeleteChatMessage(uint(id)) {
+	uid, ok := sessions.Default(c).Get("userid").(uint)
+	if !ok {
+		c.AbortWithStatus(401)
+		return
+	}
+
+	if m.db.DeleteChatMessage(uint(id), uid) {
 		c.JSON(204, nil)
 	} else {
 		c.JSON(404, nil)
