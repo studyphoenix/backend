@@ -12,7 +12,7 @@ import (
 
 func (c *Controller) AddRoutes(r *gin.Engine) {
 	// Assets
-	assets := r.Group("/assets")
+	assets := r.Group("/assets", oidclogin.EnsureLogin(false))
 	assets.PUT("create", c.CreateAsset)
 	assets.DELETE("delete/:id", c.DeleteAsset)
 	assets.GET("get/:id", c.GetAssetDetails)
@@ -21,7 +21,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	assets.PUT("upload/:id", c.UploadAsset)
 
 	// Chats
-	chats := r.Group("/chats")
+	chats := r.Group("/chats", oidclogin.EnsureLogin(false))
 	chats.PUT("create", c.CreateChat)
 	chats.DELETE("delete/:id", c.DeleteChat)
 	chats.GET("get/:id", c.GetChat)
@@ -31,7 +31,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	chats.PATCH("update/:id", c.UpdateChat)
 
 	// Flashcards
-	flashcards := r.Group("/flashcards")
+	flashcards := r.Group("/flashcards", oidclogin.EnsureLogin(false))
 	flashcards.PUT("create", c.CreateFlashcard)
 	flashcards.DELETE("delete/:id", c.DeleteFlashcard)
 	flashcards.GET("get/:id", c.GetFlashcard)
@@ -40,7 +40,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	flashcards.PATCH("complete/:id", c.CompleteFlashcard)
 
 	// Subjects
-	subjects := r.Group("/subjects")
+	subjects := r.Group("/subjects", oidclogin.EnsureLogin(false))
 	subjects.PATCH("associate/assets/:id", c.AssociateAssetToSubject)
 	subjects.PUT("create", c.CreateSubject)
 	subjects.PATCH("deassociate/assets/:id", c.DeassociateAssetFromSubject)
@@ -51,7 +51,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	subjects.PATCH("update/:id", c.UpdateSubject)
 
 	// Subtopics
-	subtopics := r.Group("/subtopics")
+	subtopics := r.Group("/subtopics", oidclogin.EnsureLogin(false))
 	subtopics.PATCH("associate/assets/:id", c.AssociateAssetToSubtopic)
 	subtopics.PATCH("associate/subtopics/:id", c.AssociateSubtopicToSubtopic)
 	subtopics.PATCH("associate/flashcards/:id", c.AssociateFlashcardToSubtopic)

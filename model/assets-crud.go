@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/TwiN/logr"
 	"gorm.io/gorm"
 )
 
@@ -49,11 +50,12 @@ func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) (uint, bo
 func (c *DBConnector) DeleteAsset(id uint, uid uint) bool {
 	asset, err := c.GetAsset(id, uid)
 	if err != nil {
+		logr.Error(err.Error())
 		return false
 	}
 
 	c.DB.Exec("DELETE FROM `subtopics_assets` WHERE asset_id = ?; DELETE FROM `subjects_assets` WHERE asset_id = ?", id, id)
-	if rows, err := gorm.G[Asset](c.DB).Where("id = ? AND user_id = ?", id).Delete(ctx); err != nil || rows == 0 {
+	if rows, err := gorm.G[Asset](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
 		return false
 	}
 
