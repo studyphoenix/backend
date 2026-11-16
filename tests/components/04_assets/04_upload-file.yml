@@ -12,7 +12,8 @@ http:
     data:
       - name: file
         type: file
-        value: ok-asset.json
+        value: 
+          - ./04_assets/ok-asset.json
         disabled: false
 
 runtime:

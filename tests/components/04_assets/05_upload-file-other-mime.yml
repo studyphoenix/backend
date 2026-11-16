@@ -12,11 +12,12 @@ http:
     data:
       - name: file
         type: file
-        value: /invalid-asset.xml
+        value: 
+          - ./04_assets/bad-asset.xml
         disabled: false
 
 runtime:
   assertions:
     - expression: res.status
       operator: eq
-      value: "400"
+      value: "409"

@@ -13,6 +13,6 @@ runtime:
     - expression: res.status
       operator: eq
       value: "200"
-    - expression: res.body.testing
+    - expression: res.body.test
       operator: eq
       value: "true"
