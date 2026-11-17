@@ -7,11 +7,13 @@ type Settings struct {
 	UserID               uint   `json:"-"`
 	AnswerLength         string `json:"answerLength" enums:"very-short,short,default,long,very-long" default:"default"`
 	AnswerInBulletPoints bool   `json:"answerInBulletPoints" default:"false"`
+	RestrictToSources    bool   `json:"restrictToSources" default:"false"`
 }
 
 type UpdateUserConfigRequest struct {
 	AnswerLength         *string `json:"answerLength" enums:"very-short,short,default,long,very-long" default:"default" validate:"optional"`
 	AnswerInBulletPoints *bool   `json:"answerInBulletPoints" default:"false" validate:"optional"`
+	RestrictToSources    bool    `json:"restrictToSources" default:"false" validate:"optional"`
 }
 
 func (c *DBConnector) CreateSettings(userid uint) bool {
