@@ -7,12 +7,12 @@ func (c *DBConnector) AssociateSubtopicToSubtopic(parent uint, child uint, uid u
 	if err != nil {
 		return false
 	}
-	parentSubtopic, err := c.GetSubject(parent, uid)
+	parentSubtopic, err := c.GetSubtopic(parent, uid)
 	if err != nil {
 		return false
 	}
 
-	parentSubtopic.Subtopics = append(parentSubtopic.Subtopics, subtopic)
+	parentSubtopic.Children = append(parentSubtopic.Children, &subtopic)
 
 	c.DB.Save(&parentSubtopic)
 
