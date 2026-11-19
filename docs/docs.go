@@ -181,6 +181,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/assets/search": {
+            "get": {
+                "description": "Returns a list of user assets, without the actual asset. That needs to be requested separately",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Get all assets or some",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The maximum number of results to return. Defaults to 25",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The offset in the results list. Defaults to 0",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Asset"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/assets/update/{id}": {
             "patch": {
                 "description": "Updates the asset. Note that all attributes in the body are optional and if omitted, will not be updated",
@@ -2689,7 +2735,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
 	Title:            "StudyPhoenix backend",
-	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts` in the [frontend repo](https://github.com/studyphoenix/frontend).\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- Endpoints marked with `[WIP]` are currently not completed\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using e.g. URL-Encoding)\n",
+	Description:      "## Authentication\nTo log in, open [this link](/auth/v2/login) in a new tab. That will log you in automatically.\nIf the frontend is not running, a \"unable to connect\" warning is expected and can be ignored.\n\n## Usage of the API in the frontend\nFollow the example in `src/ts/util/api-example.ts` in the [frontend repo](https://github.com/studyphoenix/frontend).\nYou should always use my `oidc` sdk to make requests, as it can automatically handle unauthorized requests if needed, or use a nice UI handler (which has been attached to it to handle it)\n\n## Usage of these docs\n- CRUD = Create Retrieve Update Delete\n- The HTTP methods are displayed with colours\n- parameters *not* marked with an asterisk (`*`) are optional\n- You can try out queries by using the `Try it out` button when an endpoint is expanded\n- The URL you should enter in the request URL on the frontend with the SDK is the one you can get from copying the endpoint\n- For endpoints with placeholders (i.e. that have `{id}` in their URL) you need to substitute them using your own code. That's something the SDK won't do for you.\nBe mindful of request CSRF, CSS and other injection attacks (i.e. sanitize using e.g. URL-Encoding)\n",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
