@@ -1204,6 +1204,9 @@ const docTemplate = `{
                     "201": {
                         "description": "Created"
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthorized"
                     },
@@ -1244,6 +1247,9 @@ const docTemplate = `{
                                 "$ref": "#/definitions/model.Subtopic"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -2261,7 +2267,6 @@ const docTemplate = `{
         "model.CreateSubtopicBulkRequest": {
             "type": "object",
             "required": [
-                "edges",
                 "subjectId",
                 "subtopics"
             ],
@@ -2480,7 +2485,6 @@ const docTemplate = `{
         "model.SubtopicCreate": {
             "type": "object",
             "required": [
-                "icon",
                 "name",
                 "tempId"
             ],

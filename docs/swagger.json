@@ -1201,6 +1201,9 @@
                     "201": {
                         "description": "Created"
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthorized"
                     },
@@ -1241,6 +1244,9 @@
                                 "$ref": "#/definitions/model.Subtopic"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -2258,7 +2264,6 @@
         "model.CreateSubtopicBulkRequest": {
             "type": "object",
             "required": [
-                "edges",
                 "subjectId",
                 "subtopics"
             ],
@@ -2477,7 +2482,6 @@
         "model.SubtopicCreate": {
             "type": "object",
             "required": [
-                "icon",
                 "name",
                 "tempId"
             ],
