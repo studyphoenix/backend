@@ -1179,7 +1179,44 @@ const docTemplate = `{
                 }
             }
         },
-        "/subjects/techtree/{id}": {
+        "/subjects/techtree/create": {
+            "put": {
+                "description": "Creates the tech tree with bulk ingestion",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subjects"
+                ],
+                "summary": "Bulk-Creates a tech tree for a subject",
+                "parameters": [
+                    {
+                        "description": "Subtopic details to store",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CreateSubtopicBulkRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/techtree/get/{id}": {
             "get": {
                 "description": "Returns the tech tree data structure for rendering the tech tree",
                 "produces": [
@@ -2221,6 +2258,32 @@ const docTemplate = `{
                 }
             }
         },
+        "model.CreateSubtopicBulkRequest": {
+            "type": "object",
+            "required": [
+                "edges",
+                "subjectId",
+                "subtopics"
+            ],
+            "properties": {
+                "edges": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Edge"
+                    }
+                },
+                "subjectId": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "subtopics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SubtopicCreate"
+                    }
+                }
+            }
+        },
         "model.CreateSubtopicRequest": {
             "type": "object",
             "required": [
@@ -2239,7 +2302,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 100,
+                    "maxLength": 22,
                     "minLength": 3,
                     "example": "Analysis"
                 },
@@ -2255,6 +2318,21 @@ const docTemplate = `{
                     "description": "Subject this subtopic belongs to",
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "model.Edge": {
+            "type": "object",
+            "required": [
+                "from",
+                "to"
+            ],
+            "properties": {
+                "from": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": "integer"
                 }
             }
         },
@@ -2290,7 +2368,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "answerInBulletPoints",
-                "answerLength"
+                "answerLength",
+                "restrictToSources"
             ],
             "properties": {
                 "answerInBulletPoints": {
@@ -2307,6 +2386,10 @@ const docTemplate = `{
                         "long",
                         "very-long"
                     ]
+                },
+                "restrictToSources": {
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },
@@ -2391,6 +2474,29 @@ const docTemplate = `{
                 "updatedAt": {
                     "type": "string",
                     "example": "2026-12-17T13:47:33Z"
+                }
+            }
+        },
+        "model.SubtopicCreate": {
+            "type": "object",
+            "required": [
+                "icon",
+                "name",
+                "tempId"
+            ],
+            "properties": {
+                "icon": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 0
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 22,
+                    "minLength": 3
+                },
+                "tempId": {
+                    "type": "integer"
                 }
             }
         },
@@ -2501,7 +2607,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 100,
+                    "maxLength": 22,
                     "minLength": 3,
                     "example": "Analysis"
                 },
@@ -2536,6 +2642,10 @@ const docTemplate = `{
                         "long",
                         "very-long"
                     ]
+                },
+                "restrictToSources": {
+                    "type": "boolean",
+                    "default": false
                 }
             }
         }

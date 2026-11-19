@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/subjects/techtree/{{subject-2}}"
+  url: "{{baseUrl}}/subjects/techtree/get/{{subject-2}}"
 
 runtime:
   assertions:

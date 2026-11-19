@@ -55,7 +55,7 @@ func (m *Controller) GetSubjectTechTree(c *gin.Context) {
 // @Success		201	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
-// @Router		/subjects/techtree/create [get]
+// @Router		/subjects/techtree/create [put]
 func (m *Controller) BulkCreateSubjectTechTree(c *gin.Context) {
 	var req model.CreateSubtopicBulkRequest
 	err := c.BindJSON(&req)
@@ -73,7 +73,7 @@ func (m *Controller) BulkCreateSubjectTechTree(c *gin.Context) {
 
 	ok = m.db.BulkCreateTechTreeForSubject(req, uid)
 	if ok {
-		c.JSON(200, nil)
+		c.JSON(201, nil)
 	} else {
 		httputil.NewError(c, 500, errors.New("Cannot create tech tree. See server logs"))
 		c.Abort()
