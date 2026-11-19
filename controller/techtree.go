@@ -57,14 +57,8 @@ func (m *Controller) GetSubjectTechTree(c *gin.Context) {
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/techtree/create [get]
 func (m *Controller) BulkCreateSubjectTechTree(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
-	if err != nil {
-		c.AbortWithStatus(400)
-		return
-	}
-
 	var req model.CreateSubtopicBulkRequest
-	err = c.BindJSON(&req)
+	err := c.BindJSON(&req)
 	if err != nil {
 		logr.Debug(fmt.Sprint("Failed to parse body to create subtopic: ", err))
 		c.AbortWithStatus(400)
@@ -77,11 +71,12 @@ func (m *Controller) BulkCreateSubjectTechTree(c *gin.Context) {
 		return
 	}
 
-	tree, err := m.db.GetTechTreeForSubject(uint(id), uid)
-	if err != nil {
-		httputil.NewError(c, 500, errors.New("ERR_TECH_TREE_RETRIEVE"))
+	ok = m.db.BulkCreateTechTreeForSubject(req, uid)
+	if ok {
+		c.JSON(200, nil)
+	} else {
+		httputil.NewError(c, 500, errors.New("Cannot create tech tree. See server logs"))
 		c.Abort()
 		return
 	}
-	c.JSON(200, tree)
 }
