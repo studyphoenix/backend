@@ -30,7 +30,17 @@ func (c *DBConnector) GetTechTreeForSubject(subjectid uint, uid uint) ([]Subtopi
 }
 
 func (c *DBConnector) BulkCreateTechTreeForSubject(req CreateSubtopicBulkRequest, uid uint) bool {
-	err := c.DB.Transaction(func(tx *gorm.DB) error {
+	_, err := c.GetSubject(req.SubjectID, uid)
+
+	if err != nil {
+		return false
+	}
+
+	err = c.DB.Transaction(func(tx *gorm.DB) error {
+		c := DBConnector{
+			Config: c.Config,
+			DB:     tx,
+		}
 		tempIdToInternalMapping := make(map[uint]uint)
 
 		for _, v := range req.Subtopics {
@@ -53,9 +63,9 @@ func (c *DBConnector) BulkCreateTechTreeForSubject(req CreateSubtopicBulkRequest
 			if !ok {
 				return errors.New("FROM ID not found in map")
 			}
-			to, ok := tempIdToInternalMapping[v.From]
+			to, ok := tempIdToInternalMapping[v.To]
 			if !ok {
-				return errors.New("FROM ID not found in map")
+				return errors.New("TO ID not found in map")
 			}
 
 			if !c.AssociateSubtopicToSubtopic(from, to, uid) {
@@ -67,7 +77,10 @@ func (c *DBConnector) BulkCreateTechTreeForSubject(req CreateSubtopicBulkRequest
 		return nil
 	})
 
-	logr.Errorf("%e", err)
-
-	return true
+	if err != nil {
+		logr.Errorf("%e", err)
+		return false
+	} else {
+		return true
+	}
 }
