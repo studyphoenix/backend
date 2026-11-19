@@ -6,7 +6,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/assets/get/{{chat-1}}"
+  url: "{{baseUrl}}/chats/get/{{chat-1}}"
 
 runtime:
   assertions:

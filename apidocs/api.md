@@ -8,7 +8,6 @@ You should always use my `oidc` sdk to make requests, as it can automatically ha
 
 ## Usage of these docs
 - CRUD = Create Retrieve Update Delete
-- Endpoints marked with `[WIP]` are currently not completed
 - The HTTP methods are displayed with colours
 - parameters *not* marked with an asterisk (`*`) are optional
 - You can try out queries by using the `Try it out` button when an endpoint is expanded

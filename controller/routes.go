@@ -19,6 +19,7 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	assets.GET("download/:id", c.DownloadAsset)
 	assets.PATCH("update/:id", c.UpdateAssetDetails)
 	assets.PUT("upload/:id", c.UploadAsset)
+	assets.GET("search", c.QueryAssets)
 
 	// Chats
 	chats := r.Group("/chats", oidclogin.EnsureLogin(false))
