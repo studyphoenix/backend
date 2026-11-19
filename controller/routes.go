@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/TwiN/logr"
 	"github.com/gin-gonic/gin"
-	"github.com/studyphoenix/backend/docs"
 	"github.com/janishutz/oidclogin"
+	"github.com/studyphoenix/backend/docs"
 
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -47,7 +47,8 @@ func (c *Controller) AddRoutes(r *gin.Engine) {
 	subjects.DELETE("delete/:id", c.DeleteSubject)
 	subjects.GET("get/:id", c.GetSubject)
 	subjects.GET("search", c.QuerySubjects)
-	subjects.GET("techtree/:id", c.GetSubjectTechTree)
+	subjects.GET("techtree/get/:id", c.GetSubjectTechTree)
+	subjects.PUT("techtree/create", c.BulkCreateSubjectTechTree)
 	subjects.PATCH("update/:id", c.UpdateSubject)
 
 	// Subtopics

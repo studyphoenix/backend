@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Create tech tree (bulk)
+  seq: 6
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/subjects/techtree/create"
+  body:
+    type: json
+    data: |
+      {
+        "subjectId": {{subject-tt}},
+        "subtopics": [
+          {
+            "name": "tt-st-bulk-1",
+            "icon": "test",
+            "tempId": 1
+          },
+          {
+            "name": "tt-st-bulk-2",
+            "icon": "test",
+            "tempId": 2
+          },
+          {
+            "name": "tt-st-bulk-3",
+            "icon": "test",
+            "tempId": 3
+          },
+          {
+            "name": "tt-st-bulk-4",
+            "icon": "test",
+            "tempId": 4
+          },
+          {
+            "name": "tt-st-bulk-5",
+            "icon": "test",
+            "tempId": 5
+          }
+        ],
+        "edges": [
+          {
+            "from": 1,
+            "to": 2
+          },
+          {
+            "from": 1,
+            "to": 3
+          },
+          {
+            "from": 2,
+            "to": 4
+          },
+          {
+            "from": 3,
+            "to": 5
+          },
+          {
+            "from": 4,
+            "to": 5
+          }
+        ]
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
