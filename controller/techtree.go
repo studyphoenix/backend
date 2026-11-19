@@ -20,6 +20,7 @@ import (
 // @Produce		json
 // @Param 		id path string true "The ID of the subject to retrieve the techtree for"
 // @Success		200	{object}		[]model.Subtopic "This is simply a list of subtopics"
+// @Failure 	400 {object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/techtree/get/{id} [get]
@@ -45,7 +46,7 @@ func (m *Controller) GetSubjectTechTree(c *gin.Context) {
 	c.JSON(200, tree)
 }
 
-// Request handler to get a subject's tech tree
+// Request handler to create a subject's tech tree
 //
 // @Summary 	Bulk-Creates a tech tree for a subject
 // @Description	Creates the tech tree with bulk ingestion
@@ -53,6 +54,7 @@ func (m *Controller) GetSubjectTechTree(c *gin.Context) {
 // @Produce		json
 // @Param 		payload body model.CreateSubtopicBulkRequest true "Subtopic details to store"
 // @Success		201	{object}		nil
+// @Failure 	400 {object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/techtree/create [put]

@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/TwiN/logr"
@@ -8,9 +9,9 @@ import (
 )
 
 type SubtopicCreate struct {
-	TempID uint   `json:"tempId" validate:"required" binding:"required,numeric"`
-	Name   string `json:"name" validate:"required" binding:"required,max=22,min=3"`
-	Icon   string `json:"icon" validate:"required" binding:"required,max=100,min=0,printascii"`
+	TempID uint    `json:"tempId" validate:"required" binding:"required,numeric"`
+	Name   string  `json:"name" validate:"required" binding:"required,max=22,min=3"`
+	Icon   *string `json:"icon" validate:"optional" binding:"omitempty,max=100,min=0,printascii"`
 }
 
 type Edge struct {
@@ -20,8 +21,8 @@ type Edge struct {
 
 type CreateSubtopicBulkRequest struct {
 	SubjectID uint             `json:"subjectId" validate:"required" binding:"required,numeric,min=0"`
-	Subtopics []SubtopicCreate `json:"subtopics" validate:"required" binding:"required"`
-	Edges     []Edge           `json:"edges" validate:"required" binding:"required"`
+	Subtopics []SubtopicCreate `json:"subtopics" validate:"required" binding:"required,dive"`
+	Edges     []Edge           `json:"edges" validate:"optional" binding:"omitempty,dive"`
 }
 
 func (c *DBConnector) GetTechTreeForSubject(subjectid uint, uid uint) ([]Subtopic, error) {
@@ -29,31 +30,44 @@ func (c *DBConnector) GetTechTreeForSubject(subjectid uint, uid uint) ([]Subtopi
 }
 
 func (c *DBConnector) BulkCreateTechTreeForSubject(req CreateSubtopicBulkRequest, uid uint) bool {
-	tempIdToInternalMapping := make(map[uint]uint)
+	err := c.DB.Transaction(func(tx *gorm.DB) error {
+		tempIdToInternalMapping := make(map[uint]uint)
 
-	for _, v := range req.Subtopics {
-		subtopicId, ok := c.CreateSubtopic(CreateSubtopicRequest{
-			Progress: 0,
-			Name:     v.Name,
-			Icon:     v.Icon,
-			Subject:  req.SubjectID,
-		}, uid)
+		for _, v := range req.Subtopics {
+			subtopicId, ok := c.CreateSubtopic(CreateSubtopicRequest{
+				Progress: 0,
+				Name:     v.Name,
+				Icon:     dereferenceOrDefault(v.Icon, ""),
+				Subject:  req.SubjectID,
+			}, uid)
 
-		if !ok {
-			logr.Error("Failed to create subtopic with name: " + v.Name)
-			return false
+			if !ok {
+				return errors.New("Failed to create subtopics with name: " + v.Name)
+			}
+
+			tempIdToInternalMapping[v.TempID] = subtopicId
 		}
 
-		tempIdToInternalMapping[v.TempID] = subtopicId
-	}
+		for _, v := range req.Edges {
+			from, ok := tempIdToInternalMapping[v.From]
+			if !ok {
+				return errors.New("FROM ID not found in map")
+			}
+			to, ok := tempIdToInternalMapping[v.From]
+			if !ok {
+				return errors.New("FROM ID not found in map")
+			}
 
-	for _, v := range req.Edges {
-		if !c.AssociateSubtopicToSubtopic(tempIdToInternalMapping[v.From], tempIdToInternalMapping[v.To], uid) {
-			logr.Error("Failed to associate subtopic " +
-				strconv.FormatUint(uint64(tempIdToInternalMapping[v.From]), 10) + " to subtopic " +
-				strconv.FormatUint(uint64(tempIdToInternalMapping[v.To]), 10))
+			if !c.AssociateSubtopicToSubtopic(from, to, uid) {
+				return errors.New("Failed to associate subtopic " +
+					strconv.FormatUint(uint64(from), 10) + " to subtopic " +
+					strconv.FormatUint(uint64(to), 10))
+			}
 		}
-	}
+		return nil
+	})
+
+	logr.Errorf("%e", err)
 
 	return true
 }
