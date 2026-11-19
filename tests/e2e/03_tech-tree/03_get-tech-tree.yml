@@ -16,4 +16,15 @@ runtime:
     - expression: res.body.length
       operator: eq
       value: "4"
-    # TODO: More assertions
+    - expression: res.body[0].children.length
+      operator: eq
+      value: "2"
+    - expression: res.body[0].name
+      operator: eq
+      value: "subtopic-3"
+    - expression: res.body[1].name
+      operator: eq
+      value: "subtopic-4"
+    - expression: res.body[2].name
+      operator: eq
+      value: "tt-st-1"

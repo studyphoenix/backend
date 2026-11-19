@@ -14,27 +14,27 @@ http:
         "subjectId": {{subject-tt}},
         "subtopics": [
           {
-            "name": "tt-st-1",
+            "name": "tt-st-bulk-1",
             "icon": "test",
             "tempId": 1
           },
           {
-            "name": "tt-st-2",
+            "name": "tt-st-bulk-2",
             "icon": "test",
             "tempId": 2
           },
           {
-            "name": "tt-st-3",
+            "name": "tt-st-bulk-3",
             "icon": "test",
             "tempId": 3
           },
           {
-            "name": "tt-st-4",
+            "name": "tt-st-bulk-4",
             "icon": "test",
             "tempId": 4
           },
           {
-            "name": "tt-st-5",
+            "name": "tt-st-bulk-5",
             "icon": "test",
             "tempId": 5
           }

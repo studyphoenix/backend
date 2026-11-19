@@ -16,4 +16,30 @@ runtime:
     - expression: res.body.length
       operator: eq
       value: "5"
-    # TODO: More assertions
+    - expression: res.body[0].children.length
+      operator: eq
+      value: "2"
+    - expression: res.body[0].name
+      operator: eq
+      value: "tt-st-bulk-1"
+    - expression: res.body[1].children.length
+      operator: eq
+      value: "1"
+    - expression: res.body[1].name
+      operator: eq
+      value: "tt-st-bulk-2"
+    - expression: res.body[2].children.length
+      operator: eq
+      value: "1"
+    - expression: res.body[2].name
+      operator: eq
+      value: "tt-st-bulk-3"
+    - expression: res.body[3].children.length
+      operator: eq
+      value: "1"
+    - expression: res.body[3].name
+      operator: eq
+      value: "tt-st-bulk-4"
+    - expression: res.body[4].name
+      operator: eq
+      value: "tt-st-bulk-5"
