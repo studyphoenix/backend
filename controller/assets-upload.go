@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"os"
 	"path/filepath"
 	"strconv"
 
@@ -91,5 +92,9 @@ func (m *Controller) DownloadAsset(c *gin.Context) {
 	}
 
 	src := filepath.Join(m.db.Config.Datadir, strconv.FormatUint(id, 10)+"."+model.MEDIA_TYPE_MAP[asset.MediaType])
-	c.File(src)
+	if _, err = os.Stat(src); err != nil {
+		c.HTML(401, "nosuchasset.tmpl", gin.H{})
+	} else {
+		c.File(src)
+	}
 }
