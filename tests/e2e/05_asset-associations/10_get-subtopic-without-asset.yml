@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://schema.opencollection.com/opencollection/v1.0.0.json#/$defs/HttpRequest
+info:
+  type: http
+  name: Verify asset deassociated from subtopic
+  seq: 11
+
+http:
+  method: GET
+  url: "{{baseUrl}}/subtopics/get/{{assoc-subtopic-1}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.assets
+      operator: isUndefined
