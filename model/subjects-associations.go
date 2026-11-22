@@ -1,9 +1,5 @@
 package model
 
-func remove[T any](slice []T, s int) []T {
-	return append(slice[:s], slice[s+1:]...)
-}
-
 func (c *DBConnector) AssociateAssetToSubject(subjectid uint, assetid uint, uid uint) bool {
 	asset, err := c.GetAsset(assetid, uid)
 	if err != nil {
@@ -14,9 +10,9 @@ func (c *DBConnector) AssociateAssetToSubject(subjectid uint, assetid uint, uid 
 		return false
 	}
 
-	subject.Assets = append(subject.Assets, asset)
-
-	c.DB.Save(&subject)
+	if err := c.DB.Model(&subject).Association("Assets").Append(&asset); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -26,22 +22,14 @@ func (c *DBConnector) DeassociateAssetFromSubject(subjectid uint, assetid uint, 
 	if err != nil {
 		return false
 	}
-
-	idx := -1
-	for i, asset := range subject.Assets {
-		if asset.ID == assetid {
-			idx = i
-			break
-		}
-	}
-
-	if idx < 0 {
+	asset, err := c.GetAsset(assetid, uid)
+	if err != nil {
 		return false
 	}
 
-	subject.Assets = remove(subject.Assets, idx)
-
-	c.DB.Save(&subject)
+	if err := c.DB.Model(&subject).Association("Assets").Delete(&asset); err != nil {
+		return false
+	}
 
 	return true
 }
