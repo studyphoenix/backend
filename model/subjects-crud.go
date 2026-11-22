@@ -7,7 +7,7 @@ import (
 )
 
 func (c *DBConnector) GetSubject(id uint, uid uint) (Subject, error) {
-	return gorm.G[Subject](c.DB).Where("id = ? AND user_id = ?", id, uid).First(ctx)
+	return gorm.G[Subject](c.DB).Where("id = ? AND user_id = ?", id, uid).Preload("Assets", nil).First(ctx)
 }
 
 func (c *DBConnector) UpdateSubject(id uint, req UpdateSubjectRequest, uid uint) bool {

@@ -12,9 +12,9 @@ func (c *DBConnector) AssociateSubtopicToSubtopic(parent uint, child uint, uid u
 		return false
 	}
 
-	parentSubtopic.Children = append(parentSubtopic.Children, &subtopic)
-
-	c.DB.Save(&parentSubtopic)
+	if err := c.DB.Model(&parentSubtopic).Association("Children").Append(&subtopic); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -24,22 +24,14 @@ func (c *DBConnector) DeassociateSubtopicFromSubtopic(parent uint, child uint, u
 	if err != nil {
 		return false
 	}
-
-	idx := -1
-	for i, subtopic := range parentSubtopic.Children {
-		if subtopic.ID == child {
-			idx = i
-			break
-		}
-	}
-
-	if idx < 0 {
+	childSubtopic, err := c.GetSubtopic(child, uid)
+	if err != nil {
 		return false
 	}
 
-	parentSubtopic.Children = remove(parentSubtopic.Children, idx)
-
-	c.DB.Save(&parentSubtopic)
+	if err := c.DB.Model(&parentSubtopic).Association("Children").Delete(&childSubtopic); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -56,9 +48,9 @@ func (c *DBConnector) AssociateAssetToSubtopic(subtopicid uint, assetid uint, ui
 		return false
 	}
 
-	subtopic.Assets = append(subtopic.Assets, asset)
-
-	c.DB.Save(&subtopic)
+	if err := c.DB.Model(&subtopic).Association("Assets").Append(&asset); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -68,22 +60,14 @@ func (c *DBConnector) DeassociateAssetFromSubtopic(subtopicid uint, assetid uint
 	if err != nil {
 		return false
 	}
-
-	idx := -1
-	for i, asset := range subtopic.Assets {
-		if asset.ID == assetid {
-			idx = i
-			break
-		}
-	}
-
-	if idx < 0 {
+	asset, err := c.GetAsset(assetid, uid)
+	if err != nil {
 		return false
 	}
 
-	subtopic.Assets = remove(subtopic.Assets, idx)
-
-	c.DB.Save(&subtopic)
+	if err := c.DB.Model(&subtopic).Association("Assets").Delete(&asset); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -101,9 +85,9 @@ func (c *DBConnector) AssociateChatToSubtopic(subtopicid uint, chatid uint, uid 
 		return false
 	}
 
-	subtopic.Chats = append(subtopic.Chats, chat)
-
-	c.DB.Save(&subtopic)
+	if err := c.DB.Model(&subtopic).Association("Chats").Append(&chat); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -113,22 +97,14 @@ func (c *DBConnector) DeassociateChatFromSubtopic(subtopicid uint, chatid uint, 
 	if err != nil {
 		return false
 	}
-
-	idx := -1
-	for i, chat := range subtopic.Chats {
-		if chat.ID == chatid {
-			idx = i
-			break
-		}
-	}
-
-	if idx < 0 {
+	chat, err := c.GetChat(chatid, uid)
+	if err != nil {
 		return false
 	}
 
-	subtopic.Chats = remove(subtopic.Chats, idx)
-
-	c.DB.Save(&subtopic)
+	if err := c.DB.Model(&subtopic).Association("Chats").Delete(&chat); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -145,9 +121,9 @@ func (c *DBConnector) AssociateFlashcardToSubtopic(subtopicid uint, flashcardid 
 		return false
 	}
 
-	subtopic.Flashcards = append(subtopic.Flashcards, flashcard)
-
-	c.DB.Save(&subtopic)
+	if err := c.DB.Model(&subtopic).Association("Flashcards").Append(&flashcard); err != nil {
+		return false
+	}
 
 	return true
 }
@@ -157,22 +133,14 @@ func (c *DBConnector) DeassociateFlashcardFromSubtopic(subtopicid uint, flashcar
 	if err != nil {
 		return false
 	}
-
-	idx := -1
-	for i, flashcard := range subtopic.Flashcards {
-		if flashcard.ID == flashcardid {
-			idx = i
-			break
-		}
-	}
-
-	if idx < 0 {
+	flashcard, err := c.GetFlashcard(flashcardid, uid)
+	if err != nil {
 		return false
 	}
 
-	subtopic.Flashcards = remove(subtopic.Flashcards, idx)
-
-	c.DB.Save(&subtopic)
+	if err := c.DB.Model(&subtopic).Association("Flashcards").Delete(&flashcard); err != nil {
+		return false
+	}
 
 	return true
 }
