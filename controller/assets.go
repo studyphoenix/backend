@@ -19,7 +19,7 @@ import (
 // @Tags		assets
 // @Produce		json
 // @Param 		payload body model.CreateAssetRequest true "Asset details to store"
-// @Success		201	{object}		nil
+// @Success		201	{object}		CreatedResponse
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
