@@ -20,6 +20,7 @@ import (
 // @Param 		count query uint false "The maximum number of results to return. Defaults to 25"
 // @Param 		offset query uint false "The offset in the results list. Defaults to 0"
 // @Success		200	{object}		[]model.Asset
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/assets/search [get]

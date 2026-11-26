@@ -57,6 +57,7 @@ func (m *Controller) CreateSubject(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subject to retrieve"
 // @Success		200	{object}		model.Subject
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -132,6 +133,7 @@ func (m *Controller) UpdateSubject(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subject to delete"
 // @Success		204	{object}		nil
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subject not found"
 // @Failure		500	{object}		httputil.HTTPError

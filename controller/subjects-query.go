@@ -26,6 +26,7 @@ import (
 // @Param 		minAssetCount query uint false "The minimum number of assets the subject and its subtopics need to have. Defaults to 0"
 // @Param 		maxAssetCount query uint false "The maximum number of assets the subject and its subtopics need to have. Defaults to -1 (meaning not limited)"
 // @Success		200	{object}		[]model.Subject
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/subjects/search [get]

@@ -25,6 +25,7 @@ import (
 // @Param 		minCompletionCount query uint false "The minimum number of times the flashcard was completed"
 // @Param 		maxCompletionCount query uint false "The maximum number of times the flashcard was completed"
 // @Success		200	{object}		[]model.Flashcard
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
 // @Router		/flashcards/search [get]
