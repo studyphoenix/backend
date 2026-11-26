@@ -47,7 +47,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -166,6 +169,9 @@ const docTemplate = `{
                             "$ref": "#/definitions/model.Asset"
                         }
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthorized"
                     },
@@ -214,6 +220,9 @@ const docTemplate = `{
                                 "$ref": "#/definitions/model.Asset"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -351,7 +360,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -432,6 +444,9 @@ const docTemplate = `{
                             "$ref": "#/definitions/model.Chat"
                         }
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthorized"
                     },
@@ -477,7 +492,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -516,6 +534,9 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -693,7 +714,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreatedResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -732,6 +756,9 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -852,6 +879,9 @@ const docTemplate = `{
                                 "$ref": "#/definitions/model.Flashcard"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1087,6 +1117,9 @@ const docTemplate = `{
                     "204": {
                         "description": "No Content"
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthorized"
                     },
@@ -1127,6 +1160,9 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/model.Subject"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1212,6 +1248,9 @@ const docTemplate = `{
                                 "$ref": "#/definitions/model.Subject"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1831,6 +1870,9 @@ const docTemplate = `{
                     "204": {
                         "description": "No Content"
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthorized"
                     },
@@ -1871,6 +1913,9 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/model.Subtopic"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "401": {
                         "description": "Unauthorized"

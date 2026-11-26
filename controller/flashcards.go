@@ -19,7 +19,7 @@ import (
 // @Tags		flashcards
 // @Produce		json
 // @Param 		payload body model.CreateFlashcardRequest true "flashcard details to store"
-// @Success		201	{object}		nil
+// @Success		201	{object}		CreatedResponse
 // @Success		400	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
