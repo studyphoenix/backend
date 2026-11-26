@@ -58,6 +58,7 @@ func (m *Controller) CreateAsset(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the asset to retrieve"
 // @Success		200	{object}		model.Asset
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil
 // @Failure		500	{object}		httputil.HTTPError

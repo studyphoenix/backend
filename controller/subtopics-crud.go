@@ -61,6 +61,7 @@ func (m *Controller) CreateSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to retrieve"
 // @Success		200	{object}		model.Subtopic
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -136,6 +137,7 @@ func (m *Controller) UpdateSubtopic(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the subtopic to delete"
 // @Success		204	{object}		nil
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "subtopic not found"
 // @Failure		500	{object}		httputil.HTTPError

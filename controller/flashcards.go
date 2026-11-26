@@ -20,6 +20,7 @@ import (
 // @Produce		json
 // @Param 		payload body model.CreateFlashcardRequest true "flashcard details to store"
 // @Success		201	{object}		nil
+// @Success		400	{object}		nil
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
 // @Failure		500	{object}		httputil.HTTPError
@@ -165,6 +166,7 @@ func (m *Controller) CompleteFlashcard(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the flashcard to update"
 // @Success		204	{object}		nil
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "flashcard not found"
 // @Failure		500	{object}		httputil.HTTPError

@@ -104,6 +104,7 @@ func (m *Controller) UpdateChatMessage(c *gin.Context) {
 // @Produce		json
 // @Param 		id path string true "The id of the chat message to delete"
 // @Success		204	{object}		nil
+// @Failure		400	{object}		nil
 // @Failure		401	{object}		nil
 // @Failure 	404 {object} 		nil "chat or message not found"
 // @Failure		500	{object}		httputil.HTTPError
