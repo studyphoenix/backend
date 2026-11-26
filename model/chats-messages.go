@@ -1,8 +1,10 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/TwiN/logr"
 	"gorm.io/gorm"
 )
 
@@ -35,6 +37,7 @@ func (c *DBConnector) UpdateChatMessage(id uint, req UpdateChatMessageRequest, u
 func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint, uid uint) (uint, bool) {
 	_, err := c.GetChat(chatid, uid)
 	if err != nil {
+		logr.Debug(fmt.Sprintf("Could not find chat to create message: %e", err))
 		return 0, false
 	}
 	msg := ChatMessage{
@@ -48,6 +51,7 @@ func (c *DBConnector) CreateChatMessage(req AddChatMessageRequest, chatid uint, 
 	result := gorm.WithResult()
 	err = gorm.G[ChatMessage](c.DB, result).Create(ctx, &msg)
 	if err != nil {
+		logr.Debug(fmt.Sprintf("Failed to update DB to create message: %e", err))
 		return 0, false
 	}
 	return msg.ID, true

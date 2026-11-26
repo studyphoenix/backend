@@ -16,8 +16,8 @@ import (
 // @Description	Creates a new subject linked to the current user
 // @Tags		chats
 // @Produce		json
-// @Param 		id path string true "The id of the subject to retrieve"
-// @Param 		payload body model.AddChatMessageRequest true "Subject details to store"
+// @Param 		id path string true "The id of the chat to create this message for"
+// @Param 		payload body model.AddChatMessageRequest true "Chat messages to store"
 // @Success		201	{object}		CreatedResponse
 // @Failure 	400 {object} 		nil
 // @Failure		401	{object}		nil
