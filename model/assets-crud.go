@@ -48,18 +48,38 @@ func (c *DBConnector) CreateAsset(req CreateAssetRequest, userid uint) (uint, bo
 }
 
 func (c *DBConnector) DeleteAsset(id uint, uid uint) bool {
+	err := c.DB.Transaction(func(tx *gorm.DB) error {
+		c := DBConnector{
+			Config: c.Config,
+			DB:     tx,
+		}
+
+		return c.deleteAssetWithoutTransaction(id, uid)
+	})
+
+	if err != nil {
+		logr.Errorf("[DELETE ASSETS] Delete transaction failed: %e", err)
+		return false
+	} else {
+		return true
+	}
+}
+
+func (c *DBConnector) deleteAssetWithoutTransaction(id uint, uid uint) error {
 	asset, err := c.GetAsset(id, uid)
 	if err != nil {
-		logr.Error(err.Error())
-		return false
+		return err
 	}
 
 	c.DB.Exec("DELETE FROM `subtopics_assets` WHERE asset_id = ?; DELETE FROM `subjects_assets` WHERE asset_id = ?", id, id)
 	if rows, err := gorm.G[Asset](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
-		return false
+		return err
 	}
 
-	os.Remove(filepath.Join(c.Config.Datadir, strconv.FormatUint(uint64(id), 10), MEDIA_TYPE_MAP[asset.MediaType]))
+	err = os.Remove(filepath.Join(c.Config.Datadir, strconv.FormatUint(uint64(id), 10), MEDIA_TYPE_MAP[asset.MediaType]))
+	if err != nil {
+		return err
+	}
 
-	return true
+	return nil
 }

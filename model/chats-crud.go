@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/TwiN/logr"
 	"gorm.io/gorm"
 )
 
@@ -48,10 +49,29 @@ func (c *DBConnector) DeleteChat(id uint, uid uint) bool {
 		return false
 	}
 
+	err = c.DB.Transaction(func(tx *gorm.DB) error {
+		c := DBConnector{
+			Config: c.Config,
+			DB:     tx,
+		}
+
+		return c.deleteChatWithoutTransaction(id, uid)
+	})
+
+	if err != nil {
+		logr.Errorf("[DELETE CHATS] Delete transaction failed: %e", err)
+		return false
+	} else {
+		return true
+	}
+}
+
+func (c *DBConnector) deleteChatWithoutTransaction(id uint, uid uint) error {
 	c.DB.Exec("DELETE FROM `subtopics_chats` WHERE chat_id = ?", id)
 
 	if rows, err := gorm.G[Chat](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
-		return false
+		return err
 	}
-	return true
+
+	return nil
 }

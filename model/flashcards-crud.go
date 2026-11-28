@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/TwiN/logr"
@@ -50,14 +49,31 @@ func (c *DBConnector) DeleteFlashcard(id uint, uid uint) bool {
 		return false
 	}
 
+	err = c.DB.Transaction(func(tx *gorm.DB) error {
+		c := DBConnector{
+			Config: c.Config,
+			DB:     tx,
+		}
+
+		return c.deleteFlashcardWithoutTransaction(id, uid)
+	})
+
+	if err != nil {
+		logr.Errorf("[DELETE FLASHCARD] Delete transaction failed: %e", err)
+		return false
+	} else {
+		return true
+	}
+}
+
+func (c *DBConnector) deleteFlashcardWithoutTransaction(id uint, uid uint) error {
 	c.DB.Exec("DELETE FROM `subtopics_flashcards` WHERE flashcard_id = ?", id)
 
 	if rows, err := gorm.G[Flashcard](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
-		logr.Debug(fmt.Sprint(err))
-		return false
+		return err
 	}
 
-	return true
+	return nil
 }
 
 func (c *DBConnector) CompleteFlashcard(id uint, uid uint) bool {
@@ -70,7 +86,7 @@ func (c *DBConnector) CompleteFlashcard(id uint, uid uint) bool {
 	flashcard.UpdatedAt = time.Now()
 
 	if err := c.DB.Save(&flashcard).Error; err != nil {
-		logr.Debug(fmt.Sprint(err))
+		logr.Debugf("%e", err)
 		return false
 	}
 	return true
