@@ -59,7 +59,7 @@ func (c *DBConnector) DeleteFlashcard(id uint, uid uint) bool {
 	})
 
 	if err != nil {
-		logr.Errorf("[DELETE FLASHCARD] Delete transaction failed: %e", err)
+		logr.Errorf("[DELETE FLASHCARD] Delete transaction failed: %w", err)
 		return false
 	} else {
 		return true
@@ -86,7 +86,7 @@ func (c *DBConnector) CompleteFlashcard(id uint, uid uint) bool {
 	flashcard.UpdatedAt = time.Now()
 
 	if err := c.DB.Save(&flashcard).Error; err != nil {
-		logr.Debugf("%e", err)
+		logr.Debugf("%w", err)
 		return false
 	}
 	return true

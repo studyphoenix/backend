@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -58,7 +60,7 @@ func (c *DBConnector) DeleteAsset(id uint, uid uint) bool {
 	})
 
 	if err != nil {
-		logr.Errorf("[DELETE ASSETS] Delete transaction failed: %e", err)
+		logr.Errorf("[DELETE ASSETS] Delete transaction failed: %w", err)
 		return false
 	} else {
 		return true
@@ -78,7 +80,9 @@ func (c *DBConnector) deleteAssetWithoutTransaction(id uint, uid uint) error {
 
 	err = os.Remove(filepath.Join(c.Config.Datadir, strconv.FormatUint(uint64(id), 10), MEDIA_TYPE_MAP[asset.MediaType]))
 	if err != nil {
-		return err
+		if !errors.Is(err, fs.ErrNotExist) {
+			return err
+		}
 	}
 
 	return nil

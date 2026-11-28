@@ -59,7 +59,7 @@ func (c *DBConnector) DeleteChat(id uint, uid uint) bool {
 	})
 
 	if err != nil {
-		logr.Errorf("[DELETE CHATS] Delete transaction failed: %e", err)
+		logr.Errorf("[DELETE CHATS] Delete transaction failed: %w", err)
 		return false
 	} else {
 		return true

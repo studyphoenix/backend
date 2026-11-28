@@ -14,7 +14,7 @@ func (c *DBConnector) GetSubtopic(id uint, uid uint) (Subtopic, error) {
 func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest, uid uint) bool {
 	subtopic, err := c.GetSubtopic(id, uid)
 	if err != nil {
-		logr.Errorf("[UPDATE SUBTOPIC] Failed to retrieve subtopic: %e", err)
+		logr.Errorf("[UPDATE SUBTOPIC] Failed to retrieve subtopic: %w", err)
 		return false
 	}
 
@@ -25,7 +25,7 @@ func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest, uid uin
 	subtopic.UpdatedAt = time.Now()
 
 	if err := c.DB.Save(&subtopic).Error; err != nil {
-		logr.Errorf("[UPDATE SUBTOPIC] Failed to save changes: %e", err)
+		logr.Errorf("[UPDATE SUBTOPIC] Failed to save changes: %w", err)
 		return false
 	}
 	return true
@@ -44,7 +44,7 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) (ui
 	result := gorm.WithResult()
 	err := gorm.G[Subtopic](c.DB, result).Create(ctx, &subtopic)
 	if err != nil {
-		logr.Errorf("[CREATE SUBTOPIC] Could not update: %e", err)
+		logr.Errorf("[CREATE SUBTOPIC] Could not update: %w", err)
 		return 0, false
 	}
 	return subtopic.ID, true
@@ -53,7 +53,7 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) (ui
 func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 	_, err := c.GetSubtopic(id, uid)
 	if err != nil {
-		logr.Errorf("[DELETE SUBTOPIC] Could not find subtopic to delete: %e", err)
+		logr.Errorf("[DELETE SUBTOPIC] Could not find subtopic to delete: %w", err)
 		return false
 	}
 
@@ -67,7 +67,7 @@ func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 	})
 
 	if err != nil {
-		logr.Errorf("[DELETE SUBTOPIC] Delete transaction failed: %e", err)
+		logr.Errorf("[DELETE SUBTOPIC] Delete transaction failed: %w", err)
 		return false
 	} else {
 		return true

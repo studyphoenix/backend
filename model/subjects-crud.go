@@ -59,7 +59,7 @@ func (c *DBConnector) DeleteSubject(id uint, uid uint) bool {
 	})
 
 	if err != nil {
-		logr.Errorf("[DELETE SUBTOPIC] Delete transaction failed: %e", err)
+		logr.Errorf("[DELETE SUBTOPIC] Delete transaction failed: %w", err)
 		return false
 	} else {
 		return true

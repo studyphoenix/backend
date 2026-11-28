@@ -472,13 +472,13 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "The id of the subject to retrieve",
+                        "description": "The id of the chat to create this message for",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Subject details to store",
+                        "description": "Chat messages to store",
                         "name": "payload",
                         "in": "body",
                         "required": true,
