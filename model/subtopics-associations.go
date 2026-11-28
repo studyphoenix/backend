@@ -77,7 +77,7 @@ func (c *DBConnector) DeassociateAssetFromSubtopic(subtopicid uint, assetid uint
 func (c *DBConnector) AssociateChatToSubtopic(subtopicid uint, chatid uint, uid uint) bool {
 	chat, err := c.GetChat(chatid, uid)
 	if err != nil {
-		logr.Debugf("Failed to get chat %e", err)
+		logr.Debugf("Failed to get chat %w", err)
 		return false
 	}
 	subtopic, err := c.GetSubtopic(subtopicid, uid)

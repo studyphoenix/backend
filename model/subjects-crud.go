@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/TwiN/logr"
 	"gorm.io/gorm"
 )
 
@@ -48,27 +49,49 @@ func (c *DBConnector) DeleteSubject(id uint, uid uint) bool {
 		return false
 	}
 
+	err = c.DB.Transaction(func(tx *gorm.DB) error {
+		c := DBConnector{
+			Config: c.Config,
+			DB:     tx,
+		}
+
+		return c.deleteSubjectWithoutTransaction(id, uid)
+	})
+
+	if err != nil {
+		logr.Errorf("[DELETE SUBTOPIC] Delete transaction failed: %w", err)
+		return false
+	} else {
+		return true
+	}
+}
+
+func (c *DBConnector) deleteSubjectWithoutTransaction(id uint, uid uint) error {
 	// Delete flashcards (if possible)
 	assets, err := gorm.G[uint](c.DB).Raw("SELECT asset_id FROM subjects_assets WHERE subject_id = ?", id).Find(ctx)
 	if err != nil {
-		return false
+		return err
 	}
 	for _, asset := range assets {
-		c.DeleteAsset(asset, uid)
+		if err := c.deleteAssetWithoutTransaction(asset, uid); err != nil {
+			return err
+		}
 	}
 
 	subtopics, err := gorm.G[uint](c.DB).Raw("SELECT id FROM subtopics WHERE subject_id = ?", id).Find(ctx)
 	if err != nil {
-		return false
+		return err
 	}
 	for _, subtopic := range subtopics {
-		c.DeleteSubtopic(subtopic, uid)
+		if err := c.deleteSubtopicWithoutTransaction(subtopic, uid); err != nil {
+			return err
+		}
 	}
 
 	// Actually delete the subject
 	if rows, err := gorm.G[Subject](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
-		return false
+		return err
 	}
 
-	return true
+	return nil
 }

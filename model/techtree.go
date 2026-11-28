@@ -33,7 +33,7 @@ func (c *DBConnector) BulkCreateTechTreeForSubject(req CreateSubtopicBulkRequest
 	_, err := c.GetSubject(req.SubjectID, uid)
 
 	if err != nil {
-		logr.Errorf("[TECH TREE] Could not retrieve subject with error, %e", err)
+		logr.Errorf("[TECH TREE] Could not retrieve subject with error, %w", err)
 		return false
 	}
 
@@ -79,7 +79,7 @@ func (c *DBConnector) BulkCreateTechTreeForSubject(req CreateSubtopicBulkRequest
 	})
 
 	if err != nil {
-		logr.Errorf("%e", err)
+		logr.Errorf("%w", err)
 		return false
 	} else {
 		return true

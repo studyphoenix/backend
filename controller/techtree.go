@@ -61,7 +61,7 @@ func (m *Controller) BulkCreateSubjectTechTree(c *gin.Context) {
 	var req model.CreateSubtopicBulkRequest
 	err := c.BindJSON(&req)
 	if err != nil {
-		logr.Debugf("Failed to parse body to create subtopic: %e", err)
+		logr.Debugf("Failed to parse body to create subtopic: %w", err)
 		c.AbortWithStatus(400)
 		return
 	}
