@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/TwiN/logr"
 	"gorm.io/gorm"
 )
 
@@ -13,6 +14,7 @@ func (c *DBConnector) GetSubtopic(id uint, uid uint) (Subtopic, error) {
 func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest, uid uint) bool {
 	subtopic, err := c.GetSubtopic(id, uid)
 	if err != nil {
+		logr.Errorf("[UPDATE SUBTOPIC] Failed to retrieve subtopic: %e", err)
 		return false
 	}
 
@@ -22,7 +24,8 @@ func (c *DBConnector) UpdateSubtopic(id uint, req UpdateSubtopicRequest, uid uin
 	subtopic.Progress = dereferenceOrDefault(req.Progress, subtopic.Progress)
 	subtopic.UpdatedAt = time.Now()
 
-	if c.DB.Save(&subtopic).Error != nil {
+	if err := c.DB.Save(&subtopic).Error; err != nil {
+		logr.Errorf("[UPDATE SUBTOPIC] Failed to save changes: %e", err)
 		return false
 	}
 	return true
@@ -41,12 +44,14 @@ func (c *DBConnector) CreateSubtopic(req CreateSubtopicRequest, userid uint) (ui
 	result := gorm.WithResult()
 	err := gorm.G[Subtopic](c.DB, result).Create(ctx, &subtopic)
 	if err != nil {
+		logr.Errorf("[CREATE SUBTOPIC] Could not update: %e", err)
 		return 0, false
 	}
 	return subtopic.ID, true
 }
 
 func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
+	// FIXME: This should be a transaction
 	_, err := c.GetSubtopic(id, uid)
 	if err != nil {
 		return false
@@ -54,6 +59,7 @@ func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 	// Delete assets (if possible)
 	assets, err := gorm.G[uint](c.DB).Raw("SELECT asset_id FROM subtopics_assets WHERE subtopic_id = ?", id).Find(ctx)
 	if err != nil {
+		logr.Errorf("[DELETE SUBTOPIC] Could not retrieve asset links to delete: %e", err)
 		return false
 	}
 	for _, asset := range assets {
@@ -63,6 +69,7 @@ func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 	// Delete subtopics (if possible)
 	subtopics, err := gorm.G[uint](c.DB).Raw("SELECT child_id FROM subtopics_subtopics WHERE subtopic_id = ?", id).Find(ctx)
 	if err != nil {
+		logr.Errorf("[DELETE SUBTOPIC] Could not retrieve subtopics links to delete: %e", err)
 		return false
 	}
 	for _, subtopic := range subtopics {
@@ -72,6 +79,7 @@ func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 	// Delete flashcards (if possible)
 	flashcards, err := gorm.G[uint](c.DB).Raw("SELECT flashcard_id FROM subtopics_flashcards WHERE subtopic_id = ?", id).Find(ctx)
 	if err != nil {
+		logr.Errorf("[DELETE SUBTOPIC] Could not retrieve flashcard links to delete: %e", err)
 		return false
 	}
 	for _, flashcard := range flashcards {
@@ -81,6 +89,7 @@ func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 	// Delete chats (if possible)
 	chats, err := gorm.G[uint](c.DB).Raw("SELECT chat_id FROM subtopics_chats WHERE subtopic_id = ?", id).Find(ctx)
 	if err != nil {
+		logr.Errorf("[DELETE SUBTOPIC] Could not retrieve chats links to delete: %e", err)
 		return false
 	}
 	for _, chat := range chats {
@@ -89,6 +98,7 @@ func (c *DBConnector) DeleteSubtopic(id uint, uid uint) bool {
 
 	// Actually delete the subtopic
 	if rows, err := gorm.G[Subtopic](c.DB).Where("id = ?", id).Delete(ctx); err != nil || rows == 0 {
+		logr.Errorf("[DELETE SUBTOPIC] Delete transaction failed: %e", err)
 		return false
 	}
 

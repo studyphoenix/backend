@@ -2,7 +2,6 @@ package controller
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 
 	"github.com/TwiN/logr"
@@ -62,7 +61,7 @@ func (m *Controller) BulkCreateSubjectTechTree(c *gin.Context) {
 	var req model.CreateSubtopicBulkRequest
 	err := c.BindJSON(&req)
 	if err != nil {
-		logr.Debug(fmt.Sprint("Failed to parse body to create subtopic: ", err))
+		logr.Debugf("Failed to parse body to create subtopic: %e", err)
 		c.AbortWithStatus(400)
 		return
 	}
